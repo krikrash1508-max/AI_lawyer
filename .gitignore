@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Секреты и окружение
+.env
+.env.*
+!.env.example
+
+# Реальные договоры и персональные данные — не коммитить
+data/private/
+contracts/real/
+
+# Зависимости и сборка
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+dist/
+build/
+
+# Claude Code локальные настройки
+.claude/settings.local.json
