@@ -5,6 +5,10 @@
 версионирование — [Semantic Versioning](https://semver.org/lang/ru/).
 
 ## [Unreleased]
+
+## [0.4.0] — 2026-11-24
+Включает изменения запланированного, но не выпущенного релиза 0.3.0 (позиционирование, ADR-0002) и Project Step 3 (прототип Klauzula v0.1).
+
 ### Added
 - Прототип **Klauzula v0.1** в `app/` (Python stdlib, без пакетов): загрузка DOCX/TXT, маскирование ПДн, проверка NDA по 10 правилам плейбука, правки с Accept/Reject, сравнение версий с изменением рисков, экспорт отчёта в Word/Markdown; Claude-режим (`claude-opus-5-5`, structured output) — опционально; 6 автотестов.
 - `skills/nda-review/SKILL.md` — инструкции для AI (prompt-v1).
