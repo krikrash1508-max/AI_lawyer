@@ -128,23 +128,25 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
     </div>
     <h3>Today</h3>
     <div class="flow">
-      <div class="step"><b>Sales</b>Receives the counterparty's NDA</div><span class="arrow">→</span>
-      <div class="step"><b>Email</b>"Please check, urgent"</div><span class="arrow">→</span>
-      <div class="step pain"><b>Queue</b>Waits 1–5 days for the lawyer</div><span class="arrow">→</span>
+      <div class="step"><b>Sales</b>Receives the counterparty's NDA, emails the lawyer: "please check, urgent"</div><span class="arrow">→</span>
+      <div class="step pain"><b>Queue</b>Waits about 2 days for the lawyer</div><span class="arrow">→</span>
       <div class="step pain"><b>Lawyer</b>Reads all of it, checks rules from memory</div><span class="arrow">→</span>
       <div class="step"><b>Lawyer</b>Edits in Word, explains by email</div><span class="arrow">→</span>
-      <div class="step pain"><b>New version</b>Finds changes by hand</div>
+      <div class="step"><b>Sales</b>Sends the edits to the counterparty</div><span class="arrow">→</span>
+      <div class="step pain"><b>New version</b>Sales forwards it, it waits in the queue again, the lawyer finds changes by hand</div>
     </div>
-    <p class="loop">↺ The last two steps repeat for every round of negotiation.</p>
+    <p class="loop">↺ Every round of negotiation goes back through sales and the queue.</p>
     <h3 style="margin-top:22px">With Klauzula</h3>
     <div class="flow">
-      <div class="step"><b>Lawyer</b>Uploads the DOCX</div><span class="arrow">→</span>
-      <div class="step ai"><b>Klauzula</b>Masks personal data</div><span class="arrow">→</span>
+      <div class="step"><b>Sales → queue</b>Same entry; the queue gets shorter because each review takes less time</div><span class="arrow">→</span>
+      <div class="step"><b>Lawyer</b>Uploads the DOCX or TXT</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula</b>Masks identifiers: email, phone, PESEL, NIP, KRS, IBAN</div><span class="arrow">→</span>
       <div class="step ai"><b>Klauzula</b>Checks 10 playbook rules: OK / Review / Red flag</div><span class="arrow">→</span>
-      <div class="step human"><b>Lawyer decides</b>Edits, accepts or rejects each proposal</div><span class="arrow">→</span>
-      <div class="step ai"><b>Klauzula</b>Report for Word, reply to counterparty</div><span class="arrow">→</span>
-      <div class="step ai"><b>New version</b>Compare: what changed, which risks appeared</div>
+      <div class="step human"><b>Lawyer decides</b>Verifies each finding against the quoted clause</div><span class="arrow">→</span>
+      <div class="step human"><b>Lawyer decides</b>Red flags: edits, accepts or rejects each proposal</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula</b>Report for Word (.doc); tracked changes come next</div>
     </div>
+    <p class="loop">↺ New version: Klauzula shows what changed and which risks appeared, then the lawyer uploads it for a full check.</p>
     <div class="legend"><span class="l-pain">bottleneck</span><span class="l-ai">done by Klauzula</span><span class="l-human">lawyer's decision</span></div>
   </section>
 
