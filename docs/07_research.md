@@ -1,6 +1,6 @@
 ---
 title: Research — проблема, пользователи, конкуренты (Project Step 2)
-version: 0.2.0
+version: 0.2.1
 status: draft
 owner: TBD
 updated: 2026-11-24
@@ -85,12 +85,26 @@ updated: 2026-11-24
 
 | Продукт | Рейтинги | Что хвалят | На что жалуются |
 |---|---|---|---|
-| **Juro** | G2 4,5–4,6 | Простота, настройка, шаблоны, поддержка | Не хватает функций; AI-функции «средние» (7,7–7,8 из 10 на G2) |
+| **Juro** | G2 4,5 (~180–240 отзывов); Capterra — 48 отзывов | Простота, поддержка, надстройка для Word | Слабые правки и переговоры, перенос форматирования из Word, отчёты; AI-функции «средние» (7,7–7,8 из 10 на G2) — подробнее ниже |
 | **Luminance** | Gartner 4,6 (31 отзыв) | Автоматизация проверки, поддержка | Очень дорого, только для крупных компаний, долгое внедрение, нужно обучение |
 | **Genie AI** | G2 4,4–4,6; Capterra 4,5 | Простота, скорость первого черновика | Хуже со сложными договорами; форматирование |
 | **LEGALFLY** | Независимых отзывов нет | Отзыв клиента (ECS): проверка транспортных договоров по своим условиям | «−60% времени» — заявление компании |
 | **Legartis** | Независимых отзывов нет | — | «До 85% быстрее» — маркетинг |
 | **Libra, LEX Expert AI, Beck-Noxtua** | Независимых отзывов не найдено | — | — |
+
+**Juro: каких функций не хватает (по отзывам)**
+
+| Чего не хватает | Что пишут пользователи | Где |
+|---|---|---|
+| **Правки и переговоры (redlining)** | Правку контрагента можно только принять или отклонить целиком, нельзя внести правку поверх правки; в нескольких раундах переговоров неясно, кто что изменил. Самая частая жалоба в теме «Missing Features» (~8–10 отзывов) | [G2, стр. 2](https://g2.com/products/juro/reviews?page=2), [G2, стр. 3](https://g2.com/products/juro/reviews?page=3), [Oneflow (конкурент)](https://oneflow.com/uk/blog/juro-reviews/) |
+| **Форматирование из Word** | Форматирование не всегда корректно переносится из Word; ограничена настройка таблиц, сложной вёрстки и условного форматирования | [G2](https://www.g2.com/products/juro/reviews), [Capterra](https://www.capterra.com/p/167130/Juro/) |
+| **Отчёты и аналитика** | Отчёты ограничены; чтобы выгрузить детальные метрики (длительность согласования, риски по пунктам), нужна ручная работа или API | [Capterra](https://www.capterra.com/p/167130/Juro/), [GetApp](https://www.getapp.com/operations-management-software/a/juro/reviews/), [ContractSafe (конкурент)](https://www.contractsafe.com/contractsafe-vs-juro-comparison) |
+| **Настройка** | Сложно менять договор после отправки контрагенту; неудобно переиспользовать шаблоны в разных рабочих пространствах; тема «Limited Customization» (~5 отзывов) | [G2](https://www.g2.com/products/juro/reviews), [Capterra](https://www.capterra.com/p/167130/Juro/) |
+| **Интеграции** | Нет интеграции с Microsoft Teams; часть интеграций — только через Zapier | [G2](https://www.g2.com/products/juro/reviews), [PandaDoc (конкурент)](https://pandadoc.com/blog/juro-review) |
+
+⚠️ Средняя надёжность: G2 закрыт для автоматической загрузки, поэтому данные взяты из фрагментов страниц отзывов в поиске; число отзывов по темам отличается между страницами. Обзоры Oneflow, ContractSafe и PandaDoc написаны конкурентами Juro.
+
+**Что это значит для AI_lawyer:** юристам важны удобные правки в переговорах и работа прямо в Word без потери форматирования — это подтверждает выбор «работа в Word, правки в режиме исправлений». Отчёт о времени согласования — возможная функция для покупателя (руководителя юрфункции).
 
 **Что видно по отзывам:** юротделы ценят простоту, скорость и настройку под свои правила; жалуются на цену и долгое внедрение enterprise-решений. Для средних компаний это окно: быстрое внедрение и понятная цена.
 
@@ -128,6 +142,7 @@ updated: 2026-11-24
 | Правовая помощь вне представительства не закреплена за профессиями | Palestra (2022), e-prawnik.pl | Средняя/низкая: **проверить по законам** |
 | Потери 8,6–9% выручки | WorldCC через вторичные публикации | Средняя: оригинал не открывался |
 | Рейтинги G2/Capterra/Gartner | Страницы платформ | Средняя: числа отличаются между страницами |
+| Недостающие функции Juro | Фрагменты отзывов G2, Capterra, GetApp; обзоры конкурентов | Средняя: G2 не открывается напрямую; часть обзоров — от конкурентов |
 | Ускорение 60% (LEGALFLY), 85% (Legartis) | Сайты компаний | Низкая: маркетинг |
 | Сведения о VAI Legal, Gaius-Lex, LexTool | Сайты компаний | Низкая: независимых обзоров нет |
 | Статус EU AI Act для проверки договоров | Обзоры юрфирм | Не подтверждено: проверка договоров не упоминается в Annex III в найденных источниках |
@@ -174,7 +189,7 @@ updated: 2026-11-24
 
 **Отзывы клиентов**
 - [Genie AI — G2](https://www.g2.com/products/genieai/reviews) · [Capterra](https://www.capterra.com/p/10003121/Genie-AI/reviews/)
-- [Juro — G2](https://www.g2.com/products/juro/reviews)
+- [Juro — G2](https://www.g2.com/products/juro/reviews) · [Capterra](https://www.capterra.com/p/167130/Juro/) · [GetApp](https://www.getapp.com/operations-management-software/a/juro/reviews/) · [Oneflow о Juro (конкурент)](https://oneflow.com/uk/blog/juro-reviews/) · [ContractSafe vs Juro (конкурент)](https://www.contractsafe.com/contractsafe-vs-juro-comparison) · [PandaDoc о Juro (конкурент)](https://pandadoc.com/blog/juro-review)
 - [Luminance — Gartner](https://www.gartner.com/reviews/vendor/luminance) · [ToolRadar](https://toolradar.com/tools/luminance) · [Spellbook о ценах Luminance (конкурент)](https://spellbook.com/learn/luminance-pricing)
 
 **Проблема**
