@@ -1,6 +1,6 @@
 ---
 title: Research — проблема, пользователи, конкуренты (Project Step 2)
-version: 0.2.1
+version: 0.3.0
 status: draft
 owner: TBD
 updated: 2026-11-24
@@ -108,6 +108,34 @@ updated: 2026-11-24
 
 **Что видно по отзывам:** юротделы ценят простоту, скорость и настройку под свои правила; жалуются на цену и долгое внедрение enterprise-решений. Для средних компаний это окно: быстрое внедрение и понятная цена.
 
+### 3.4 Польша: что говорят юристы
+
+**Отзывы о польских продуктах.** Независимых отзывов клиентов о польских AI-инструментах для юристов найти не удалось:
+
+| Продукт | Что нашлось | Источник |
+|---|---|---|
+| **LEX Expert AI** | Только материалы вендора: продукт тестировали юристы и radcowie prawni до запуска; интервью с проф. Марцином Дзюрдой (radca prawny), которого инструмент, по его словам, положительно удивил | [Wolters Kluwer](https://www.wolterskluwer.com/pl-pl/solutions/lex/expert-ai/dlaczego-lex-expert-ai) |
+| **Libra** | Крупнейший названный клиент — CRIDO (~200 юристов и консультантов, консалтинговая компания, не юротдел); отзывов юротделов нет | [Wolters Kluwer](https://www.wolterskluwer.com/pl-pl/news/crido-wybiera-libre-od-wolters-kluwer-jako-nowe-srodowisko-pracy-ai), [prawo.pl](https://www.prawo.pl/prawnicy-sady/libra-nowy-ai-ulatwiajacy-prace-prawnikow,1537789.html) |
+| **Gaius-Lex** | Карточки на G2, Capterra, GetApp есть, отзывов нет (на GetApp — 0) | [GetApp](https://www.getapp.com/all-software/a/gaius-lex/), [G2](https://www.g2.com/products/gaius-lex/reviews) |
+| **VAI Legal, LexTool, Beck-Noxtua** | Отзывов не найдено | — |
+
+**Что польские юристы говорят в опросах**
+
+| Исследование | Кто опрошен | Ключевые данные |
+|---|---|---|
+| **Raport Rynku Prawniczego 2025/2026** (Supesu Recruitment, янв.–март 2026) | 507 юристов юрфирм и **юротделов** | ~88% используют AI-инструменты; самые популярные — **общие**: ChatGPT (~63%), Copilot (56%), DeepL (51%); почти каждый второй говорит о выгорании |
+| **Опрос Fundacji SET и Logit** | Адвокаты и radcowie prawni | 52,5% уже используют AI (22,5% — интенсивно), ещё 32,5% планируют. Опасения: **безопасность и конфиденциальность данных — 81%**, **ошибки AI — 75,9%**, профессиональная ответственность — 44,3%. **36,3% не знают ни одного** специализированного AI-инструмента для юристов на польском рынке («shadow AI») |
+| **In-House Lawyer Innovation Forum 2025** (Варшава, 30.09.2025, организатор — Wolters Kluwer) | ~120–130 руководителей юротделов | Панель «AI в юротделе»: вопрос уже не «нужно ли», а «как». Главные темы: безопасность данных и где стоят серверы, бесконтрольное использование AI сотрудниками компании |
+
+⚠️ Надёжность: Supesu и SET/Logit — средняя (независимые организации, но методику полностью не проверяли; данные по юротделам отдельно не выделены). Форум и материалы о продуктах — низкая–средняя: источник — Wolters Kluwer, продавец конкурирующих решений.
+
+**Что это значит для AI_lawyer:**
+1. **Юристы в Польше уже пользуются AI, но в основном общими инструментами** (ChatGPT, Copilot) — это и главный конкурент, и признак спроса.
+2. **Главное возражение — данные, а не качество текста:** 81% опасаются за конфиденциальность. Хранение в ЕС, отказ от обучения на договорах и понятная политика данных — обязательное условие продажи.
+3. **Рынок специализированных инструментов слабо известен** (36% не знают ни одного) — есть место для нового игрока, но придётся вкладываться в узнаваемость.
+4. **Публичных отзывов польских юротделов нет** — их нужно получить самим через 5–10 интервью; данные опросов дают гипотезы для вопросов.
+
+
 ## 4. Самые сильные аргументы против идеи
 
 1. **Функция становится стандартной.** Claude for Legal, ChatGPT, Libra уже проверяют договоры. Если продукт — «LLM + промт», его легко повторить.
@@ -142,6 +170,8 @@ updated: 2026-11-24
 | Правовая помощь вне представительства не закреплена за профессиями | Palestra (2022), e-prawnik.pl | Средняя/низкая: **проверить по законам** |
 | Потери 8,6–9% выручки | WorldCC через вторичные публикации | Средняя: оригинал не открывался |
 | Рейтинги G2/Capterra/Gartner | Страницы платформ | Средняя: числа отличаются между страницами |
+| Опросы польских юристов (Supesu 2026, SET/Logit) | rp.pl, cyberdefence24.pl | Средняя: данные по юротделам отдельно не выделены |
+| Отзывы о польских продуктах, форум in-house | Wolters Kluwer, prawo.pl, GetApp | Низкая–средняя: в основном материалы вендора; независимых отзывов нет |
 | Недостающие функции Juro | Фрагменты отзывов G2, Capterra, GetApp; обзоры конкурентов | Средняя: G2 не открывается напрямую; часть обзоров — от конкурентов |
 | Ускорение 60% (LEGALFLY), 85% (Legartis) | Сайты компаний | Низкая: маркетинг |
 | Сведения о VAI Legal, Gaius-Lex, LexTool | Сайты компаний | Низкая: независимых обзоров нет |
@@ -175,6 +205,10 @@ updated: 2026-11-24
 - [VAI Legal](https://vai.legal/) · [Gaius-Lex](https://gaius-lex.pl/) · [LexTool](https://www.lextool.pl/) · [Обзор AI для юристов в Польше (Lexedit)](https://lexedit.ai/pl/blog/ai-dla-prawnikow-narzedzia-zastosowania)
 
 **Юристы и AI**
+- [Raport Rynku Prawniczego 2025/2026 — Supesu (Rzeczpospolita)](https://www.rp.pl/zawody-prawnicze/art44314141-raport-prawnicy-miedzy-algorytmami-a-wypaleniem)
+- [AI в юридическом секторе — опрос Fundacji SET и Logit (CyberDefence24)](https://cyberdefence24.pl/polityka-i-prawo/sztuczna-inteligencja-w-sektorze-prawniczym-miedzy-innowacja-a-ryzykiem-systemowym)
+- [In-House Lawyer Innovation Forum 2025 (Wolters Kluwer)](https://www.wolterskluwer.com/pl-pl/news/in-house-lawyer-innovation-forum-2025) · [prawo.pl](https://www.prawo.pl/biznes/in-house-lawyer-innovation-forum-2025,535159.html)
+- [LEX Expert AI — почему (Wolters Kluwer)](https://www.wolterskluwer.com/pl-pl/solutions/lex/expert-ai/dlaczego-lex-expert-ai) · [CRIDO выбирает Libra (PL)](https://www.wolterskluwer.com/pl-pl/news/crido-wybiera-libre-od-wolters-kluwer-jako-nowe-srodowisko-pracy-ai) · [Gaius-Lex — GetApp](https://www.getapp.com/all-software/a/gaius-lex/) · [Gaius-Lex — G2](https://www.g2.com/products/gaius-lex/reviews)
 - [EY Law General Counsel Study 2025 (PL)](https://www.ey.com/pl_pl/newsroom/2025/04/ey-law-general-counsel-study-pl)
 - [Юристы ежедневно пользуются AI (prawo.pl)](https://www.prawo.pl/biznes/prawnicy-na-co-dzien-korzystaja-z-ai-a-ai-zmienia-model-ich-zawodu,1540345.html)
 - [Future Ready Lawyer 2026 (Wolters Kluwer)](https://www.wolterskluwer.com/pl-pl/news/wolters-kluwer-publikuje-raport-z-badania-future-ready-lawyer-2026)
