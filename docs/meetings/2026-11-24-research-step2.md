@@ -1,30 +1,30 @@
-# 2026-11-22 – 2026-11-24 — Старт проекта и исследование (Project Step 2)
+# 2026-11-22 – 2026-11-24 — Project start and research (Project Step 2)
 
-- Участники: владелец проекта, Claude (AI-ассистент)
-- Цель: настроить ведение документации и версионность, выполнить исследование проблемы, пользователей и конкурентов для Step 2 курса «Generative AI for Managers [2026]»
+- Participants: project owner, Claude (AI assistant)
+- Goal: set up documentation and versioning, carry out research on the problem, users and competitors for Step 2 of the "Generative AI for Managers [2026]" course
 
-## Что сделано
-- Создана структура документации `docs/`, шаблоны разделов, ADR, заметок встреч и плейбука; `CLAUDE.md` с правилами ведения документации.
-- Инициализирован git, создан приватный репозиторий на GitHub, первый релиз `v0.1.0` отправлен.
-- Проведено исследование рынка ЕС: [07_research.md](../07_research.md) и Word-версия [AI_lawyer_Research_Step2.docx](../AI_lawyer_Research_Step2.docx).
+## What was done
+- Created the `docs/` documentation structure, templates for sections, ADRs, meeting notes and the playbook; `CLAUDE.md` with documentation rules.
+- Initialised git, created a private GitHub repository, pushed the first release `v0.1.0`.
+- Carried out EU market research: [07_research.md](../07_research.md) and the Word version [AI_lawyer_Research_Step2.docx](../AI_lawyer_Research_Step2.docx).
 
-## Ключевые выводы исследования
-- Проблема подтверждена: компании теряют в среднем ~8,6–9% выручки из-за слабой работы с договорами (WorldCC, по вторичным источникам).
-- Сегмент крупных клиентов занят: Legora, Luminance, LEGALFLY, Legartis. Для МСБ есть Genie AI и польские VAI Legal, Gaius-Lex, LexTool.
-- Главная угроза — универсальные AI-ассистенты (Claude for Legal, ChatGPT), которые уже проверяют договоры по плейбуку.
-- Возможная ниша: МСБ без штатного юриста, одна страна ЕС, один тип договоров, плейбук от юриста, объяснение рисков простым языком.
+## Key research takeaways
+- The problem is confirmed: companies lose on average ~8.6–9% of revenue due to weak contract management (WorldCC, via secondary sources).
+- The large-client segment is taken: Legora, Luminance, LEGALFLY, Legartis. For SMEs there are Genie AI and the Polish VAI Legal, Gaius-Lex, LexTool.
+- The main threat is general-purpose AI assistants (Claude for Legal, ChatGPT), which already review contracts against a playbook.
+- A possible niche: SMEs without an in-house lawyer, one EU country, one contract type, a playbook from a lawyer, risks explained in plain language.
 
-## Решения
-- Трек курса: **Startup**.
-- Рынок исследования: **весь ЕС**.
-- Формат исследования: русский язык, Markdown в `docs/` + Word для сдачи.
-- Целевой пользователь пока **не выбран** — в исследовании сравнены три сегмента, рекомендован МСБ без юриста.
+## Decisions
+- Course track: **Startup**.
+- Research market: **the whole EU**.
+- Research format: Russian language, Markdown in `docs/` + Word for submission.
+- The target user is **not yet chosen** — the research compared three segments and recommended SMEs without a lawyer.
 
-## Задачи
-- [ ] Выбрать целевого пользователя, страну и тип договоров — группа
-- [ ] Обновить Project Charter по разделу 7 исследования — группа
-- [ ] Провести 5–10 интервью с владельцами малого бизнеса (боль, готовность платить) — группа
-- [ ] Проверить правовой статус сервиса в выбранной стране (не является ли он юридической консультацией) — группа
-- [ ] Положить Research в общую папку группы, проверить доступ по ссылке для людей вне группы — до финальной встречи на кампусе
-- [ ] При необходимости перевести исследование на английский
-- [ ] Заполнить `docs/00_overview.md` после выбора сегмента
+## Tasks
+- [ ] Choose the target user, country and contract type — group
+- [ ] Update the Project Charter per section 7 of the research — group
+- [ ] Conduct 5–10 interviews with small-business owners (pain, willingness to pay) — group
+- [ ] Check the legal status of the service in the chosen country (whether it counts as legal advice) — group
+- [ ] Put the Research into the group's shared folder, check link access for people outside the group — before the final campus meeting
+- [ ] Translate the research into English if needed
+- [ ] Fill in `docs/00_overview.md` after the segment is chosen

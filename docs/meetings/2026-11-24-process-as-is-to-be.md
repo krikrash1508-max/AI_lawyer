@@ -1,46 +1,46 @@
-# 2026-11-24 — Пересмотр процессов AS-IS / TO-BE
+# 2026-11-24 — AS-IS / TO-BE process review
 
-- Участники: владелец проекта, Claude (AI-ассистент)
-- Цель: сверить диаграммы процесса с прототипом v0.1 и пересмотреть AS-IS и TO-BE
+- Participants: project owner, Claude (AI assistant)
+- Goal: check the process diagrams against prototype v0.1 and revise AS-IS and TO-BE
 
-## Что сделано
-| Материал | Где |
-|----------|-----|
-| Схема AS-IS: 3 полосы (бизнес, юрист, контрагент) | [diagrams/as-is.svg](../diagrams/as-is.svg) |
-| Схема TO-BE: 4 полосы (бизнес, юрист, Продукт, контрагент) | [diagrams/to-be.svg](../diagrams/to-be.svg) |
-| Роли, сценарий, таблица «AS-IS → TO-BE», расхождения с v0.1 | [03_architecture.md](../03_architecture.md) 0.2.0 → 0.4.1 |
-| Блок «Process» в дизайн-паке | [mockups/klauzula-design.html](../mockups/klauzula-design.html) |
-| Коммиты | `3ba1881` (первый пересмотр), `285caf4` (полосы ролей) |
+## What was done
+| Material | Where |
+|----------|-------|
+| AS-IS diagram: 3 lanes (business, lawyer, counterparty) | [diagrams/as-is.svg](../diagrams/as-is.svg) |
+| TO-BE diagram: 4 lanes (business, lawyer, Product, counterparty) | [diagrams/to-be.svg](../diagrams/to-be.svg) |
+| Roles, scenario, "AS-IS → TO-BE" table, divergences from v0.1 | [03_architecture.md](../03_architecture.md) 0.2.0 → 0.4.1 |
+| "Process" block in the design pack | [mockups/klauzula-design.html](../mockups/klauzula-design.html) |
+| Commits | `3ba1881` (first review), `285caf4` (role lanes) |
 
-Также разобрана задача 1 Step 3 (тест Claude-режима): нужен Python ≥ 3.10, пакет `anthropic` и API-ключ — на ноутбуке сейчас Python 3.9 без пакета и ключа; отдельного файла с эталоном находок нет.
+Step 3 task 1 (testing Claude mode) was also worked through: it needs Python ≥ 3.10, the `anthropic` package and an API key — the laptop currently has Python 3.9 without the package or a key; there is no separate file with the reference findings.
 
-## Ключевые выводы
-- **Сверка с прототипом:** старые диаграммы обещали больше, чем делает v0.1: «маскирование ПДн» (имена не маскируются), загрузку только DOCX, переход от сравнения версий сразу к правкам.
-- **Сравнение версий** в v0.1 — отдельный экран без правок и всегда на правилах (`compare.py` → `rules.check`), даже в Claude-режиме.
-- **Юристы контрагентов работают в Word в режиме исправлений**, поэтому ручного поиска изменений в AS-IS нет. Ценность сравнения в продукте смещается с «что поменяли» на «какие риски по плейбуку появились».
-- **Mermaid не рисует горизонтальные полосы ролей**, поэтому схемы сделаны в SVG (GitHub показывает их как картинки).
+## Key takeaways
+- **Check against the prototype:** the old diagrams promised more than v0.1 does: "personal data masking" (names are not masked), upload of DOCX only, a transition from version comparison straight to edits.
+- **Version comparison** in v0.1 is a separate screen without edits and always rule-based (`compare.py` → `rules.check`), even in Claude mode.
+- **Counterparties' lawyers work in Word with track changes**, so there is no manual search for changes in AS-IS. The value of comparison in the product shifts from "what changed" to "which playbook risks appeared".
+- **Mermaid cannot draw horizontal role lanes**, so the diagrams are made in SVG (GitHub shows them as images).
 
-## Решения
+## Decisions
 **AS-IS**
-- Полосы ролей: бизнес, юрист, контрагент.
-- Объект процесса — **контракт** (не только NDA).
-- Очередь к юристу — **~2 дня на каждый раунд правок**.
-- Юрист **сверяет с плейбуком по памяти**.
-- Правки и новые версии идут через бизнес; новая версия приходит в режиме исправлений Word.
-- Убраны: развилка «чей шаблон», shadow AI, отчёт для руководителя, ручное сравнение версий.
+- Role lanes: business, lawyer, counterparty.
+- The process object is a **contract** (not only an NDA).
+- Queue to the lawyer — **~2 days per round of edits**.
+- The lawyer **checks against the playbook from memory**.
+- Edits and new versions go through the business; the new version arrives with Word track changes.
+- Removed: the "whose template" fork, shadow AI, the report for the manager, manual version comparison.
 
 **TO-BE**
-- На схеме «Продукт» вместо «Klauzula»; в дизайн-паке название Klauzula сохранено.
-- Бизнес **ставит задачу юристу**, очереди нет — юрист сразу **загружает файл в Продукт** (новую версию тоже).
-- Продукт **маскирует ФИО**, e-mail, телефон, PESEL, NIP, KRS, IBAN.
-- Продукт **анализирует контракт на соответствие плейбуку и законодательству Польши** и **генерирует отчёт** для юриста.
-- Юрист **проверяет отчёт** → «Есть красные флаги?»: нет — подписание; да — юрист вносит правки, бизнес отправляет их контрагенту.
-- Убраны: отчёт .doc / track changes, отдельный шаг сравнения версий, плейбук как отдельный процесс.
+- The diagram says "Product" instead of "Klauzula"; the design pack keeps the name Klauzula.
+- The business **assigns a task to the lawyer**, there is no queue — the lawyer **uploads the file to the Product** straight away (the new version too).
+- The Product **masks names**, e-mail, phone, PESEL, NIP, KRS, IBAN.
+- The Product **analyses the contract against the playbook and Polish legislation** and **generates a report** for the lawyer.
+- The lawyer **reviews the report** → "Any red flags?": no — signing; yes — the lawyer makes the edits, the business sends them to the counterparty.
+- Removed: .doc report / track changes, a separate version comparison step, the playbook as a separate process.
 
-## Задачи
-- [ ] Решить, добавлять ли в требования анализ на соответствие законодательству Польши (в TO-BE есть, в спецификации и v0.1 — нет) — группа
-- [ ] Пересмотреть формулировку F5 и наблюдение «юрист, сравнивая вручную, пропустит» с учётом работы в режиме исправлений — владелец проекта
-- [ ] Решить по правкам потока данных (раздел 4 `03_architecture.md`): fallback на правила, блок `/api/compare` — владелец проекта
-- [ ] Перепубликовать дизайн-пак на claude.ai (там старый процесс) — владелец проекта
-- [ ] `git push` коммита `285caf4` — владелец проекта
-- [ ] Задача 1 Step 3: подготовить среду (Python ≥ 3.10, `anthropic`, API-ключ) и эталон находок — владелец проекта
+## Tasks
+- [ ] Decide whether to add analysis against Polish legislation to the requirements (it is in TO-BE, but not in the specification or v0.1) — group
+- [ ] Revisit the wording of F5 and the observation "a lawyer comparing manually will miss something" in light of track-changes work — project owner
+- [ ] Decide on the data flow edits (section 4 of `03_architecture.md`): rule fallback, the `/api/compare` block — project owner
+- [ ] Republish the design pack on claude.ai (it has the old process) — project owner
+- [ ] `git push` of commit `285caf4` — project owner
+- [ ] Step 3 task 1: prepare the environment (Python ≥ 3.10, `anthropic`, API key) and the reference findings — project owner

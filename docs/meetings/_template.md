@@ -1,13 +1,13 @@
-# YYYY-MM-DD — <Тема встречи / интервью>
+# YYYY-MM-DD — <Meeting / interview topic>
 
-- Участники: 
-- Цель: 
+- Participants: 
+- Goal: 
 
-## Ключевые выводы
+## Key takeaways
 - 
 
-## Решения
+## Decisions
 - 
 
-## Задачи
-- [ ] <задача> — <ответственный> — <срок>
+## Tasks
+- [ ] <task> — <owner> — <due date>

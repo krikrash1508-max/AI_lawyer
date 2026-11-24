@@ -1,57 +1,57 @@
-# 2026-11-24 — Step 3: процесс, макеты, стиль, спецификация, прототип v0.1
+# 2026-11-24 — Step 3: process, mock-ups, style, specification, prototype v0.1
 
-- Участники: владелец проекта, Claude (AI-ассистент)
-- Цель: подготовить материалы Project Step 3 — диаграмму процесса, макеты, название и стиль, спецификацию (≤ 5 функций), SKILL.md и первую рабочую версию
+- Participants: project owner, Claude (AI assistant)
+- Goal: prepare the Project Step 3 materials — process diagram, mock-ups, name and style, specification (≤ 5 features), SKILL.md and the first working version
 
-## Что сделано
-| Материал | Где |
-|----------|-----|
-| Диаграмма процесса AS-IS / TO-BE, поток данных | [03_architecture.md](../03_architecture.md) |
-| Спецификация: 5 функций, FR/NFR, критерии приёмки | [01_requirements.md](../01_requirements.md), [02_user_stories.md](../02_user_stories.md) |
-| Название, стиль, макеты 5 экранов | [08_design.md](../08_design.md), [mockups/klauzula-design.html](../mockups/klauzula-design.html) (также опубликовано как приватный artifact на claude.ai) |
-| Custom instructions для AI (prompt-v1) | [skills/nda-review/SKILL.md](../../skills/nda-review/SKILL.md), [04_ai_prompts.md](../04_ai_prompts.md) |
-| Плейбук NDA | [06_playbook/nda.md](../06_playbook/nda.md), `app/playbooks/nda_pl.json` |
-| Прототип v0.1 | `app/` — запуск `python3 app/server.py`, тесты `python3 -m unittest discover -s app/tests` (6/6 OK) |
+## What was done
+| Material | Where |
+|----------|-------|
+| AS-IS / TO-BE process diagram, data flow | [03_architecture.md](../03_architecture.md) |
+| Specification: 5 features, FR/NFR, acceptance criteria | [01_requirements.md](../01_requirements.md), [02_user_stories.md](../02_user_stories.md) |
+| Name, style, mock-ups of 5 screens | [08_design.md](../08_design.md), [mockups/klauzula-design.html](../mockups/klauzula-design.html) (also published as a private artifact on claude.ai) |
+| Custom instructions for the AI (prompt-v1) | [skills/nda-review/SKILL.md](../../skills/nda-review/SKILL.md), [04_ai_prompts.md](../04_ai_prompts.md) |
+| NDA playbook | [06_playbook/nda.md](../06_playbook/nda.md), `app/playbooks/nda_pl.json` |
+| Prototype v0.1 | `app/` — run `python3 app/server.py`, tests `python3 -m unittest discover -s app/tests` (6/6 OK) |
 
-## Наблюдения при создании v0.1
-1. **Правила на шаблонах работают на типовых NDA.** 10 правил нашли все 6 красных флагов в образце. Нетиповые формулировки они пропустят — Claude-режим нужен для устойчивости, а не для демо.
-2. **Сравнение версий — самый сильный момент демо.** Версия 2 исправила 5 проблем и незаметно добавила indemnity; Klauzula показывает это одной строкой «New risk».
-3. **Пробел в маскировании.** Идентификаторы (PESEL, NIP, e-mail, телефон) маскируются, а имя представителя компании — нет. Нужно распознавание имён до пилота.
-4. **Плейбук = продукт.** Качество зависит от правил, написанных юристом. Наши правила — примеры, их должен проверить radca prawny.
-5. **Юристы работают в Word.** Экспорт в .doc есть, но настоящие track changes в .docx важнее любого экрана — первая доработка после v0.1.
-6. **Результатов AI пока нет.** Claude-режим написан, но не запускался на тестовом наборе (нет API-ключа в среде). Без цифр точности нельзя обещать экономию времени.
-7. **Ограничение среды:** на ноутбуке только Python 3.9 без пакетов → прототип на стандартной библиотеке ([ADR-0004](../decisions/0004-prototype-stack.md)). Для Claude-режима нужен Python ≥ 3.10 и `pip install anthropic`.
+## Observations while building v0.1
+1. **Template-based rules work on typical NDAs.** The 10 rules found all 6 red flags in the sample. They will miss non-standard wording — Claude mode is needed for robustness, not for the demo.
+2. **Version comparison is the strongest moment of the demo.** Version 2 fixed 5 problems and quietly added an indemnity; Klauzula shows this in one "New risk" line.
+3. **Masking gap.** Identifiers (PESEL, NIP, e-mail, phone) are masked, but the name of the company's representative is not. Name recognition is needed before a pilot.
+4. **Playbook = product.** Quality depends on rules written by a lawyer. Our rules are examples; a radca prawny must review them.
+5. **Lawyers work in Word.** .doc export exists, but real track changes in .docx matter more than any screen — the first improvement after v0.1.
+6. **No AI results yet.** Claude mode is written but has not been run on the test set (no API key in the environment). Without accuracy figures we cannot promise time savings.
+7. **Environment limitation:** the laptop has only Python 3.9 without packages → the prototype is on the standard library ([ADR-0004](../decisions/0004-prototype-stack.md)). Claude mode needs Python ≥ 3.10 and `pip install anthropic`.
 
-## Решения (proposed — нужно подтверждение группы)
-- Тип договора для MVP — **NDA** ([ADR-0003](../decisions/0003-mvp-contract-type-nda.md)).
-- Стек прототипа — Python stdlib + HTML/JS, Claude как опция ([ADR-0004](../decisions/0004-prototype-stack.md)).
-- Название — **Klauzula** ([ADR-0005](../decisions/0005-product-name-klauzula.md)).
+## Decisions (proposed — group confirmation needed)
+- Contract type for the MVP — **NDA** ([ADR-0003](../decisions/0003-mvp-contract-type-nda.md)).
+- Prototype stack — Python stdlib + HTML/JS, Claude as an option ([ADR-0004](../decisions/0004-prototype-stack.md)).
+- Name — **Klauzula** ([ADR-0005](../decisions/0005-product-name-klauzula.md)).
 
-## Задачи
-- [ ] Подтвердить ADR-0003, 0004, 0005 (статус → accepted) — группа
-- [ ] Прогнать Claude-режим на двух образцах, записать точность в `04_ai_prompts.md` — владелец проекта
-- [ ] Проверить плейбук NDA у radcy prawnego — группа
-- [ ] Собрать 10–20 обезличенных NDA для тестового набора — группа
-- [ ] Маскирование имён физлиц (FR-004) — разработка
-- [ ] Track changes в .docx (FR-012) — разработка
-- [ ] Проверить товарный знак «Klauzula» (EUIPO, UPRP) — группа
-- [ ] Положить материалы Step 3 (дизайн-пак, спецификацию, ссылку на репозиторий) в общую папку группы — до финальной встречи
+## Tasks
+- [ ] Confirm ADR-0003, 0004, 0005 (status → accepted) — group
+- [ ] Run Claude mode on the two samples, record accuracy in `04_ai_prompts.md` — project owner
+- [ ] Have the NDA playbook reviewed by a radca prawny — group
+- [ ] Collect 10–20 anonymised NDAs for the test set — group
+- [ ] Masking of natural persons' names (FR-004) — development
+- [ ] Track changes in .docx (FR-012) — development
+- [ ] Check the "Klauzula" trademark (EUIPO, UPRP) — group
+- [ ] Put the Step 3 materials (design pack, specification, repository link) into the group's shared folder — before the final meeting
 
-## План: задачи Step 3 — отдельными чатами
-Решение владельца проекта: каждую задачу делать в отдельном чате Claude Code (одна задача = один чат = один коммит).
+## Plan: Step 3 tasks as separate chats
+Decision of the project owner: do each task in a separate Claude Code chat (one task = one chat = one commit).
 
-**Условие перед стартом:** работа этой сессии должна быть закоммичена и отправлена на GitHub — новые чаты начинают с последнего коммита и не видят незакоммиченных файлов.
+**Condition before starting:** the work of this session must be committed and pushed to GitHub — new chats start from the latest commit and do not see uncommitted files.
 
-| # | Чат | Цель (готово, когда…) | Файлы | Зависит от |
-|---|-----|------------------------|-------|-----------|
-| 0 | ✅ Коммит и релиз v0.4.0 | Два коммита, тег `v0.4.0`, push на GitHub | `CHANGELOG.md`, всё из этой сессии | — (делается первым) |
-| 1 | Тест Claude-режима | prompt-v1 прогнан на `nda_counterparty_v1/v2`, точность против эталона записана в `04_ai_prompts.md` | `app/engine/llm.py`, `docs/04_ai_prompts.md` | 0; Python ≥ 3.10, `anthropic`, API-ключ |
-| 2 | 🟡 Маскирование имён (FR-004) — по словам-маркерам сделано в v0.2 ([итоги](2026-11-24-step3-to-be-alignment.md)); осталось: NER и адреса | Имена и адреса физлиц маскируются; тест на образце; FR-004 → ✅ | `app/engine/masking.py`, `app/tests/` | 0 |
-| 3 | Track changes в DOCX (FR-012) | Экспорт `.docx` с правками как исправления Word; FR-012 → ✅ | `app/engine/report.py`, новый модуль | 0 |
-| 4 | Расширить тестовый набор | 10–20 вымышленных NDA с эталоном находок | `app/samples/`, `docs/04_ai_prompts.md` | 0 |
-| 5 | Проверка названия Klauzula | Поиск товарных знаков (EUIPO, UPRP) и доменов, вывод в ADR-0005 | `docs/decisions/0005-…` | 0 |
-| 6 | Word-версия Step 3 для сдачи | `.docx` из `01_requirements`, `03_architecture`, `08_design` + напоминание положить в общую папку | `docs/` | 0, желательно 1 |
+| # | Chat | Goal (done when…) | Files | Depends on |
+|---|------|--------------------|-------|-----------|
+| 0 | ✅ Commit and release v0.4.0 | Two commits, tag `v0.4.0`, push to GitHub | `CHANGELOG.md`, everything from this session | — (done first) |
+| 1 | Test Claude mode | prompt-v1 run on `nda_counterparty_v1/v2`, accuracy against the reference recorded in `04_ai_prompts.md` | `app/engine/llm.py`, `docs/04_ai_prompts.md` | 0; Python ≥ 3.10, `anthropic`, API key |
+| 2 | 🟡 Name masking (FR-004) — marker-based done in v0.2 ([summary](2026-11-24-step3-to-be-alignment.md)); remaining: NER and addresses | Names and addresses of natural persons are masked; test on the sample; FR-004 → ✅ | `app/engine/masking.py`, `app/tests/` | 0 |
+| 3 | Track changes in DOCX (FR-012) | `.docx` export with edits as Word tracked changes; FR-012 → ✅ | `app/engine/report.py`, new module | 0 |
+| 4 | Extend the test set | 10–20 fictional NDAs with reference findings | `app/samples/`, `docs/04_ai_prompts.md` | 0 |
+| 5 | Check the name Klauzula | Search of trademarks (EUIPO, UPRP) and domains, outcome in ADR-0005 | `docs/decisions/0005-…` | 0 |
+| 6 | Word version of Step 3 for submission | `.docx` from `01_requirements`, `03_architecture`, `08_design` + a reminder to put it in the shared folder | `docs/` | 0, preferably 1 |
 
-Задачи группы (не для чата): подтвердить ADR-0003/0004/0005, проверить плейбук у radcy prawnego, собрать реальные обезличенные NDA.
+Group tasks (not for a chat): confirm ADR-0003/0004/0005, have the playbook reviewed by a radca prawny, collect real anonymised NDAs.
 
-**Как начать чат:** новый чат в этой папке → вставить «Задача N из плана в docs/meetings/2026-11-24-step3-prototype.md» → в конце чата Claude обновляет этот файл (отмечает задачу) и CHANGELOG.
+**How to start a chat:** new chat in this folder → paste "Task N from the plan in docs/meetings/2026-11-24-step3-prototype.md" → at the end of the chat Claude updates this file (marks the task) and the CHANGELOG.

@@ -1,36 +1,36 @@
-# ADR-0007: Объём прототипа v0.2 по процессу TO-BE
+# ADR-0007: Prototype v0.2 scope per the TO-BE process
 
-- Статус: proposed
-- Дата: 2026-11-24
-- Связано: [ADR-0003](0003-mvp-contract-type-nda.md), [ADR-0004](0004-prototype-stack.md), [ADR-0006](0006-product-name-klauzula-ai.md); процесс — [03_architecture.md](../03_architecture.md) 0.4.1, раздел 2
+- Status: proposed
+- Date: 2026-11-24
+- Related: [ADR-0003](0003-mvp-contract-type-nda.md), [ADR-0004](0004-prototype-stack.md), [ADR-0006](0006-product-name-klauzula-ai.md); process — [03_architecture.md](../03_architecture.md) 0.4.1, section 2
 
-## Контекст
-Схема TO-BE (полосы ролей) обещает то, чего нет в прототипе v0.1:
-1. маскирование **ФИО**;
-2. анализ **на соответствие законодательству Польши**, а не только плейбуку;
-3. шаг юриста **«Есть красные флаги?»** с двумя исходами: подписание или правки через бизнес;
-4. новую версию — **снова на проверку**, без отдельного шага сравнения.
+## Context
+The TO-BE diagram (role lanes) promises things the v0.1 prototype does not have:
+1. masking of **personal names**;
+2. analysis **against Polish legislation**, not only against the playbook;
+3. the lawyer's **"Any red flags?"** step with two outcomes: signing, or edits via the business;
+4. a new version goes **back to review**, with no separate comparison step.
 
-В v0.1 сравнение версий — отдельная вкладка, а риски в ней всегда считаются правилами, даже в Claude-режиме. Анализ по законодательству Польши был открытым вопросом группы (встреча 2026-11-24, «Пересмотр процессов»).
+In v0.1 version comparison is a separate tab, and its risks are always computed by rules, even in Claude mode. Analysis against Polish legislation was an open question for the group (meeting 2026-11-24, "Process review").
 
-## Рассмотренные варианты
-| Вопрос | Вариант | За | Против |
-|--------|---------|----|--------|
-| Право Польши | A. Не делать, убрать со схемы | Честно, без риска ошибок | Схема и продукт расходятся; юристы ждут опоры на закон |
-| | **B. Ссылка на норму за каждым правилом плейбука** | Дёшево; норма проверяема; AI не придумывает статьи | Это не анализ императивных норм вне плейбука |
-| | C. Свободный анализ права через LLM | Полное обещание схемы | Галлюцинации статей; нужна база актов (ISAP) и проверка юристом |
-| Сравнение версий | A. Оставить вкладку Compare | Уже работает | Не совпадает с процессом; риски — всегда правилами |
-| | **B. Новая версия = следующий раунд проверки** | Как на схеме; один режим для раундов | Нет сравнения двух произвольных файлов |
-| Решение юриста | A. Продукт сам пишет «можно подписывать» | Быстро | Противоречит ADR-0002 (решает юрист) |
-| | **B. Блок «Any red flags?» с двумя кнопками юриста** | Human-in-the-loop; решение попадает в отчёт | Ещё один клик |
-| ФИО | **A. Регулярные выражения по словам-маркерам** | Стандартная библиотека (ADR-0004) | Не ловит имя без маркера |
-| | B. NER (spaCy pl / LLM) | Полнота | Пакеты и среда; отложено |
+## Options considered
+| Question | Option | Pros | Cons |
+|----------|--------|------|------|
+| Polish law | A. Do not do it, remove from the diagram | Honest, no risk of errors | Diagram and product diverge; lawyers expect a legal anchor |
+| | **B. Reference to the legal provision behind each playbook rule** | Cheap; the provision is verifiable; the AI does not invent articles | Not an analysis of mandatory norms outside the playbook |
+| | C. Free-form legal analysis via an LLM | Full promise of the diagram | Hallucinated articles; needs a database of acts (ISAP) and review by a lawyer |
+| Version comparison | A. Keep the Compare tab | Already works | Does not match the process; risks always by rules |
+| | **B. New version = next review round** | As in the diagram; one mode for rounds | No comparison of two arbitrary files |
+| Lawyer's decision | A. The Product itself writes "can be signed" | Fast | Contradicts ADR-0002 (the lawyer decides) |
+| | **B. "Any red flags?" block with two lawyer buttons** | Human-in-the-loop; the decision goes into the report | One more click |
+| Personal names | **A. Regular expressions on marker words** | Standard library (ADR-0004) | Misses a name without a marker |
+| | B. NER (spaCy pl / LLM) | Completeness | Packages and environment; deferred |
 
-## Решение
-Для v0.2 выбраны варианты, выделенные жирным: нормы права — ссылки из плейбука (поле `legal_basis`, пометка «to verify»); новая версия — раунд 2 в том же экране (`/api/review` с `previous`, `/api/compare` удалён); решение «sign / send edits» принимает юрист; ФИО маскируются по словам-маркерам.
+## Decision
+For v0.2 the options in bold were chosen: legal provisions — references from the playbook (`legal_basis` field, marked "to verify"); new version — round 2 on the same screen (`/api/review` with `previous`, `/api/compare` removed); the "sign / send edits" decision is made by the lawyer; names are masked on marker words.
 
-## Последствия
-- Спецификация — [01_requirements.md](../01_requirements.md) 0.3.0: F4 «Отчёт и решение юриста», F5 «Новая версия — новый раунд», FR-014…017, NFR-008.
-- Плейбук `nda_pl.json` 0.2.0 и [06_playbook/nda.md](../06_playbook/nda.md) 0.2.0 содержат нормы; их нужно проверить у radcy prawnego до пилота.
-- Анализ императивных норм вне плейбука и NER для ФИО остаются открытыми задачами.
-- Вкладки Compare в интерфейсе больше нет; макеты — [mockups/klauzula-design.html](../mockups/klauzula-design.html).
+## Consequences
+- Specification — [01_requirements.md](../01_requirements.md) 0.3.0: F4 "Report and lawyer's decision", F5 "New version — new round", FR-014…017, NFR-008.
+- Playbook `nda_pl.json` 0.2.0 and [06_playbook/nda.md](../06_playbook/nda.md) 0.2.0 contain the provisions; they must be checked by a radca prawny before a pilot.
+- Analysis of mandatory norms outside the playbook and NER for names remain open tasks.
+- The Compare tab no longer exists in the interface; mock-ups — [mockups/klauzula-design.html](../mockups/klauzula-design.html).

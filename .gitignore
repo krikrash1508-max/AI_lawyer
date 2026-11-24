@@ -1,16 +1,16 @@
 # macOS
 .DS_Store
 
-# Секреты и окружение
+# Secrets and environment
 .env
 .env.*
 !.env.example
 
-# Реальные договоры и персональные данные — не коммитить
+# Real contracts and personal data — do not commit
 data/private/
 contracts/real/
 
-# Зависимости и сборка
+# Dependencies and build
 node_modules/
 __pycache__/
 *.pyc
@@ -18,8 +18,8 @@ __pycache__/
 dist/
 build/
 
-# Claude Code локальные настройки
+# Claude Code local settings
 .claude/settings.local.json
 
-# Временные файлы Microsoft Office (создаются, пока документ открыт)
+# Microsoft Office temporary files (created while a document is open)
 ~$*

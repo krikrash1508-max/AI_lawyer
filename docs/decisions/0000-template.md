@@ -1,17 +1,17 @@
-# ADR-NNNN: <Краткое название решения>
+# ADR-NNNN: <Short decision title>
 
-- Статус: proposed | accepted | superseded by ADR-NNNN
-- Дата: YYYY-MM-DD
+- Status: proposed | accepted | superseded by ADR-NNNN
+- Date: YYYY-MM-DD
 
-## Контекст
-Какую проблему решаем и почему сейчас.
+## Context
+What problem are we solving and why now.
 
-## Рассмотренные варианты
+## Options considered
 1. 
 2. 
 
-## Решение
-Что выбрали.
+## Decision
+What we chose.
 
-## Последствия
-Что становится проще, что сложнее, какие риски.
+## Consequences
+What becomes easier, what becomes harder, what the risks are.

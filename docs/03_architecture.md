@@ -1,137 +1,137 @@
 ---
-title: Архитектура и процесс
-version: 0.5.1
+title: Architecture and process
+version: 0.5.2
 status: draft
 owner: TBD
 updated: 2026-11-24
 ---
 
-# Архитектура и процесс
+# Architecture and process
 
-## 1. Бизнес-процесс: как сейчас (AS-IS)
+## 1. Business process: as is today (AS-IS)
 
-![AS-IS: согласование контракта сегодня — три полосы: бизнес, юрист, контрагент](diagrams/as-is.svg)
+![AS-IS: contract approval today — three lanes: business, lawyer, counterparty](diagrams/as-is.svg)
 
-Исходник схемы: [`diagrams/as-is.svg`](diagrams/as-is.svg). Каждой роли — своя горизонтальная полоса, шаг роли нарисован в её полосе.
+Diagram source: [`diagrams/as-is.svg`](diagrams/as-is.svg). Each role has its own horizontal lane; a role's step is drawn in its lane.
 
-| Роль | Что делает |
-|------|-----------|
-| Бизнес (продажи / закупки) | Получает контракт, пишет юристу, отправляет правки контрагенту, пересылает юристу новую версию, подписывает |
-| Юрист | Ждёт в очереди, читает весь текст и сверяет с плейбуком по памяти, правит в Word |
-| Контрагент | Принимает правки или присылает новую версию в режиме исправлений Word |
+| Role | What it does |
+|------|--------------|
+| Business (sales / procurement) | Receives the contract, writes to the lawyer, sends edits to the counterparty, forwards the new version to the lawyer, signs |
+| Lawyer | Waits in a queue, reads the whole text and checks it against the playbook from memory, edits in Word |
+| Counterparty | Accepts the edits or sends a new version with Word track changes |
 
-Узкие места:
-- **Очередь к юристу — около 2 дней на каждый раунд правок.** Новая версия от контрагента приходит через бизнес и снова встаёт в очередь.
-- **Ручная сверка с плейбуком по памяти** — на каждой версии юрист заново читает весь текст.
+Bottlenecks:
+- **Queue to the lawyer — about 2 days per round of edits.** The counterparty's new version arrives through the business and joins the queue again.
+- **Manual playbook check from memory** — on every version the lawyer re-reads the whole text.
 
-Изменения контрагента видны в режиме исправлений Word, поэтому ручного поиска изменений между версиями в процессе нет.
+The counterparty's changes are visible in Word track changes, so there is no manual search for changes between versions in the process.
 
-## 2. Бизнес-процесс: с Продуктом (TO-BE)
+## 2. Business process: with the Product (TO-BE)
 
-![TO-BE: согласование контракта с Продуктом — четыре полосы: бизнес, юрист, Продукт, контрагент](diagrams/to-be.svg)
+![TO-BE: contract approval with the Product — four lanes: business, lawyer, Product, counterparty](diagrams/to-be.svg)
 
-Исходник схемы: [`diagrams/to-be.svg`](diagrams/to-be.svg). Устроена так же, как AS-IS: каждой роли — своя горизонтальная полоса.
+Diagram source: [`diagrams/to-be.svg`](diagrams/to-be.svg). Built like AS-IS: each role has its own horizontal lane.
 
-| Роль | Что делает |
-|------|-----------|
-| Бизнес (продажи / закупки) | Получает контракт, ставит задачу юристу, отправляет правки контрагенту, пересылает юристу новую версию, подписывает |
-| Юрист | Загружает файл в Продукт, проверяет отчёт; если есть красные флаги — вносит правки в контракт, если нет — контракт идёт на подписание |
-| Продукт | Маскирует идентификаторы, анализирует контракт на соответствие плейбуку и законодательству Польши, генерирует отчёт для юриста |
-| Контрагент | Принимает правки или присылает новую версию в режиме исправлений Word |
+| Role | What it does |
+|------|--------------|
+| Business (sales / procurement) | Receives the contract, assigns a task to the lawyer, sends edits to the counterparty, forwards the new version to the lawyer, signs |
+| Lawyer | Uploads the file to the Product, reviews the report; if there are red flags — edits the contract, if not — the contract goes to signing |
+| Product | Masks identifiers, analyses the contract against the playbook and Polish legislation, generates a report for the lawyer |
+| Counterparty | Accepts the edits or sends a new version with Word track changes |
 
-Что меняется по сравнению с AS-IS:
+What changes compared with AS-IS:
 
-| Шаг | AS-IS | TO-BE |
-|-----|-------|-------|
-| Вход контракта | Письмо юристу → очередь ~2 дня на каждый раунд | Бизнес ставит задачу юристу, юрист сразу загружает файл в Продукт |
-| Сверка с плейбуком | Юрист читает весь текст и сверяет по памяти | Продукт анализирует контракт и генерирует отчёт, **юрист проверяет отчёт** |
-| Персональные данные | — | Продукт маскирует ФИО, e-mail, телефон, PESEL, NIP, KRS, IBAN |
-| Решение по контракту | Юрист правит в Word по памяти, бизнес отправляет правки контрагенту | Нет красных флагов — сразу на подписание. Есть — юрист вносит правки в контракт, бизнес отправляет их контрагенту |
-| Новая версия | Бизнес пересылает, снова очередь, юрист заново сверяет весь текст | Бизнес пересылает, юрист загружает новую версию в Продукт на проверку |
+| Step | AS-IS | TO-BE |
+|------|-------|-------|
+| Contract intake | E-mail to the lawyer → queue ~2 days per round | The business assigns a task to the lawyer, the lawyer uploads the file to the Product straight away |
+| Playbook check | The lawyer reads the whole text and checks from memory | The Product analyses the contract and generates a report, **the lawyer reviews the report** |
+| Personal data | — | The Product masks names, e-mail, phone, PESEL, NIP, KRS, IBAN |
+| Decision on the contract | The lawyer edits in Word from memory, the business sends the edits to the counterparty | No red flags — straight to signing. Red flags — the lawyer edits the contract, the business sends the edits to the counterparty |
+| New version | The business forwards it, queue again, the lawyer re-checks the whole text | The business forwards it, the lawyer uploads the new version to the Product for review |
 
-Сценарий:
-1. Бизнес получает контракт от контрагента и ставит задачу юристу.
-2. Юрист загружает файл в Продукт.
-3. Продукт маскирует идентификаторы, анализирует контракт на соответствие плейбуку и законодательству Польши и генерирует отчёт.
-4. Юрист проверяет отчёт: есть ли красные флаги?
-   - **Нет** → контракт идёт на подписание.
-   - **Да** → юрист вносит правки в контракт, бизнес отправляет правки контрагенту.
-5. Контрагент согласен → подписание. Не согласен → присылает новую версию в режиме исправлений Word, бизнес пересылает её юристу, процесс повторяется с шага 2.
+Scenario:
+1. The business receives the contract from the counterparty and assigns a task to the lawyer.
+2. The lawyer uploads the file to the Product.
+3. The Product masks identifiers, analyses the contract against the playbook and Polish legislation and generates a report.
+4. The lawyer reviews the report: are there red flags?
+   - **No** → the contract goes to signing.
+   - **Yes** → the lawyer edits the contract, the business sends the edits to the counterparty.
+5. The counterparty agrees → signing. Disagrees → sends a new version with Word track changes, the business forwards it to the lawyer, and the process repeats from step 2.
 
-Решение на каждом шаге принимает юрист (human-in-the-loop): Продукт готовит отчёт, юрист проверяет его и решает, править ли контракт.
+The lawyer makes the decision at every step (human-in-the-loop): the Product prepares the report, the lawyer reviews it and decides whether to edit the contract.
 
-Как шаги TO-BE реализованы в прототипе v0.2 ([ADR-0007](decisions/0007-scope-v0-2-to-be-process.md)):
+How the TO-BE steps are implemented in prototype v0.2 ([ADR-0007](decisions/0007-scope-v0-2-to-be-process.md)):
 
-| Шаг TO-BE | Функция | Экран v0.2 | Ограничение |
-|-----------|---------|-----------|-------------|
-| Юрист загружает файл в Продукт | F1 | Review → Upload (round 1) | — |
-| Маскирует идентификаторы, включая ФИО | F2 | Сводка «Masked before analysis» | ФИО — по словам-маркерам, в блоке подписей и рядом с должностью; повторы, инициалы и склонения — та же метка; имя вне этих мест не находится |
-| Анализирует на соответствие плейбуку и законодательству Польши | F3 | Карточки находок с блоком «Polish law · to verify» | Ссылка на норму за правилом плейбука, не анализ императивных норм; нормы не проверены юристом |
-| Генерирует отчёт → юрист проверяет отчёт | F4 | Лист договора + карточки, экспорт отчёта | Track changes в .docx — нет |
-| Есть красные флаги? | F4 | Блок «Your decision»: «ready for signing» / «send edits» | Продукт только считает флаги, решает юрист |
-| Новая версия — снова на проверку | F5 | «Upload new version» → Round 2 с блоком «Since round 1» | Track changes из .docx читаются как принятые |
+| TO-BE step | Feature | v0.2 screen | Limitation |
+|------------|---------|-------------|------------|
+| The lawyer uploads the file to the Product | F1 | Review → Upload (round 1) | — |
+| Masks identifiers, including names | F2 | Summary "Masked before analysis" | Names — by marker words, in the signature block and next to job titles; repeats, initials and grammatical cases get the same placeholder; a name outside these places is not found |
+| Analyses against the playbook and Polish legislation | F3 | Finding cards with a "Polish law · to verify" block | A reference to a provision behind a playbook rule, not an analysis of mandatory norms; provisions not verified by a lawyer |
+| Generates report → the lawyer reviews the report | F4 | Contract sheet + cards, report export | Track changes in .docx — no |
+| Any red flags? | F4 | "Your decision" block: "ready for signing" / "send edits" | The Product only counts flags, the lawyer decides |
+| New version — back to review | F5 | "Upload new version" → Round 2 with a "Since round 1" block | Track changes from .docx are read as accepted |
 
-Закрытые расхождения v0.1: маскирование ФИО (частично), нормы права Польши, шаг решения юриста; отдельная вкладка Compare убрана — сравнение стало частью раунда и использует находки того же режима (правила или Claude).
+Closed v0.1 divergences: name masking (partly), Polish legal provisions, the lawyer's decision step; the separate Compare tab was removed — comparison became part of the round and uses the findings of the same mode (rules or Claude).
 
-## 3. Компоненты v0.2
+## 3. v0.2 components
 
-| Компонент | Файл | Технология | Что делает |
-|-----------|------|------------|-----------|
-| Frontend | `app/static/` | HTML + CSS + JS без фреймворков | 2 вкладки: Review contract (раунды, решение юриста), Playbook |
-| Backend | `app/server.py` | Python 3.9+ стандартная библиотека (`http.server`) | REST API, без внешних пакетов |
-| Парсер | `app/engine/parser.py` | `zipfile` + XML | DOCX/TXT → пункты |
-| Маскирование | `app/engine/masking.py` | регулярные выражения | ФИО (маркеры, блок подписей, должности; одна метка на человека), e-mail, телефон, PESEL, NIP, KRS, IBAN → метки |
-| Проверка (demo) | `app/engine/rules.py` | правила на регулярных выражениях | 10 правил NDA, детерминированно |
-| Проверка (AI) | `app/engine/llm.py` | Claude API (`anthropic` SDK), structured output | Тот же плейбук, инструкции из `skills/nda-review/SKILL.md` |
-| Нормы права | `app/engine/__init__.py` | — | Добавляет к каждой находке `legal_basis` из плейбука (не из ответа модели) |
-| Раунды | `app/engine/compare.py` | `difflib` | Diff по пунктам + изменения рисков между находками прошлого и нового раунда |
-| Отчёт | `app/engine/report.py` | HTML для Word, Markdown | Решение юриста, изменения с прошлого раунда, правки для бизнеса, нормы права |
-| Плейбук | `app/playbooks/nda_pl.json` 0.2.0 | JSON | Правила компании + `legal_basis` |
-| Хранилище | — | — | v0.2 ничего не хранит: прошлый раунд живёт в браузере и передаётся в запросе |
+| Component | File | Technology | What it does |
+|-----------|------|------------|--------------|
+| Frontend | `app/static/` | HTML + CSS + JS, no frameworks | 2 tabs: Review contract (rounds, lawyer's decision), Playbook |
+| Backend | `app/server.py` | Python 3.9+ standard library (`http.server`) | REST API, no external packages |
+| Parser | `app/engine/parser.py` | `zipfile` + XML | DOCX/TXT → clauses |
+| Masking | `app/engine/masking.py` | regular expressions | Names (markers, signature block, job titles; one placeholder per person), e-mail, phone, PESEL, NIP, KRS, IBAN → placeholders |
+| Review (demo) | `app/engine/rules.py` | regular-expression rules | 10 NDA rules, deterministic |
+| Review (AI) | `app/engine/llm.py` | Claude API (`anthropic` SDK), structured output | The same playbook, instructions from `skills/nda-review/SKILL.md` |
+| Legal provisions | `app/engine/__init__.py` | — | Adds `legal_basis` from the playbook to each finding (not from the model's answer) |
+| Rounds | `app/engine/compare.py` | `difflib` | Clause-level diff + risk changes between the findings of the previous and the new round |
+| Report | `app/engine/report.py` | HTML for Word, Markdown | Lawyer's decision, changes since the previous round, edits for the business, legal provisions |
+| Playbook | `app/playbooks/nda_pl.json` 0.2.0 | JSON | Company rules + `legal_basis` |
+| Storage | — | — | v0.2 stores nothing: the previous round lives in the browser and is passed in the request |
 
-Решение о стеке: [ADR-0004](decisions/0004-prototype-stack.md).
+Decision on the stack: [ADR-0004](decisions/0004-prototype-stack.md).
 
-## 4. Поток данных (v0.2)
+## 4. Data flow (v0.2)
 
 ```mermaid
 sequenceDiagram
-    participant U as Юрист (браузер)
+    participant U as Lawyer (browser)
     participant S as server.py
     participant M as masking
     participant R as rules / llm
-    participant C as Claude API (опц.)
-    U->>S: POST /api/review (раунд 1: файл или текст)
-    S->>M: маскирование ФИО и идентификаторов
-    M-->>S: текст с метками [NAME_1], [EMAIL_1]…
-    S->>S: parser: текст → пункты
-    alt Claude-режим (есть ключ)
-        S->>C: пункты + плейбук + SKILL.md
-        C-->>S: JSON-находки
-    else Demo-режим
-        S->>R: rules.check(пункты, плейбук)
+    participant C as Claude API (opt.)
+    U->>S: POST /api/review (round 1: file or text)
+    S->>M: mask names and identifiers
+    M-->>S: text with placeholders [NAME_1], [EMAIL_1]…
+    S->>S: parser: text → clauses
+    alt Claude mode (key present)
+        S->>C: clauses + playbook + SKILL.md
+        C-->>S: JSON findings
+    else Demo mode
+        S->>R: rules.check(clauses, playbook)
     end
-    S->>S: нормы права (legal_basis) из плейбука
-    S-->>U: отчёт: пункты, находки, счётчики (ничего не сохраняется)
-    U->>U: юрист: Accept / Reject правок, «Есть красные флаги?»
-    U->>S: POST /api/export (отчёт, решения, verdict)
+    S->>S: legal provisions (legal_basis) from the playbook
+    S-->>U: report: clauses, findings, counters (nothing is stored)
+    U->>U: lawyer: Accept / Reject edits, "Any red flags?"
+    U->>S: POST /api/export (report, decisions, verdict)
     S-->>U: klauzula-report-roundN.doc / .md
-    U->>S: POST /api/review (новая версия + прошлый раунд)
-    S-->>U: отчёт раунда 2 + changes + risk_changes
+    U->>S: POST /api/review (new version + previous round)
+    S-->>U: round 2 report + changes + risk_changes
 ```
 
 ## 5. API
 
-| Метод | Путь | Вход | Выход |
-|-------|------|------|-------|
-| GET | `/api/status` | — | доступен ли Claude-режим, модель |
-| GET | `/api/playbook` | — | плейбук JSON с `legal_basis` |
-| GET | `/api/samples` | — | обезличенные образцы NDA |
-| POST | `/api/review` | `text` или `file_b64` + `filename`; опционально `previous` = `{round, clauses, findings}` | `round`, пункты, находки с `legal_basis`, счётчики, `red_flags`, что замаскировано; при `previous` — `changes`, `risk_changes` |
-| POST | `/api/export` | `review`, `decisions`, `verdict` (`sign` / `edits`), `format` (doc/md) | файл отчёта |
+| Method | Path | Input | Output |
+|--------|------|-------|--------|
+| GET | `/api/status` | — | whether Claude mode is available, model |
+| GET | `/api/playbook` | — | playbook JSON with `legal_basis` |
+| GET | `/api/samples` | — | anonymised NDA samples |
+| POST | `/api/review` | `text` or `file_b64` + `filename`; optionally `previous` = `{round, clauses, findings}` | `round`, clauses, findings with `legal_basis`, counters, `red_flags`, what was masked; with `previous` — `changes`, `risk_changes` |
+| POST | `/api/export` | `review`, `decisions`, `verdict` (`sign` / `edits`), `format` (doc/md) | report file |
 
-`/api/compare` удалён в v0.2: сравнение — часть `/api/review` с `previous`.
+`/api/compare` was removed in v0.2: comparison is part of `/api/review` with `previous`.
 
-## Связанные решения
-- [ADR-0003](decisions/0003-mvp-contract-type-nda.md) — тип договора NDA
-- [ADR-0004](decisions/0004-prototype-stack.md) — стек прототипа
-- [ADR-0007](decisions/0007-scope-v0-2-to-be-process.md) — объём v0.2 по процессу TO-BE
+## Related decisions
+- [ADR-0003](decisions/0003-mvp-contract-type-nda.md) — contract type NDA
+- [ADR-0004](decisions/0004-prototype-stack.md) — prototype stack
+- [ADR-0007](decisions/0007-scope-v0-2-to-be-process.md) — v0.2 scope per the TO-BE process

@@ -1,24 +1,24 @@
-# ADR-0002: Позиционирование — инструмент для юриста, Польша, компании с юристом
+# ADR-0002: Positioning — a tool for the lawyer, Poland, companies with a lawyer
 
-- Статус: accepted
-- Дата: 2026-11-24
+- Status: accepted
+- Date: 2026-11-24
 
-## Контекст
-Исследование Step 2 (v0.1.0) сравнило три сегмента и рекомендовало МСБ без юриста. После изучения результатов команда выбрала другое направление: у сегмента МСБ высокий риск «юридической консультации», низкая готовность платить и сильная конкуренция бесплатных AI-чатов.
+## Context
+The Step 2 research (v0.1.0) compared three segments and recommended SMEs without a lawyer. After reviewing the results, the team chose a different direction: the SME segment carries a high risk of "legal advice", low willingness to pay and strong competition from free AI chats.
 
-## Рассмотренные варианты
-1. AI-помощник для МСБ без юриста — объясняет риски простым языком (рекомендация v0.1.0).
-2. Инструмент, ускоряющий работу юриста в компаниях, которым нужно оптимизировать работу юриста.
-3. Инструмент для юридических фирм.
+## Options considered
+1. AI assistant for SMEs without a lawyer — explains risks in plain language (recommendation of v0.1.0).
+2. A tool that speeds up the lawyer's work in companies that need to optimise the lawyer's work.
+3. A tool for law firms.
 
-## Решение
-Вариант 2:
-- **Позиционирование:** инструмент, ускоряющий работу юриста (не замена юриста).
-- **Целевая страна:** Польша.
-- **Целевой клиент:** компании, у которых есть потребность оптимизировать работу юриста (штатного или внешнего на постоянном обслуживании); основной сегмент по исследованию — средние компании с 1–5 юристами.
+## Decision
+Option 2:
+- **Positioning:** a tool that speeds up the lawyer's work (not a replacement for the lawyer).
+- **Target country:** Poland.
+- **Target client:** companies that need to optimise the work of a lawyer (in-house, or external on a retainer); main segment per the research — mid-sized companies with 1–5 lawyers.
 
-## Последствия
-- Проще: ниже риск запрещённой юридической консультации — решение принимает юрист; пользователь может проверить результат AI.
-- Сложнее: прямая конкуренция с Wolters Kluwer (LEX Expert AI, Libra) и C.H.Beck (Beck-Noxtua); юрист — требовательный пользователь; нужны польское право, работа в Word и измеримая экономия времени.
-- Нужно: интервью с in-house юристами в Польше; выбор одного типа договоров; плейбук компании; требования GDPR/DPO к хранению договоров.
-- Затронутые документы: `07_research.md` (v0.2.0), `00_overview.md`.
+## Consequences
+- Easier: lower risk of unauthorised legal advice — the lawyer makes the decision; the user can verify the AI's result.
+- Harder: direct competition with Wolters Kluwer (LEX Expert AI, Libra) and C.H.Beck (Beck-Noxtua); lawyers are demanding users; Polish law, work in Word and measurable time savings are required.
+- Needed: interviews with in-house lawyers in Poland; choice of one contract type; company playbook; GDPR/DPO requirements for contract storage.
+- Affected documents: `07_research.md` (v0.2.0), `00_overview.md`.

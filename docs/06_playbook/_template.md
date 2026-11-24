@@ -1,17 +1,17 @@
 ---
-title: Плейбук: шаблон
-version: 0.1.0
+title: "Playbook: template"
+version: 0.1.1
 status: draft
 owner: TBD
-updated: 2026-11-22
+updated: 2026-11-24
 ---
 
-# Плейбук проверки договора: <тип договора>
+# Contract review playbook: <contract type>
 
-Скопируйте этот файл как <тип>.md (например, nda.md).
+Copy this file as <type>.md (for example, nda.md).
 
-| Пункт договора | Стандартная позиция | Допустимые отклонения | Красный флаг | Рекомендуемая правка |
-|----------------|---------------------|-----------------------|--------------|----------------------|
-| Срок действия | | | | |
-| Ограничение ответственности | | | | |
-| Применимое право | | | | |
+| Contract clause | Standard position | Acceptable deviations | Red flag | Recommended edit |
+|-----------------|-------------------|-----------------------|----------|------------------|
+| Term | | | | |
+| Limitation of liability | | | | |
+| Governing law | | | | |

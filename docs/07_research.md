@@ -1,237 +1,237 @@
 ---
-title: Research — проблема, пользователи, конкуренты (Project Step 2)
-version: 0.3.0
+title: Research — problem, users, competitors (Project Step 2)
+version: 0.3.1
 status: draft
 owner: TBD
 updated: 2026-11-24
 ---
 
-# Research: AI_lawyer — инструмент, ускоряющий работу юриста с договорами
+# Research: AI_lawyer — a tool that speeds up the lawyer's work with contracts
 
-**Трек:** Startup  **Целевая страна:** Польша (контекст — рынок ЕС)  **Дата исследования:** 23–24.11.2026
-**Метод:** поиск через AI-инструмент, подключённый к поисковой системе; каждая цифра ниже помечена по степени надёжности источника (см. раздел 5).
+**Track:** Startup  **Target country:** Poland (context — the EU market)  **Research date:** 23–24.11.2026
+**Method:** search through an AI tool connected to a search engine; every figure below is marked by the reliability of its source (see section 5).
 
-> **Что изменилось в версии 0.2.0.** Команда приняла три вводные ([ADR-0002](decisions/0002-positioning-poland-in-house.md)):
-> 1. продукт — **инструмент, ускоряющий работу юриста**, а не замена юриста для неюристов;
-> 2. целевая страна — **Польша**;
-> 3. целевой клиент — **компании, которым нужно оптимизировать работу юриста** (штатного или внешнего на постоянном обслуживании).
+> **What changed in version 0.2.0.** The team adopted three inputs ([ADR-0002](decisions/0002-positioning-poland-in-house.md)):
+> 1. the product is a **tool that speeds up the lawyer's work**, not a replacement for the lawyer for non-lawyers;
+> 2. the target country is **Poland**;
+> 3. the target client is **companies that need to optimise the lawyer's work** (in-house, or external on a retainer).
 >
-> Поэтому сегмент «МСБ без юриста», рекомендованный в версии 0.1.0, больше не целевой. Анализ проблемы, конкурентов, рисков и выводы пересмотрены под новые вводные; добавлены польские конкуренты для юристов (Wolters Kluwer, C.H.Beck).
+> Therefore the "SMEs without a lawyer" segment recommended in version 0.1.0 is no longer a target. The analysis of the problem, competitors, risks and the conclusions were revised for the new inputs; Polish competitors for lawyers (Wolters Kluwer, C.H.Beck) were added.
 
 ---
 
-## 1. Проблема
+## 1. Problem
 
-Юрист компании тратит значительную часть времени на однотипную проверку входящих договоров (NDA, поставки, услуги B2B). Бизнес ждёт согласования, юрист становится «узким горлом», а договоры с плохими условиями всё равно проходят.
+A company lawyer spends a large share of their time on repetitive review of incoming contracts (NDAs, supply, B2B services). The business waits for approval, the lawyer becomes a bottleneck, and contracts with bad terms still get through.
 
-- В среднем компании теряют **около 8,6–9% годовой выручки** из-за слабого управления договорами; лучшие — около 3%, худшие — 15% и больше (World Commerce & Contracting, 2025, по вторичным публикациям). ⚠️ Средняя надёжность: цифру публикуют вендоры CLM-систем.
-- Юристы уже массово пробуют AI: **более 92%** опрошенных юристов используют хотя бы один AI-инструмент в ежедневной работе (опрос Wolters Kluwer: 810 юристов фирм и юротделов в США, Китае и 9 странах Европы). ⚠️ Опрос вендора, отдельных данных по Польше нет.
-- Руководители юридических функций крупных компаний подчёркивают, что внедрять AI в юротделах нужно очень осторожно из-за чувствительности данных (EY Law General Counsel Study 2025, 1 000 руководителей юрфункций компаний с выручкой > $1 млрд). → Требование к продукту: конфиденциальность и контроль данных.
-- **Размер пула юристов в Польше:** около **42,7 тыс. практикующих radców prawnych** (из 55,8 тыс. внесённых в списки) и **22,9 тыс. практикующих адвокатов** — по ответу на депутатский запрос, данные на июнь 2025. Radca prawny — основная профессия юристов, работающих в штате компаний (по трудовому договору). ⚠️ Сколько из них работает in-house, найти не удалось.
+- On average companies lose **about 8.6–9% of annual revenue** due to weak contract management; the best lose about 3%, the worst 15% or more (World Commerce & Contracting, 2025, via secondary publications). ⚠️ Medium reliability: the figure is published by CLM vendors.
+- Lawyers are already trying AI en masse: **more than 92%** of surveyed lawyers use at least one AI tool in daily work (Wolters Kluwer survey: 810 lawyers from law firms and legal departments in the USA, China and 9 European countries). ⚠️ Vendor survey, no separate data for Poland.
+- Heads of legal functions at large companies stress that AI in legal departments must be introduced very carefully because of data sensitivity (EY Law General Counsel Study 2025, 1,000 heads of legal at companies with revenue > $1 billion). → Product requirement: confidentiality and control of data.
+- **Size of the lawyer pool in Poland:** about **42.7 thousand practising radcy prawni** (of 55.8 thousand on the registers) and **22.9 thousand practising advocates (adwokaci)** — per a reply to a parliamentary interpellation, data as of June 2025. Radca prawny is the main profession of lawyers employed by companies (under an employment contract). ⚠️ How many of them work in-house could not be found.
 
-**Вывод:** боль «юрист не успевает, договоры проверяются медленно или поверхностно» реальна, и юристы готовы пользоваться AI. Но польских данных о времени юриста на один договор и о доле in-house юристов нет — этот пробел надо закрыть интервью.
+**Conclusion:** the pain "the lawyer cannot keep up, contracts are reviewed slowly or superficially" is real, and lawyers are ready to use AI. But there are no Polish data on a lawyer's time per contract or on the share of in-house lawyers — this gap must be closed with interviews.
 
-## 2. Целевой клиент: сегменты
+## 2. Target client: segments
 
-### 2.1 Кто покупает и кто пользуется
+### 2.1 Who buys and who uses
 
-| Роль | Кто это | Что важно |
+| Role | Who | What matters |
 |---|---|---|
-| **Пользователь** | In-house юрист (radca prawny / prawnik) | Быстрее проверить договор, не потерять качество, работать в Word |
-| **Покупатель** | Head of Legal / General Counsel, в небольших компаниях — CFO или CEO | Снижение нагрузки на юриста без найма, измеримая экономия времени |
-| **Выгодоприобретатель** | Продажи, закупки | Договор согласуется быстрее |
-| **Контролёр** | IT / безопасность / DPO | Где хранятся данные, обучается ли модель на договорах |
+| **User** | In-house lawyer (radca prawny / prawnik) | Review a contract faster without losing quality, work in Word |
+| **Buyer** | Head of Legal / General Counsel; in small companies — CFO or CEO | Lower workload for the lawyer without hiring, measurable time savings |
+| **Beneficiary** | Sales, procurement | The contract is approved faster |
+| **Controller** | IT / security / DPO | Where data is stored, whether the model is trained on contracts |
 
-### 2.2 Сравнение сегментов компаний
+### 2.2 Comparison of company segments
 
-| Критерий | **Средние компании с 1–5 юристами** (основной) | Крупные компании с юротделом | Компании с внешним юристом на абонементе | МСБ без юриста (было в v0.1.0) |
+| Criterion | **Mid-sized companies with 1–5 lawyers** (main) | Large companies with a legal department | Companies with an external lawyer on retainer | SMEs without a lawyer (was in v0.1.0) |
 |---|---|---|---|---|
-| Боль | Юрист перегружен однотипными договорами, нанять ещё одного дорого | Большой поток договоров, нужны стандарты и контроль | Каждая проверка — оплачиваемые часы | Не понимают риски |
-| Кто уже обслуживает | LEX / Libra, Beck-Noxtua, VAI Legal, ChatGPT/Claude | Luminance, LEGALFLY, Legartis, Legora, Libra | Сам внешний юрист со своими инструментами | ChatGPT/Claude, шаблоны |
-| Готовность платить | Средняя: есть бюджет на правовые базы (LEX/Legalis) | Высокая, но долгие продажи и тендеры | Низкая: экономию получает юрфирма | Низкая |
-| Риск «юридической консультации» | Низкий: решение принимает юрист | Низкий | Низкий | Высокий |
-| Доступ для студенческой команды | Средний: сеть Kozminski, LinkedIn | Сложный | Средний | Лёгкий |
-| Соответствие вводным | ✅ Полное | ✅, но рынок занят | Частичное | ❌ Не соответствует |
+| Pain | The lawyer is overloaded with repetitive contracts, hiring another is expensive | Large flow of contracts, standards and control needed | Every review is billable hours | Do not understand the risks |
+| Already served by | LEX / Libra, Beck-Noxtua, VAI Legal, ChatGPT/Claude | Luminance, LEGALFLY, Legartis, Legora, Libra | The external lawyer with their own tools | ChatGPT/Claude, templates |
+| Willingness to pay | Medium: there is a budget for legal databases (LEX/Legalis) | High, but long sales cycles and tenders | Low: the savings go to the law firm | Low |
+| Risk of "legal advice" | Low: the lawyer decides | Low | Low | High |
+| Access for a student team | Medium: Kozminski network, LinkedIn | Difficult | Medium | Easy |
+| Fit with the inputs | ✅ Full | ✅, but the market is taken | Partial | ❌ Does not fit |
 
-**Рекомендация:** основной сегмент — **польские средние компании с небольшой юридической функцией (1–5 юристов)**, у которых высокий поток **одного типа договоров** (например, NDA или договоры услуг/поставки B2B). Крупные юротделы — следующий этап, когда будет доказана экономия времени. Юрфирмы в текущие вводные не входят.
+**Recommendation:** the main segment is **Polish mid-sized companies with a small legal function (1–5 lawyers)** that have a high flow of **one type of contract** (for example NDAs or B2B services/supply agreements). Large legal departments are the next stage, once time savings are proven. Law firms are not part of the current inputs.
 
-## 3. Конкуренты и отзывы клиентов
+## 3. Competitors and customer reviews
 
-### 3.1 Польский рынок — прямые конкуренты
+### 3.1 Polish market — direct competitors
 
-| Компания / продукт | Кто стоит | Для кого | Что делает | Надёжность данных |
+| Company / product | Behind it | For whom | What it does | Data reliability |
 |---|---|---|---|---|
-| **LEX Expert AI + Libra** | Wolters Kluwer Polska | Юрфирмы и юротделы | AI-чат по польскому праву внутри базы LEX; Libra — рабочее пространство юриста (research, drafting, review), свои AI-ассистенты команды, надстройки для Word и Outlook. С мая 2026 — расширенный анализ договоров. Бесплатный пробный доступ. В августе 2026 Libra выбрала CRIDO | Низкая–средняя: пресс-релизы вендора |
-| **Beck-Noxtua** | Noxtua + Wydawnictwo C.H.Beck (Legalis) | Юристы | AI-рабочее пространство с ответами со ссылками на контент Legalis; запуск в Польше заявлен на весну 2026 | Низкая: факт запуска не подтверждён |
-| **VAI Legal** | Стартап | Юристы, компании | Анализ договоров по польскому праву, оценка рисков, правки в Word | Низкая: сайт компании |
-| **Gaius-Lex** | Стартап | Юристы | «Суверенный» AI для польского и европейского права, данные в ЕЭЗ | Низкая: сайт компании |
-| **LexTool** | Стартап | Юристы | Помощник по документам, от 249 zł нетто в месяц | Низкая: сайт компании |
+| **LEX Expert AI + Libra** | Wolters Kluwer Polska | Law firms and legal departments | AI chat on Polish law inside the LEX database; Libra — the lawyer's workspace (research, drafting, review), team-specific AI assistants, Word and Outlook add-ins. Since May 2026 — extended contract analysis. Free trial access. In August 2026 Libra was chosen by CRIDO | Low–medium: vendor press releases |
+| **Beck-Noxtua** | Noxtua + Wydawnictwo C.H.Beck (Legalis) | Lawyers | AI workspace with answers linked to Legalis content; launch in Poland announced for spring 2026 | Low: launch not confirmed |
+| **VAI Legal** | Startup | Lawyers, companies | Contract analysis under Polish law, risk assessment, edits in Word | Low: company website |
+| **Gaius-Lex** | Startup | Lawyers | "Sovereign" AI for Polish and European law, data in the EEA | Low: company website |
+| **LexTool** | Startup | Lawyers | Document assistant, from 249 zł net per month | Low: company website |
 
-**Ключевой вывод по Польше:** главные конкуренты — **издатели правовых баз (Wolters Kluwer, C.H.Beck)**. Юротделы уже платят им за LEX или Legalis, поэтому AI-функции продаются как дополнение к знакомому продукту, с готовыми продажами и доверием. Новому продукту придётся объяснять, почему его стоит купить в дополнение к ним.
+**Key conclusion for Poland:** the main competitors are **legal database publishers (Wolters Kluwer, C.H.Beck)**. Legal departments already pay them for LEX or Legalis, so AI features are sold as an add-on to a familiar product, with ready sales and trust. A new product will have to explain why it is worth buying in addition to them.
 
-### 3.2 Европейские игроки (для юротделов)
+### 3.2 European players (for legal departments)
 
-| Компания | Страна | Для кого | Что делает | Масштаб |
+| Company | Country | For whom | What it does | Scale |
 |---|---|---|---|---|
-| **Legora** | Швеция | Юрфирмы, крупные юротделы | Универсальная AI-платформа для юристов | Series E €489 млн, оценка ~€7,8 млрд (окт. 2026) |
-| **Luminance** | Великобритания | Крупные компании | Проверка и автоматические переговоры по договорам | Series C $75 млн, клиенты в 70+ странах |
-| **LEGALFLY** | Бельгия | Юротделы компаний | Проверка договоров по правилам компании | ~€17 млн (seed + Series A €15 млн) |
-| **Legartis** | Швейцария | Юротделы, закупки | Проверка входящих договоров по плейбуку компании, 150+ типов пунктов | Данные о финансировании не найдены |
-| **Juro** | Великобритания | Растущие компании | Управление договорами (CLM) с AI | — |
+| **Legora** | Sweden | Law firms, large legal departments | General-purpose AI platform for lawyers | Series E €489 million, valuation ~€7.8 billion (Oct 2026) |
+| **Luminance** | United Kingdom | Large companies | Contract review and automated negotiation | Series C $75 million, clients in 70+ countries |
+| **LEGALFLY** | Belgium | Corporate legal departments | Contract review against company rules | ~€17 million (seed + Series A €15 million) |
+| **Legartis** | Switzerland | Legal departments, procurement | Review of incoming contracts against the company playbook, 150+ clause types | No funding data found |
+| **Juro** | United Kingdom | Growing companies | Contract management (CLM) with AI | — |
 
-**Универсальные AI-ассистенты.** В феврале 2026 Anthropic выпустила open-source плагин для проверки договоров в Claude, в мае 2026 — **Claude for Legal** с 12 плагинами. Плагин проверяет договор по плейбуку команды и даёт ссылку на пункт, риск и вариант правки. Для юриста это сильная альтернатива: он сам может проверить результат. Ограничения для компаний: политика безопасности данных и отсутствие польской правовой базы «из коробки».
+**General-purpose AI assistants.** In February 2026 Anthropic released an open-source contract review plugin for Claude, and in May 2026 — **Claude for Legal** with 12 plugins. The plugin reviews a contract against the team's playbook and gives a reference to the clause, the risk and an edit option. For a lawyer this is a strong alternative: they can verify the result themselves. Limitations for companies: data security policy and the absence of a Polish legal base out of the box.
 
-### 3.3 Что говорят клиенты
+### 3.3 What customers say
 
-| Продукт | Рейтинги | Что хвалят | На что жалуются |
+| Product | Ratings | What they praise | What they complain about |
 |---|---|---|---|
-| **Juro** | G2 4,5 (~180–240 отзывов); Capterra — 48 отзывов | Простота, поддержка, надстройка для Word | Слабые правки и переговоры, перенос форматирования из Word, отчёты; AI-функции «средние» (7,7–7,8 из 10 на G2) — подробнее ниже |
-| **Luminance** | Gartner 4,6 (31 отзыв) | Автоматизация проверки, поддержка | Очень дорого, только для крупных компаний, долгое внедрение, нужно обучение |
-| **Genie AI** | G2 4,4–4,6; Capterra 4,5 | Простота, скорость первого черновика | Хуже со сложными договорами; форматирование |
-| **LEGALFLY** | Независимых отзывов нет | Отзыв клиента (ECS): проверка транспортных договоров по своим условиям | «−60% времени» — заявление компании |
-| **Legartis** | Независимых отзывов нет | — | «До 85% быстрее» — маркетинг |
-| **Libra, LEX Expert AI, Beck-Noxtua** | Независимых отзывов не найдено | — | — |
+| **Juro** | G2 4.5 (~180–240 reviews); Capterra — 48 reviews | Simplicity, support, Word add-in | Weak edits and negotiation, transfer of Word formatting, reports; AI features "average" (7.7–7.8 out of 10 on G2) — details below |
+| **Luminance** | Gartner 4.6 (31 reviews) | Review automation, support | Very expensive, only for large companies, long implementation, training needed |
+| **Genie AI** | G2 4.4–4.6; Capterra 4.5 | Simplicity, speed of the first draft | Worse with complex contracts; formatting |
+| **LEGALFLY** | No independent reviews | Customer testimonial (ECS): review of transport contracts against its own terms | "−60% time" — the company's claim |
+| **Legartis** | No independent reviews | — | "Up to 85% faster" — marketing |
+| **Libra, LEX Expert AI, Beck-Noxtua** | No independent reviews found | — | — |
 
-**Juro: каких функций не хватает (по отзывам)**
+**Juro: which features are missing (per reviews)**
 
-| Чего не хватает | Что пишут пользователи | Где |
+| What is missing | What users write | Where |
 |---|---|---|
-| **Правки и переговоры (redlining)** | Правку контрагента можно только принять или отклонить целиком, нельзя внести правку поверх правки; в нескольких раундах переговоров неясно, кто что изменил. Самая частая жалоба в теме «Missing Features» (~8–10 отзывов) | [G2, стр. 2](https://g2.com/products/juro/reviews?page=2), [G2, стр. 3](https://g2.com/products/juro/reviews?page=3), [Oneflow (конкурент)](https://oneflow.com/uk/blog/juro-reviews/) |
-| **Форматирование из Word** | Форматирование не всегда корректно переносится из Word; ограничена настройка таблиц, сложной вёрстки и условного форматирования | [G2](https://www.g2.com/products/juro/reviews), [Capterra](https://www.capterra.com/p/167130/Juro/) |
-| **Отчёты и аналитика** | Отчёты ограничены; чтобы выгрузить детальные метрики (длительность согласования, риски по пунктам), нужна ручная работа или API | [Capterra](https://www.capterra.com/p/167130/Juro/), [GetApp](https://www.getapp.com/operations-management-software/a/juro/reviews/), [ContractSafe (конкурент)](https://www.contractsafe.com/contractsafe-vs-juro-comparison) |
-| **Настройка** | Сложно менять договор после отправки контрагенту; неудобно переиспользовать шаблоны в разных рабочих пространствах; тема «Limited Customization» (~5 отзывов) | [G2](https://www.g2.com/products/juro/reviews), [Capterra](https://www.capterra.com/p/167130/Juro/) |
-| **Интеграции** | Нет интеграции с Microsoft Teams; часть интеграций — только через Zapier | [G2](https://www.g2.com/products/juro/reviews), [PandaDoc (конкурент)](https://pandadoc.com/blog/juro-review) |
+| **Edits and negotiation (redlining)** | The counterparty's edit can only be accepted or rejected as a whole, you cannot make an edit on top of an edit; over several negotiation rounds it is unclear who changed what. The most frequent complaint under "Missing Features" (~8–10 reviews) | [G2, p. 2](https://g2.com/products/juro/reviews?page=2), [G2, p. 3](https://g2.com/products/juro/reviews?page=3), [Oneflow (competitor)](https://oneflow.com/uk/blog/juro-reviews/) |
+| **Formatting from Word** | Formatting is not always transferred correctly from Word; limited customisation of tables, complex layout and conditional formatting | [G2](https://www.g2.com/products/juro/reviews), [Capterra](https://www.capterra.com/p/167130/Juro/) |
+| **Reports and analytics** | Reports are limited; to export detailed metrics (approval duration, risks per clause) manual work or the API is needed | [Capterra](https://www.capterra.com/p/167130/Juro/), [GetApp](https://www.getapp.com/operations-management-software/a/juro/reviews/), [ContractSafe (competitor)](https://www.contractsafe.com/contractsafe-vs-juro-comparison) |
+| **Customisation** | Hard to change a contract after it was sent to the counterparty; inconvenient to reuse templates across workspaces; "Limited Customization" topic (~5 reviews) | [G2](https://www.g2.com/products/juro/reviews), [Capterra](https://www.capterra.com/p/167130/Juro/) |
+| **Integrations** | No Microsoft Teams integration; some integrations only via Zapier | [G2](https://www.g2.com/products/juro/reviews), [PandaDoc (competitor)](https://pandadoc.com/blog/juro-review) |
 
-⚠️ Средняя надёжность: G2 закрыт для автоматической загрузки, поэтому данные взяты из фрагментов страниц отзывов в поиске; число отзывов по темам отличается между страницами. Обзоры Oneflow, ContractSafe и PandaDoc написаны конкурентами Juro.
+⚠️ Medium reliability: G2 is closed to automated download, so the data comes from review page snippets in search; the number of reviews per topic differs between pages. The Oneflow, ContractSafe and PandaDoc reviews were written by Juro's competitors.
 
-**Что это значит для AI_lawyer:** юристам важны удобные правки в переговорах и работа прямо в Word без потери форматирования — это подтверждает выбор «работа в Word, правки в режиме исправлений». Отчёт о времени согласования — возможная функция для покупателя (руководителя юрфункции).
+**What this means for AI_lawyer:** lawyers value convenient edits in negotiations and working directly in Word without losing formatting — this supports the choice of "work in Word, edits as track changes". A report on approval time is a possible feature for the buyer (head of legal).
 
-**Что видно по отзывам:** юротделы ценят простоту, скорость и настройку под свои правила; жалуются на цену и долгое внедрение enterprise-решений. Для средних компаний это окно: быстрое внедрение и понятная цена.
+**What the reviews show:** legal departments value simplicity, speed and customisation to their own rules; they complain about price and long implementation of enterprise solutions. For mid-sized companies this is a window: fast implementation and a clear price.
 
-### 3.4 Польша: что говорят юристы
+### 3.4 Poland: what lawyers say
 
-**Отзывы о польских продуктах.** Независимых отзывов клиентов о польских AI-инструментах для юристов найти не удалось:
+**Reviews of Polish products.** No independent customer reviews of Polish AI tools for lawyers could be found:
 
-| Продукт | Что нашлось | Источник |
+| Product | What was found | Source |
 |---|---|---|
-| **LEX Expert AI** | Только материалы вендора: продукт тестировали юристы и radcowie prawni до запуска; интервью с проф. Марцином Дзюрдой (radca prawny), которого инструмент, по его словам, положительно удивил | [Wolters Kluwer](https://www.wolterskluwer.com/pl-pl/solutions/lex/expert-ai/dlaczego-lex-expert-ai) |
-| **Libra** | Крупнейший названный клиент — CRIDO (~200 юристов и консультантов, консалтинговая компания, не юротдел); отзывов юротделов нет | [Wolters Kluwer](https://www.wolterskluwer.com/pl-pl/news/crido-wybiera-libre-od-wolters-kluwer-jako-nowe-srodowisko-pracy-ai), [prawo.pl](https://www.prawo.pl/prawnicy-sady/libra-nowy-ai-ulatwiajacy-prace-prawnikow,1537789.html) |
-| **Gaius-Lex** | Карточки на G2, Capterra, GetApp есть, отзывов нет (на GetApp — 0) | [GetApp](https://www.getapp.com/all-software/a/gaius-lex/), [G2](https://www.g2.com/products/gaius-lex/reviews) |
-| **VAI Legal, LexTool, Beck-Noxtua** | Отзывов не найдено | — |
+| **LEX Expert AI** | Only vendor materials: the product was tested by lawyers and radcowie prawni before launch; an interview with Prof. Marcin Dziurda (radca prawny), who, by his account, was pleasantly surprised by the tool | [Wolters Kluwer](https://www.wolterskluwer.com/pl-pl/solutions/lex/expert-ai/dlaczego-lex-expert-ai) |
+| **Libra** | The largest named client is CRIDO (~200 lawyers and consultants, a consulting company, not a legal department); no legal department reviews | [Wolters Kluwer](https://www.wolterskluwer.com/pl-pl/news/crido-wybiera-libre-od-wolters-kluwer-jako-nowe-srodowisko-pracy-ai), [prawo.pl](https://www.prawo.pl/prawnicy-sady/libra-nowy-ai-ulatwiajacy-prace-prawnikow,1537789.html) |
+| **Gaius-Lex** | Listings on G2, Capterra, GetApp exist, no reviews (0 on GetApp) | [GetApp](https://www.getapp.com/all-software/a/gaius-lex/), [G2](https://www.g2.com/products/gaius-lex/reviews) |
+| **VAI Legal, LexTool, Beck-Noxtua** | No reviews found | — |
 
-**Что польские юристы говорят в опросах**
+**What Polish lawyers say in surveys**
 
-| Исследование | Кто опрошен | Ключевые данные |
+| Study | Who was surveyed | Key data |
 |---|---|---|
-| **Raport Rynku Prawniczego 2025/2026** (Supesu Recruitment, янв.–март 2026) | 507 юристов юрфирм и **юротделов** | ~88% используют AI-инструменты; самые популярные — **общие**: ChatGPT (~63%), Copilot (56%), DeepL (51%); почти каждый второй говорит о выгорании |
-| **Опрос Fundacji SET и Logit** | Адвокаты и radcowie prawni | 52,5% уже используют AI (22,5% — интенсивно), ещё 32,5% планируют. Опасения: **безопасность и конфиденциальность данных — 81%**, **ошибки AI — 75,9%**, профессиональная ответственность — 44,3%. **36,3% не знают ни одного** специализированного AI-инструмента для юристов на польском рынке («shadow AI») |
-| **In-House Lawyer Innovation Forum 2025** (Варшава, 30.09.2025, организатор — Wolters Kluwer) | ~120–130 руководителей юротделов | Панель «AI в юротделе»: вопрос уже не «нужно ли», а «как». Главные темы: безопасность данных и где стоят серверы, бесконтрольное использование AI сотрудниками компании |
+| **Raport Rynku Prawniczego 2025/2026** (Supesu Recruitment, Jan–Mar 2026) | 507 lawyers from law firms and **legal departments** | ~88% use AI tools; the most popular are **general-purpose**: ChatGPT (~63%), Copilot (56%), DeepL (51%); almost every second respondent mentions burnout |
+| **Survey by Fundacja SET and Logit** | Advocates and radcowie prawni | 52.5% already use AI (22.5% intensively), another 32.5% plan to. Concerns: **data security and confidentiality — 81%**, **AI errors — 75.9%**, professional liability — 44.3%. **36.3% know none** of the specialised AI tools for lawyers on the Polish market ("shadow AI") |
+| **In-House Lawyer Innovation Forum 2025** (Warsaw, 30.09.2025, organiser — Wolters Kluwer) | ~120–130 heads of legal departments | Panel "AI in the legal department": the question is no longer "whether" but "how". Main topics: data security and where the servers are, uncontrolled use of AI by company employees |
 
-⚠️ Надёжность: Supesu и SET/Logit — средняя (независимые организации, но методику полностью не проверяли; данные по юротделам отдельно не выделены). Форум и материалы о продуктах — низкая–средняя: источник — Wolters Kluwer, продавец конкурирующих решений.
+⚠️ Reliability: Supesu and SET/Logit — medium (independent organisations, but the methodology was not fully checked; data for legal departments are not separated). The forum and product materials — low–medium: the source is Wolters Kluwer, a seller of competing solutions.
 
-**Что это значит для AI_lawyer:**
-1. **Юристы в Польше уже пользуются AI, но в основном общими инструментами** (ChatGPT, Copilot) — это и главный конкурент, и признак спроса.
-2. **Главное возражение — данные, а не качество текста:** 81% опасаются за конфиденциальность. Хранение в ЕС, отказ от обучения на договорах и понятная политика данных — обязательное условие продажи.
-3. **Рынок специализированных инструментов слабо известен** (36% не знают ни одного) — есть место для нового игрока, но придётся вкладываться в узнаваемость.
-4. **Публичных отзывов польских юротделов нет** — их нужно получить самим через 5–10 интервью; данные опросов дают гипотезы для вопросов.
+**What this means for AI_lawyer:**
+1. **Lawyers in Poland already use AI, but mostly general-purpose tools** (ChatGPT, Copilot) — this is both the main competitor and a sign of demand.
+2. **The main objection is data, not text quality:** 81% worry about confidentiality. EU storage, no training on contracts and a clear data policy are a mandatory condition of sale.
+3. **The market of specialised tools is poorly known** (36% know none) — there is room for a new player, but investment in awareness will be needed.
+4. **There are no public reviews from Polish legal departments** — we must obtain them ourselves through 5–10 interviews; the survey data give hypotheses for the questions.
 
 
-## 4. Самые сильные аргументы против идеи
+## 4. The strongest arguments against the idea
 
-1. **Функция становится стандартной.** Claude for Legal, ChatGPT, Libra уже проверяют договоры. Если продукт — «LLM + промт», его легко повторить.
-2. **Сильные местные игроки с готовыми клиентами.** Wolters Kluwer и C.H.Beck продают AI тем же юротделам, которые уже платят им за правовые базы. Глобально рынок занят хорошо финансируемыми компаниями, и даже они проигрывают: британский **Robin AI** в 2025 не смог привлечь раунд, сократил персонал и был продан по частям.
-3. **Юрист — требовательный пользователь.** Если инструмент ошибается или даёт «воду», юрист быстро перестаёт им пользоваться: проверить самому быстрее, чем перепроверять AI. Известно более 1 300 судебных дел с выдуманными AI ссылками (апрель 2026) — юристы знают этот риск и относятся к AI скептически.
-4. **Конфиденциальность и долгие продажи в компании.** Договоры — чувствительные данные; нужны проверка IT/безопасности, DPO, договор поручения обработки данных (GDPR), иногда юридическая тайна. Это удлиняет продажу даже для средних компаний.
-5. **Нужны знания польского права.** Качественная проверка требует польской правовой базы и практики; у издателей она есть, у стартапа — нет.
-6. **Экономию времени надо доказать цифрами.** Покупатель (GC, CFO) платит за сэкономленные часы юриста; без измеримого результата продукт — «ещё одна подписка».
+1. **The feature becomes standard.** Claude for Legal, ChatGPT, Libra already review contracts. If the product is "LLM + prompt", it is easy to copy.
+2. **Strong local players with ready customers.** Wolters Kluwer and C.H.Beck sell AI to the same legal departments that already pay them for legal databases. Globally the market is occupied by well-funded companies, and even they lose: the British **Robin AI** failed to raise a round in 2025, cut staff and was sold off in parts.
+3. **The lawyer is a demanding user.** If the tool makes mistakes or produces filler, the lawyer quickly stops using it: it is faster to check yourself than to double-check the AI. There are more than 1,300 court cases with AI-invented citations (April 2026) — lawyers know this risk and are sceptical about AI.
+4. **Confidentiality and long sales cycles in the company.** Contracts are sensitive data; IT/security review, a DPO, a data processing agreement (GDPR) and sometimes legal privilege are needed. This lengthens the sale even for mid-sized companies.
+5. **Knowledge of Polish law is needed.** Quality review requires a Polish legal base and practice; publishers have them, a startup does not.
+6. **Time savings must be proven with numbers.** The buyer (GC, CFO) pays for the lawyer's saved hours; without a measurable result the product is "yet another subscription".
 
-**Что ослабло по сравнению с v0.1.0:** риск запрещённой юридической консультации стал ниже — решение принимает юрист. В Польше закрепленными за адвокатами и radcami prawnymi являются в основном представительство в суде и органах; общая правовая помощь вне этих рамок прямо не запрещена другим лицам (по юридическим публикациям). ⚠️ Нужно проверить по тексту законов.
+**What weakened compared with v0.1.0:** the risk of unauthorised legal advice is lower — the lawyer decides. In Poland what is reserved for advocates and radcowie prawni is mainly representation in courts and authorities; general legal assistance outside this scope is not expressly forbidden to other persons (per legal publications). ⚠️ To be verified in the text of the statutes.
 
-**Что можно противопоставить:**
-- **Плейбук компании**, а не общий AI: проверка по правилам и позициям конкретного юротдела, одобренным его юристом.
-- **Работа в Word** и экспорт правок в режиме исправлений — без новой системы.
-- **Один тип договоров с высоким потоком** и измеримая метрика: минут на договор до и после.
-- **Каждое замечание со ссылкой на текст договора** — юрист проверяет быстро.
-- **Хранение данных в ЕС**, без обучения модели на договорах клиента.
+**What can be set against this:**
+- **The company playbook**, not a general AI: review against the rules and positions of a specific legal department, approved by its lawyer.
+- **Work in Word** and export of edits as track changes — no new system.
+- **One contract type with a high flow** and a measurable metric: minutes per contract before and after.
+- **Every comment linked to the contract text** — the lawyer verifies quickly.
+- **Data stored in the EU**, no model training on the client's contracts.
 
-## 5. Проверка источников
+## 5. Source check
 
-| Утверждение | Источник | Надёжность |
+| Claim | Source | Reliability |
 |---|---|---|
-| Раунд Legora €489 млн | EU-Startups, Startup in Europe | Высокая (несколько СМИ) |
-| Распад Robin AI | Legal Cheek, Sifted, Artificial Lawyer, Law360 | Высокая |
-| Claude for Legal, май 2026 | ABA Journal, TechCrunch, LawNext | Высокая |
-| Дела с «галлюцинациями» AI | База D. Charlotin, Stanford CIS, NPR | Высокая (по словам автора — занижено) |
-| Число radców prawnych и адвокатов (июнь 2025) | Ответ на депутатский запрос (api.sejm.gov.pl) | Высокая (официальный документ), но доля in-house неизвестна |
-| Осторожность GC при внедрении AI | EY Law General Counsel Study 2025 | Средняя: консалтинговая компания, крупные компании, не только Польша |
-| 92% юристов используют AI | Wolters Kluwer через prawo.pl | Низкая–средняя: опрос вендора, Польша отдельно не выделена |
-| Libra: анализ договоров, Word/Outlook, CRIDO | Пресс-релизы Wolters Kluwer, prawo.pl | Низкая–средняя: сведения вендора |
-| Beck-Noxtua в Польше | Пресс-релиз Noxtua | Низкая: запуск не подтверждён |
-| Правовая помощь вне представительства не закреплена за профессиями | Palestra (2022), e-prawnik.pl | Средняя/низкая: **проверить по законам** |
-| Потери 8,6–9% выручки | WorldCC через вторичные публикации | Средняя: оригинал не открывался |
-| Рейтинги G2/Capterra/Gartner | Страницы платформ | Средняя: числа отличаются между страницами |
-| Опросы польских юристов (Supesu 2026, SET/Logit) | rp.pl, cyberdefence24.pl | Средняя: данные по юротделам отдельно не выделены |
-| Отзывы о польских продуктах, форум in-house | Wolters Kluwer, prawo.pl, GetApp | Низкая–средняя: в основном материалы вендора; независимых отзывов нет |
-| Недостающие функции Juro | Фрагменты отзывов G2, Capterra, GetApp; обзоры конкурентов | Средняя: G2 не открывается напрямую; часть обзоров — от конкурентов |
-| Ускорение 60% (LEGALFLY), 85% (Legartis) | Сайты компаний | Низкая: маркетинг |
-| Сведения о VAI Legal, Gaius-Lex, LexTool | Сайты компаний | Низкая: независимых обзоров нет |
-| Статус EU AI Act для проверки договоров | Обзоры юрфирм | Не подтверждено: проверка договоров не упоминается в Annex III в найденных источниках |
-| Данные о МСБ без юриста (YouGov/LawBite, Smallpdf) | — | Убраны из v0.2.0: сегмент больше не целевой |
+| Legora round €489 million | EU-Startups, Startup in Europe | High (several media) |
+| Collapse of Robin AI | Legal Cheek, Sifted, Artificial Lawyer, Law360 | High |
+| Claude for Legal, May 2026 | ABA Journal, TechCrunch, LawNext | High |
+| Cases with AI "hallucinations" | D. Charlotin's database, Stanford CIS, NPR | High (per the author — understated) |
+| Number of radcowie prawni and advocates (June 2025) | Reply to a parliamentary interpellation (api.sejm.gov.pl) | High (official document), but the in-house share is unknown |
+| GC caution when introducing AI | EY Law General Counsel Study 2025 | Medium: consulting company, large companies, not only Poland |
+| 92% of lawyers use AI | Wolters Kluwer via prawo.pl | Low–medium: vendor survey, Poland not separated |
+| Libra: contract analysis, Word/Outlook, CRIDO | Wolters Kluwer press releases, prawo.pl | Low–medium: vendor information |
+| Beck-Noxtua in Poland | Noxtua press release | Low: launch not confirmed |
+| Legal assistance outside representation is not reserved for the professions | Palestra (2022), e-prawnik.pl | Medium/low: **verify in the statutes** |
+| Losses of 8.6–9% of revenue | WorldCC via secondary publications | Medium: original not opened |
+| G2/Capterra/Gartner ratings | Platform pages | Medium: numbers differ between pages |
+| Surveys of Polish lawyers (Supesu 2026, SET/Logit) | rp.pl, cyberdefence24.pl | Medium: data for legal departments not separated |
+| Reviews of Polish products, in-house forum | Wolters Kluwer, prawo.pl, GetApp | Low–medium: mostly vendor materials; no independent reviews |
+| Juro's missing features | Snippets of G2, Capterra, GetApp reviews; competitor reviews | Medium: G2 does not open directly; some reviews are from competitors |
+| 60% speed-up (LEGALFLY), 85% (Legartis) | Company websites | Low: marketing |
+| Information on VAI Legal, Gaius-Lex, LexTool | Company websites | Low: no independent reviews |
+| EU AI Act status of contract review | Law firm reviews | Not confirmed: contract review is not mentioned in Annex III in the sources found |
+| Data on SMEs without a lawyer (YouGov/LawBite, Smallpdf) | — | Removed from v0.2.0: the segment is no longer a target |
 
-## 6. Выводы
+## 6. Conclusions
 
-1. **Проблема перегрузки юриста подтверждается**, а юристы уже готовы пользоваться AI. Ценность AI_lawyer — не «AI читает договор», а **измеримая экономия времени юриста** на конкретном типе договоров.
-2. **В Польше главные конкуренты — издатели правовых баз** (Wolters Kluwer с LEX и Libra, C.H.Beck с Beck-Noxtua): у них есть польское право, клиенты и продажи. Конкурировать в лоб с ними нельзя; нужна узкая специализация.
-3. **Ниша:** средние польские компании с 1–5 юристами, один тип договоров с высоким потоком, проверка по плейбуку компании, работа в Word, данные в ЕС. Enterprise-решения для них дороги и долго внедряются.
-4. **Доверие юриста — главное требование:** ссылка на текст договора в каждом замечании, мало ложных срабатываний, прозрачность, где хранятся данные.
-5. **Перед разработкой проверить:** (а) сколько времени юрист реально тратит на выбранный тип договоров и сколько компания готова платить при наличии LEX/Legalis; (б) требования IT/DPO к хранению договоров — через **5–10 интервью с in-house юристами и руководителями юрфункций в Польше**.
+1. **The problem of lawyer overload is confirmed**, and lawyers are already ready to use AI. The value of AI_lawyer is not "AI reads the contract" but **measurable time savings for the lawyer** on a specific contract type.
+2. **In Poland the main competitors are legal database publishers** (Wolters Kluwer with LEX and Libra, C.H.Beck with Beck-Noxtua): they have Polish law, customers and sales. We cannot compete with them head-on; narrow specialisation is needed.
+3. **Niche:** mid-sized Polish companies with 1–5 lawyers, one contract type with a high flow, review against the company playbook, work in Word, data in the EU. Enterprise solutions are expensive for them and slow to implement.
+4. **The lawyer's trust is the main requirement:** a reference to the contract text in every comment, few false positives, transparency about where data is stored.
+5. **Before development check:** (a) how much time a lawyer really spends on the chosen contract type and how much the company is ready to pay given LEX/Legalis; (b) IT/DPO requirements for contract storage — through **5–10 interviews with in-house lawyers and heads of legal in Poland**.
 
-## 7. Что обновить в Project Charter
+## 7. What to update in the Project Charter
 
-- Решение: «AI-инструмент для in-house юристов польских компаний, который ускоряет проверку <тип договоров> по плейбуку компании и предлагает правки в Word».
-- Целевой клиент: средние компании в Польше с небольшой юридической функцией; пользователь — юрист, покупатель — руководитель юрфункции / CFO.
-- Как поймём, что работает: время проверки одного договора снизилось на X% на тестовом наборе; доля замечаний AI, принятых юристом; готовность опрошенных компаний платить.
-- Открытые вопросы: тип договоров; кто из юристов поможет составить первый плейбук; ценовая гипотеза относительно LEX/Legalis.
+- Solution: "An AI tool for in-house lawyers at Polish companies that speeds up the review of <contract type> against the company playbook and proposes edits in Word".
+- Target client: mid-sized companies in Poland with a small legal function; the user is the lawyer, the buyer is the head of legal / CFO.
+- How we will know it works: review time per contract dropped by X% on the test set; share of AI comments accepted by the lawyer; willingness of surveyed companies to pay.
+- Open questions: contract type; which lawyer will help write the first playbook; price hypothesis relative to LEX/Legalis.
 
 ---
 
-## Источники
+## Sources
 
-**Польский рынок**
-- [Число адвокатов и radców prawnych, июнь 2025 (ответ на депутатский запрос)](https://api.sejm.gov.pl/sejm/term10/interpellations/attachment/ATTDMXK2C/i12392-o1.pdf)
-- [LEX Expert AI — запуск (PAP MediaRoom)](https://www.pap.pl/mediaroom/zaufany-czat-ai-dla-prawnikow-wolters-kluwer-polska-wprowadza-lex-expert-ai) · [LEX Expert AI для юротдела](https://www.wolterskluwer.com/pl-pl/solutions/lex/expert-ai/zastosowania-ai-w-dziale-prawnym)
-- [Libra на польском рынке (февраль 2026)](https://www.wolterskluwer.com/pl-pl/news/wolters-kluwer-wprowadza-na-polski-rynek-platforme-libra-w-ramach-europejskiej-ekspansji) · [Libra — анализ договоров (май 2026)](https://www.wolterskluwer.com/pl-pl/news/wolters-kluwer-rozwija-platforme-libra) · [CRIDO выбирает Libra](https://www.wolterskluwer.com/en/news/crido-chooses-libra-by-wolters-kluwer) · [Libra (prawo.pl)](https://www.prawo.pl/prawnicy-sady/libra-nowy-ai-ulatwiajacy-prace-prawnikow,1537789.html)
+**Polish market**
+- [Number of advocates and radcowie prawni, June 2025 (reply to a parliamentary interpellation)](https://api.sejm.gov.pl/sejm/term10/interpellations/attachment/ATTDMXK2C/i12392-o1.pdf)
+- [LEX Expert AI — launch (PAP MediaRoom)](https://www.pap.pl/mediaroom/zaufany-czat-ai-dla-prawnikow-wolters-kluwer-polska-wprowadza-lex-expert-ai) · [LEX Expert AI for the legal department](https://www.wolterskluwer.com/pl-pl/solutions/lex/expert-ai/zastosowania-ai-w-dziale-prawnym)
+- [Libra on the Polish market (February 2026)](https://www.wolterskluwer.com/pl-pl/news/wolters-kluwer-wprowadza-na-polski-rynek-platforme-libra-w-ramach-europejskiej-ekspansji) · [Libra — contract analysis (May 2026)](https://www.wolterskluwer.com/pl-pl/news/wolters-kluwer-rozwija-platforme-libra) · [CRIDO chooses Libra](https://www.wolterskluwer.com/en/news/crido-chooses-libra-by-wolters-kluwer) · [Libra (prawo.pl)](https://www.prawo.pl/prawnicy-sady/libra-nowy-ai-ulatwiajacy-prace-prawnikow,1537789.html)
 - [Beck-Noxtua for Poland (Noxtua)](https://www.noxtua.com/news/press-releases/beck-noxtua-poland)
-- [VAI Legal](https://vai.legal/) · [Gaius-Lex](https://gaius-lex.pl/) · [LexTool](https://www.lextool.pl/) · [Обзор AI для юристов в Польше (Lexedit)](https://lexedit.ai/pl/blog/ai-dla-prawnikow-narzedzia-zastosowania)
+- [VAI Legal](https://vai.legal/) · [Gaius-Lex](https://gaius-lex.pl/) · [LexTool](https://www.lextool.pl/) · [Overview of AI for lawyers in Poland (Lexedit)](https://lexedit.ai/pl/blog/ai-dla-prawnikow-narzedzia-zastosowania)
 
-**Юристы и AI**
+**Lawyers and AI**
 - [Raport Rynku Prawniczego 2025/2026 — Supesu (Rzeczpospolita)](https://www.rp.pl/zawody-prawnicze/art44314141-raport-prawnicy-miedzy-algorytmami-a-wypaleniem)
-- [AI в юридическом секторе — опрос Fundacji SET и Logit (CyberDefence24)](https://cyberdefence24.pl/polityka-i-prawo/sztuczna-inteligencja-w-sektorze-prawniczym-miedzy-innowacja-a-ryzykiem-systemowym)
+- [AI in the legal sector — survey by Fundacja SET and Logit (CyberDefence24)](https://cyberdefence24.pl/polityka-i-prawo/sztuczna-inteligencja-w-sektorze-prawniczym-miedzy-innowacja-a-ryzykiem-systemowym)
 - [In-House Lawyer Innovation Forum 2025 (Wolters Kluwer)](https://www.wolterskluwer.com/pl-pl/news/in-house-lawyer-innovation-forum-2025) · [prawo.pl](https://www.prawo.pl/biznes/in-house-lawyer-innovation-forum-2025,535159.html)
-- [LEX Expert AI — почему (Wolters Kluwer)](https://www.wolterskluwer.com/pl-pl/solutions/lex/expert-ai/dlaczego-lex-expert-ai) · [CRIDO выбирает Libra (PL)](https://www.wolterskluwer.com/pl-pl/news/crido-wybiera-libre-od-wolters-kluwer-jako-nowe-srodowisko-pracy-ai) · [Gaius-Lex — GetApp](https://www.getapp.com/all-software/a/gaius-lex/) · [Gaius-Lex — G2](https://www.g2.com/products/gaius-lex/reviews)
+- [LEX Expert AI — why (Wolters Kluwer)](https://www.wolterskluwer.com/pl-pl/solutions/lex/expert-ai/dlaczego-lex-expert-ai) · [CRIDO chooses Libra (PL)](https://www.wolterskluwer.com/pl-pl/news/crido-wybiera-libre-od-wolters-kluwer-jako-nowe-srodowisko-pracy-ai) · [Gaius-Lex — GetApp](https://www.getapp.com/all-software/a/gaius-lex/) · [Gaius-Lex — G2](https://www.g2.com/products/gaius-lex/reviews)
 - [EY Law General Counsel Study 2025 (PL)](https://www.ey.com/pl_pl/newsroom/2025/04/ey-law-general-counsel-study-pl)
-- [Юристы ежедневно пользуются AI (prawo.pl)](https://www.prawo.pl/biznes/prawnicy-na-co-dzien-korzystaja-z-ai-a-ai-zmienia-model-ich-zawodu,1540345.html)
+- [Lawyers use AI every day (prawo.pl)](https://www.prawo.pl/biznes/prawnicy-na-co-dzien-korzystaja-z-ai-a-ai-zmienia-model-ich-zawodu,1540345.html)
 - [Future Ready Lawyer 2026 (Wolters Kluwer)](https://www.wolterskluwer.com/pl-pl/news/wolters-kluwer-publikuje-raport-z-badania-future-ready-lawyer-2026)
 
-**Конкуренты в Европе**
-- [Legora — €489 млн (EU-Startups)](https://www.eu-startups.com/2026/10/theres-no-stopping-legora-e489-million-for-stockholms-legaltech-unicorn/) · [Startup in Europe](https://startup-in-europe.com/legora-raises-approximately-e505-million-to-accelerate-its-expansion/)
+**Competitors in Europe**
+- [Legora — €489 million (EU-Startups)](https://www.eu-startups.com/2026/10/theres-no-stopping-legora-e489-million-for-stockholms-legaltech-unicorn/) · [Startup in Europe](https://startup-in-europe.com/legora-raises-approximately-e505-million-to-accelerate-its-expansion/)
 - [Legal AI startups by fundraising (New Market Pitch)](https://newmarketpitch.com/blogs/news/legal-ai-top-startups-fundraising)
 - [LEGALFLY Series A (Law.com)](https://law.com/legaltechnews/2024/07/16/belgian-ai-startup-legalfly-secures-16-3-million-in-series-a-keeps-the-legal-tech-funding-streak-hot) · [seed (Tech.eu)](https://tech.eu/2023/11/28/ai-co-pilot-legalfly-secures-over-2m-in-seed-funding/) · [ITdaily](https://itdaily.com/blogs/software/legalfly-legal-ai-organisation/) · [Legal 500](https://www.legal500.com/suppliers/legalfly/)
 - [Legartis — AI contract review](https://legartis.ai/ai-contract-review) · [CB Insights](https://www.cbinsights.com/company/legartis/customers)
 - [Robin AI — Legal Technology](https://legaltechnology.com/robin-ai-listed-for-distressed-sale-nine-months-after-making-the-sunday-times-100-tech-list/) · [Sifted](https://sifted.eu/articles/robin-ai-cuts-a-third-of-staff) · [Artificial Lawyer](https://www.artificiallawyer.com/2025/10/27/robin-ai-lays-off-staff-as-growth-disappoints/)
 - [Claude for Legal (ABA Journal)](https://www.abajournal.com/news/article/anthropic-launches-claude-for-legal-giving-lawyers-20-new-program-integrations-and-12-practice-area-plugins/) · [Artificial Lawyer](https://artificiallawyer.com/2026/02/02/anthropic-moves-into-legal-tech) · [TechCrunch](https://techcrunch.com/2026/05/12/the-ai-legal-services-industry-is-heating-up-anthropic-is-getting-in-on-the-action)
 
-**Отзывы клиентов**
+**Customer reviews**
 - [Genie AI — G2](https://www.g2.com/products/genieai/reviews) · [Capterra](https://www.capterra.com/p/10003121/Genie-AI/reviews/)
-- [Juro — G2](https://www.g2.com/products/juro/reviews) · [Capterra](https://www.capterra.com/p/167130/Juro/) · [GetApp](https://www.getapp.com/operations-management-software/a/juro/reviews/) · [Oneflow о Juro (конкурент)](https://oneflow.com/uk/blog/juro-reviews/) · [ContractSafe vs Juro (конкурент)](https://www.contractsafe.com/contractsafe-vs-juro-comparison) · [PandaDoc о Juro (конкурент)](https://pandadoc.com/blog/juro-review)
-- [Luminance — Gartner](https://www.gartner.com/reviews/vendor/luminance) · [ToolRadar](https://toolradar.com/tools/luminance) · [Spellbook о ценах Luminance (конкурент)](https://spellbook.com/learn/luminance-pricing)
+- [Juro — G2](https://www.g2.com/products/juro/reviews) · [Capterra](https://www.capterra.com/p/167130/Juro/) · [GetApp](https://www.getapp.com/operations-management-software/a/juro/reviews/) · [Oneflow on Juro (competitor)](https://oneflow.com/uk/blog/juro-reviews/) · [ContractSafe vs Juro (competitor)](https://www.contractsafe.com/contractsafe-vs-juro-comparison) · [PandaDoc on Juro (competitor)](https://pandadoc.com/blog/juro-review)
+- [Luminance — Gartner](https://www.gartner.com/reviews/vendor/luminance) · [ToolRadar](https://toolradar.com/tools/luminance) · [Spellbook on Luminance pricing (competitor)](https://spellbook.com/learn/luminance-pricing)
 
-**Проблема**
+**Problem**
 - [WorldCC — Contract Management 2025](https://info.worldcc.com/contract-management-aug-2025)
 - [Legal Dive — contract value erosion](https://legaldive.com/news/contract-value-erosion-CLM-software-contracts-contracting/688790)
 
-**Риски и регулирование**
-- [AI-галлюцинации в судах (UNC Law Library)](https://library.law.unc.edu/2026/06/handling-hallucinations-a-reflection/) · [Stanford CIS](https://cyberlaw.stanford.edu/blog/2025/10/whos-submitting-ai-tainted-filings-in-court/)
-- [Правовая помощь вне закреплённых профессий (Palestra)](https://ojs.academicon.pl/palestra/article/download/8212/8452/22856) · [Uprawnienia do świadczenia pomocy prawnej (e-prawnik.pl)](https://e-prawnik.pl/porady-prawne/uprawnienia-do-swiadczenia-pomocy-prawnej.html)
-- [BGH Smartlaw (LTO)](https://www.lto.de/recht/juristen/b/bgh-urteil-izr11320-vertragsgenerator-smartlaw-keine-unzulaessige-rechtsdienstleistung-rak-hamburg-rdg-legal-tech) — контекст ЕС
+**Risks and regulation**
+- [AI hallucinations in courts (UNC Law Library)](https://library.law.unc.edu/2026/06/handling-hallucinations-a-reflection/) · [Stanford CIS](https://cyberlaw.stanford.edu/blog/2025/10/whos-submitting-ai-tainted-filings-in-court/)
+- [Legal assistance outside the reserved professions (Palestra)](https://ojs.academicon.pl/palestra/article/download/8212/8452/22856) · [Uprawnienia do świadczenia pomocy prawnej (e-prawnik.pl)](https://e-prawnik.pl/porady-prawne/uprawnienia-do-swiadczenia-pomocy-prawnej.html)
+- [BGH Smartlaw (LTO)](https://www.lto.de/recht/juristen/b/bgh-urteil-izr11320-vertragsgenerator-smartlaw-keine-unzulaessige-rechtsdienstleistung-rak-hamburg-rdg-legal-tech) — EU context
 - [EU AI Act Omnibus (Hogan Lovells)](https://www.hoganlovells.com/en/publications/eu-legislators-agree-to-delay-for-highrisk-ai-rules) · [Orrick](https://www.orrick.com/ja-JP/Insights/2026/07/EU-AI-Act-Update-Digital-Omnibus-Finalizes-8-Compliance-Changes)

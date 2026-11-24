@@ -1,21 +1,21 @@
-# ADR-0003: Тип договора для MVP — NDA
+# ADR-0003: MVP contract type — NDA
 
-- Статус: proposed
-- Дата: 2026-11-24
+- Status: proposed
+- Date: 2026-11-24
 
-## Контекст
-Для Step 3 нужен рабочий прототип, а тип договора ещё не выбран (задача из встречи 2026-11-24). Без одного типа нельзя написать плейбук, тестовый набор и промт.
+## Context
+Step 3 needs a working prototype, but the contract type has not been chosen yet (a task from the 2026-11-24 meeting). Without a single type we cannot write a playbook, a test set or a prompt.
 
-## Рассмотренные варианты
-1. **NDA** — короткие (2–5 стр.), очень частые, стандартная структура, мало зависят от отрасли.
-2. Договор услуг / поставки B2B — больше ценность на один договор, но длиннее, сильно зависят от отрасли и условий оплаты.
-3. Несколько типов сразу — шире охват, но нет глубины ни в одном.
+## Options considered
+1. **NDA** — short (2–5 pages), very frequent, standard structure, little dependence on industry.
+2. B2B services / supply agreement — more value per contract, but longer and highly dependent on industry and payment terms.
+3. Several types at once — wider coverage, but no depth in any.
 
-## Решение
-Предлагается **вариант 1 — NDA** для прототипа v0.1 и первых интервью. Договоры услуг/поставки — следующий плейбук, если интервью покажут, что NDA юристы и так проверяют быстро.
+## Decision
+Proposed: **option 1 — NDA** for prototype v0.1 and the first interviews. Services / supply agreements are the next playbook if interviews show that lawyers already review NDAs quickly.
 
-## Последствия
-- Проще: короткие обезличенные образцы, 10 понятных правил, быстрый демо-сценарий.
-- Сложнее: NDA — низкий риск, экономия времени на одном договоре меньше; конкуренты (Juro, LEGALFLY) тоже начинают с NDA.
-- Нужно: подтвердить выбор командой и на интервью («сколько NDA в месяц, сколько минут на один»).
-- Затронутые документы: `01_requirements.md`, `06_playbook/nda.md`, `04_ai_prompts.md`, `app/`.
+## Consequences
+- Easier: short anonymised samples, 10 clear rules, a quick demo scenario.
+- Harder: NDAs are low-risk, so the time saved per contract is smaller; competitors (Juro, LEGALFLY) also start with NDAs.
+- Needed: confirm the choice with the team and in interviews ("how many NDAs per month, how many minutes each").
+- Affected documents: `01_requirements.md`, `06_playbook/nda.md`, `04_ai_prompts.md`, `app/`.

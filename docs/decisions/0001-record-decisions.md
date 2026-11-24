@@ -1,17 +1,17 @@
-# ADR-0001: Фиксировать архитектурные решения в формате ADR
+# ADR-0001: Record architecture decisions as ADRs
 
-- Статус: accepted
-- Дата: 2026-11-22
+- Status: accepted
+- Date: 2026-11-22
 
-## Контекст
-Проект только начинается; важно сохранять причины ключевых решений.
+## Context
+The project is just starting; it is important to preserve the reasons behind key decisions.
 
-## Рассмотренные варианты
-1. Не фиксировать решения отдельно
-2. Вести ADR в docs/decisions/
+## Options considered
+1. Do not record decisions separately
+2. Keep ADRs in docs/decisions/
 
-## Решение
-Вести ADR: одно решение — один файл NNNN-название.md. Принятые ADR не редактируются; изменённое решение оформляется новым ADR со ссылкой «заменяет ADR-NNNN».
+## Decision
+Keep ADRs: one decision — one NNNN-title.md file. Accepted ADRs are not edited; a changed decision is recorded as a new ADR with the reference "supersedes ADR-NNNN".
 
-## Последствия
-История решений прозрачна и версионируется вместе с кодом в git.
+## Consequences
+The decision history is transparent and versioned together with the code in git.

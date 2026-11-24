@@ -1,23 +1,23 @@
-# ADR-0004: Стек прототипа v0.1 — Python stdlib + HTML/JS, Claude как опция
+# ADR-0004: Prototype v0.1 stack — Python stdlib + HTML/JS, Claude as an option
 
-- Статус: proposed
-- Дата: 2026-11-24
+- Status: proposed
+- Date: 2026-11-24
 
-## Контекст
-Нужен работающий скелет (v0.1) для курса. На ноутбуке команды есть только Python 3.9; нет Node.js, Homebrew, pandoc. Команда — начинающие разработчики; прототип должен запускаться одной командой.
+## Context
+A working skeleton (v0.1) is needed for the course. The team's laptop has only Python 3.9; there is no Node.js, Homebrew or pandoc. The team are beginner developers; the prototype must start with one command.
 
-## Рассмотренные варианты
-1. Python стандартная библиотека (`http.server`) + статический HTML/CSS/JS; LLM подключается опционально.
-2. Python + FastAPI/Streamlit — удобнее, но нужна установка пакетов и виртуальное окружение.
-3. Next.js / React — современно, но нужен Node.js.
-4. No-code (Bubble, Softr) — быстро, но нельзя показать собственный движок и контроль данных.
+## Options considered
+1. Python standard library (`http.server`) + static HTML/CSS/JS; LLM connected optionally.
+2. Python + FastAPI/Streamlit — more convenient, but needs package installation and a virtual environment.
+3. Next.js / React — modern, but needs Node.js.
+4. No-code (Bubble, Softr) — fast, but we cannot show our own engine or control over data.
 
-## Решение
-Вариант 1. Проверка работает в двух режимах:
-- **Demo (по умолчанию):** правила на регулярных выражениях — бесплатно, офлайн, детерминированно, покрыто тестами.
-- **Claude:** при наличии пакета `anthropic` и ключа — тот же плейбук через Claude API (`claude-opus-5-5`, structured output), инструкции в `skills/nda-review/SKILL.md`.
+## Decision
+Option 1. The review works in two modes:
+- **Demo (default):** regular-expression rules — free, offline, deterministic, covered by tests.
+- **Claude:** if the `anthropic` package and a key are available — the same playbook via the Claude API (`claude-opus-5-5`, structured output), instructions in `skills/nda-review/SKILL.md`.
 
-## Последствия
-- Проще: `python3 app/server.py` — и всё работает; демо не зависит от интернета и ключей.
-- Сложнее: `http.server` не для продакшена; нет авторизации и хранения. Для пилота — перейти на FastAPI + хостинг в ЕС (новый ADR).
-- Риск: rule-based режим хорошо работает только на «типичных» формулировках; реальное качество покажет Claude-режим на тестовом наборе.
+## Consequences
+- Easier: `python3 app/server.py` and everything works; the demo does not depend on the internet or keys.
+- Harder: `http.server` is not for production; no authentication or storage. For a pilot — move to FastAPI + EU hosting (new ADR).
+- Risk: the rule-based mode works well only on "typical" wording; real quality will be shown by the Claude mode on the test set.

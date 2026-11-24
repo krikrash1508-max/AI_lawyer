@@ -1,32 +1,32 @@
 ---
-title: Обзор продукта
-version: 0.2.2
+title: Product overview
+version: 0.2.3
 status: draft
 owner: TBD
 updated: 2026-11-24
 ---
 
-# Обзор продукта
+# Product overview
 
-## Одной фразой
-In-house юрист польской компании использует **Klauzula AI** (название продукта AI Lawyer, [ADR-0006](decisions/0006-product-name-klauzula-ai.md), proposed), чтобы быстрее проверять **NDA** ([ADR-0003](decisions/0003-mvp-contract-type-nda.md), proposed) по плейбуку компании в польской юрисдикции.
+## In one sentence
+An in-house lawyer at a Polish company uses **Klauzula AI** (product name of AI Lawyer, [ADR-0006](decisions/0006-product-name-klauzula-ai.md), proposed) to review **NDAs** ([ADR-0003](decisions/0003-mvp-contract-type-nda.md), proposed) faster against the company playbook under Polish jurisdiction.
 
-## Проблема
-- Юрист компании перегружен однотипными договорами; бизнес ждёт согласования.
-- Нанять ещё одного юриста дорого, а договоры с плохими условиями всё равно проходят.
+## Problem
+- The company lawyer is overloaded with repetitive contracts; the business waits for approval.
+- Hiring another lawyer is expensive, and contracts with bad terms still get through.
 
-## Целевой пользователь
-- **Страна:** Польша ([ADR-0002](decisions/0002-positioning-poland-in-house.md)).
-- **Клиент:** компании, которым нужно оптимизировать работу юриста; основной сегмент — средние компании с 1–5 юристами.
-- **Пользователь:** in-house юрист; **покупатель:** руководитель юрфункции / CFO; **получатель отчёта:** бизнес (продажи / закупки) — отправляет правки контрагенту.
+## Target user
+- **Country:** Poland ([ADR-0002](decisions/0002-positioning-poland-in-house.md)).
+- **Client:** companies that need to optimise the lawyer's work; main segment — mid-sized companies with 1–5 lawyers.
+- **User:** in-house lawyer; **buyer:** head of legal / CFO; **report recipient:** the business (sales / procurement) — sends the edits to the counterparty.
 
-## Ценность
-- Экономия времени юриста на проверке договора (метрика: минут на договор до/после).
-- Проверка по правилам компании (плейбук) со ссылкой на нормы права Польши; замечания со ссылкой на текст договора; правки в Word.
-- Новая версия от контрагента — новый раунд той же проверки: видно, какие риски появились и ушли.
-- Данные хранятся в ЕС и не используются для обучения модели.
+## Value
+- Saves the lawyer's time on contract review (metric: minutes per contract before/after).
+- Review against company rules (playbook) with references to Polish law; findings linked to the contract text; edits in Word.
+- A new version from the counterparty is a new round of the same review: shows which risks appeared and which went away.
+- Data is stored in the EU and not used for model training.
 
-## Что НЕ входит в продукт (out of scope)
-- Продукт не даёт обязывающих юридических консультаций — это инструмент юриста, решение остаётся за ним.
-- Сервис для неюристов (МСБ без юриста) — не целевой сегмент (см. ADR-0002).
-- Юридические фирмы — пока не целевой сегмент.
+## What is NOT in the product (out of scope)
+- The product does not give binding legal advice — it is a lawyer's tool, and the decision stays with the lawyer.
+- A service for non-lawyers (SMEs without a lawyer) is not a target segment (see ADR-0002).
+- Law firms are not a target segment for now.

@@ -1,32 +1,32 @@
 ---
-title: Промты для LLM
-version: 0.2.0
+title: LLM prompts
+version: 0.2.1
 status: draft
 owner: TBD
 updated: 2026-11-24
 ---
 
-# Промты для LLM
+# LLM prompts
 
-## Тестовый набор
-| Файл | Что внутри | Эталон (ожидаемые находки) |
-|------|-----------|----------------------------|
-| `app/samples/nda_counterparty_v1.txt` | Вымышленный NDA: английское право, суды Лондона, бессрочная конфиденциальность, одностороння kara umowna PLN 500 000, non-solicitation, 1 исключение из CI | Red flag: NDA-01, 02, 03, 04, 06, 08; Review: NDA-05, 10; OK: NDA-07, 09 |
-| `app/samples/nda_counterparty_v2.txt` | Та же NDA после переговоров: польское право, 5 лет, взаимный штраф PLN 50 000, но добавлен indemnity | Red flag: NDA-07; OK: NDA-01, 02, 03, 08 |
+## Test set
+| File | Contents | Reference (expected findings) |
+|------|----------|-------------------------------|
+| `app/samples/nda_counterparty_v1.txt` | Fictional NDA: English law, London courts, perpetual confidentiality, one-sided kara umowna PLN 500,000, non-solicitation, 1 exception to CI | Red flag: NDA-01, 02, 03, 04, 06, 08; Review: NDA-05, 10; OK: NDA-07, 09 |
+| `app/samples/nda_counterparty_v2.txt` | The same NDA after negotiation: Polish law, 5 years, mutual penalty PLN 50,000, but indemnity added | Red flag: NDA-07; OK: NDA-01, 02, 03, 08 |
 
-Эталон пока составлен командой по плейбуку, **не юристом** — нужна проверка radcy prawnego. Нужно 10–20 обезличенных NDA для честной оценки.
+The reference was compiled by the team from the playbook, **not by a lawyer** — it needs review by a radca prawny. 10–20 anonymised NDAs are needed for a fair evaluation.
 
-## Версии промтов
+## Prompt versions
 
 ### prompt-v1 — 2026-11-24
-- **Где:** [`skills/nda-review/SKILL.md`](../skills/nda-review/SKILL.md) (тело файла = system prompt) + плейбук `app/playbooks/nda_pl.json` в теге `<playbook>`. Вызывается из `app/engine/llm.py`.
-- **Модель:** `claude-opus-5-5`, effort `high`, structured output (JSON-схема находки), server-side fallback при отказе модели.
-- **Что изменилось:** первая версия.
-- **Ключевые приёмы:**
-  - одна находка на правило плейбука — модель не придумывает новые темы;
-  - дословная цитата + номер пункта → юрист может проверить;
-  - при сомнении — `review`, а не догадка;
-  - ПДн уже замаскированы, метки сохраняются;
-  - польское право как рамка; иностранное право только помечается.
-- **Результат на тестовом наборе:** ⬜ не запускался (нет API-ключа в среде разработки). Базовая линия — rule-based движок: 10/10 правил совпадают с эталоном на v1 и v2 (`python3 -m unittest discover -s app/tests`).
-- **Следующий шаг:** прогнать prompt-v1 на обоих образцах, сравнить с эталоном, записать точность и ошибки сюда.
+- **Where:** [`skills/nda-review/SKILL.md`](../skills/nda-review/SKILL.md) (file body = system prompt) + playbook `app/playbooks/nda_pl.json` in the `<playbook>` tag. Called from `app/engine/llm.py`.
+- **Model:** `claude-opus-5-5`, effort `high`, structured output (finding JSON schema), server-side fallback if the model refuses.
+- **What changed:** first version.
+- **Key techniques:**
+  - one finding per playbook rule — the model does not invent new topics;
+  - verbatim quote + clause number → the lawyer can verify;
+  - when in doubt — `review`, not a guess;
+  - personal data is already masked, placeholders are preserved;
+  - Polish law as the frame; foreign law is only flagged.
+- **Result on the test set:** ⬜ not run (no API key in the development environment). Baseline — rule-based engine: 10/10 rules match the reference on v1 and v2 (`python3 -m unittest discover -s app/tests`).
+- **Next step:** run prompt-v1 on both samples, compare with the reference, record accuracy and errors here.

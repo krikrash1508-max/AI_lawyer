@@ -1,46 +1,46 @@
 ---
-title: Юридические требования и соответствие
-version: 0.3.1
+title: Legal requirements and compliance
+version: 0.3.2
 status: draft
 owner: TBD
 updated: 2026-11-24
 ---
 
-# Юридические требования и соответствие
+# Legal requirements and compliance
 
-## Позиционирование
-Инструмент для юриста, не замена юриста. Human-in-the-loop: каждое изменение принимает или отклоняет юрист; ничего не отправляется контрагенту автоматически.
+## Positioning
+A tool for the lawyer, not a replacement for the lawyer. Human-in-the-loop: every change is accepted or rejected by the lawyer; nothing is sent to the counterparty automatically.
 
-## GDPR и конфиденциальность
-| Вопрос | Прототип v0.1 | Целевое состояние |
-|--------|---------------|-------------------|
-| Где хранятся данные | Нигде: договор обрабатывается в памяти и не сохраняется | Хостинг в ЕС, шифрование, срок хранения задаёт клиент |
-| Персональные данные | v0.2: маскируются до анализа ФИО (по словам-маркерам, в блоке подписей и рядом с должностью; повторы, инициалы и склонения — та же метка), e-mail, телефон, PESEL, NIP, KRS, IBAN | ФИО в свободном тексте и адреса физлиц (словарь имён или NER), проверка DPO клиента |
-| Использование данных AI-провайдером | Claude-режим выключен по умолчанию; при включении текст уходит в Claude API уже замаскированным | Договор с провайдером: без обучения на данных, обработка в ЕС, DPA |
-| Роль по GDPR | — | Klauzula AI — processor, клиент — controller; нужен DPA с клиентом |
+## GDPR and confidentiality
+| Question | Prototype v0.1 | Target state |
+|----------|----------------|--------------|
+| Where data is stored | Nowhere: the contract is processed in memory and not saved | EU hosting, encryption, retention period set by the client |
+| Personal data | v0.2: masked before analysis — names (by marker words, in the signature block and next to job titles; repeats, initials and grammatical cases get the same placeholder), e-mail, phone, PESEL, NIP, KRS, IBAN | Names in free text and addresses of natural persons (name dictionary or NER), review by the client's DPO |
+| Use of data by the AI provider | Claude mode is off by default; when enabled, the text goes to the Claude API already masked | Contract with the provider: no training on data, processing in the EU, DPA |
+| GDPR role | — | Klauzula AI is the processor, the client is the controller; a DPA with the client is needed |
 
-## Дисклеймеры (реализованы в v0.2)
-- На каждом экране: «Klauzula AI is a working tool for lawyers. Results and legal references are not legal advice; the lawyer reviews and decides.»
-- В каждом отчёте: «Prepared with Klauzula AI as a working aid for the lawyer. It is not legal advice…»
-- У каждой нормы права: «Polish law · to verify».
-- В прототипе: «do not upload real confidential contracts».
+## Disclaimers (implemented in v0.2)
+- On every screen: "Klauzula AI is a working tool for lawyers. Results and legal references are not legal advice; the lawyer reviews and decides."
+- In every report: "Prepared with Klauzula AI as a working aid for the lawyer. It is not legal advice…"
+- On every legal provision: "Polish law · to verify".
+- In the prototype: "do not upload real confidential contracts".
 
-## Ссылки на законодательство Польши (v0.2)
-Схема TO-BE обещает анализ «на соответствие законодательству Польши». В v0.2 это **ссылка на норму за каждым правилом плейбука** (KC, KPC, UZNK, KP, RODO, Rome I, Brussels I bis), а не самостоятельный анализ императивных норм ([ADR-0007](decisions/0007-scope-v0-2-to-be-process.md)).
+## References to Polish legislation (v0.2)
+The TO-BE diagram promises analysis "against Polish legislation". In v0.2 this is a **reference to a provision behind each playbook rule** (KC, KPC, UZNK, KP, RODO, Rome I, Brussels I bis), not a standalone analysis of mandatory norms ([ADR-0007](decisions/0007-scope-v0-2-to-be-process.md)).
 
-| Риск | Мера в v0.2 |
-|------|-------------|
-| Неверная или устаревшая статья | Пометка «to verify»; плейбук и нормы проверяет radca prawny до пилота |
-| AI придумывает статьи (галлюцинации) | Норма берётся из плейбука сервером, не из ответа модели (NFR-008) |
-| Отчёт воспринимается как правовое заключение | Дисклеймер «not legal advice»; решение — кнопка юриста |
+| Risk | Measure in v0.2 |
+|------|-----------------|
+| Wrong or outdated article | Marked "to verify"; the playbook and provisions are checked by a radca prawny before a pilot |
+| AI invents articles (hallucinations) | The provision is taken from the playbook by the server, not from the model's answer (NFR-008) |
+| The report is taken for a legal opinion | Disclaimer "not legal advice"; the decision is the lawyer's button |
 
-## Решение юриста
-Продукт считает красные флаги, но не говорит «можно подписывать». Если юрист выбирает «ready for signing» при открытых красных флагах, отчёт фиксирует, что риск принят юристом.
+## Lawyer's decision
+The Product counts red flags but does not say "can be signed". If the lawyer chooses "ready for signing" with open red flags, the report records that the risk was accepted by the lawyer.
 
-## Открытые вопросы
-- ФИО в свободном тексте без маркера и должности (например, «Jan Kowalski will coordinate»): следующий шаг — словарь польских имён (реестр PESEL, dane.gov.pl, проверить лицензию), затем NER на сервере. Распознавание через Claude не подходит: имена ушли бы в LLM до маскирования.
-- Подтверждение юристом сомнительных мест перед анализом («Possible name — mask?»).
-- Проверка списка норм в `app/playbooks/nda_pl.json` у radcy prawnego.
-- Обработка в ЕС для LLM-вызовов: проверить доступные варианты у провайдера.
-- Проверить по тексту законов, кто вправе оказывать правовую помощь в Польше (задача из встречи 2026-11-24).
-- AI Act: инструмент для юристов, вероятно, не high-risk — подтвердить.
+## Open questions
+- Names in free text without a marker or job title (for example, "Jan Kowalski will coordinate"): next step — a Polish name dictionary (PESEL registry, dane.gov.pl, check the licence), then server-side NER. Recognition via Claude is not suitable: names would reach the LLM before masking.
+- Lawyer confirmation of doubtful cases before analysis ("Possible name — mask?").
+- Review of the list of provisions in `app/playbooks/nda_pl.json` by a radca prawny.
+- EU processing for LLM calls: check the options available from the provider.
+- Check in the text of the statutes who may provide legal assistance in Poland (task from the 2026-11-24 meeting).
+- AI Act: a tool for lawyers is probably not high-risk — to be confirmed.

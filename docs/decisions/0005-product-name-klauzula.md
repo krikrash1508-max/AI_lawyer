@@ -1,22 +1,22 @@
-# ADR-0005: Название продукта — Klauzula
+# ADR-0005: Product name — Klauzula
 
-- Статус: superseded by [ADR-0006](0006-product-name-klauzula-ai.md)
-- Дата: 2026-11-24
+- Status: superseded by [ADR-0006](0006-product-name-klauzula-ai.md)
+- Date: 2026-11-24
 
-## Контекст
-«AI Lawyer» описывает идею, но противоречит позиционированию (ADR-0002): мы не «AI-юрист», а инструмент юриста. Для макетов и прототипа нужно имя.
+## Context
+"AI Lawyer" describes the idea but contradicts the positioning (ADR-0002): we are not an "AI lawyer", we are a lawyer's tool. A name is needed for the mock-ups and the prototype.
 
-## Рассмотренные варианты
-| Название | За | Против |
-|----------|----|--------|
-| **Klauzula** | Польское «оговорка, пункт договора»; понятно юристу, звучит профессионально; знак «§» как логотип | Общеупотребимое слово — сложнее зарегистрировать товарный знак |
-| Paragraf | Тоже юридическое, короткое | Много существующих брендов с этим словом |
-| Umowa.ai | Сразу ясно, про что | Звучит как сервис для неюристов; «.ai» обещает замену юриста |
-| AI Lawyer | Уже используется в репозитории | Противоречит ADR-0002; англоязычное, без связи с Польшей |
+## Options considered
+| Name | Pros | Cons |
+|------|------|------|
+| **Klauzula** | Polish for "clause, contract provision"; understandable to a lawyer, sounds professional; the "§" sign as a logo | A common word — harder to register as a trademark |
+| Paragraf | Also legal, short | Many existing brands with this word |
+| Umowa.ai | Clear at once what it is about | Sounds like a service for non-lawyers; ".ai" promises to replace the lawyer |
+| AI Lawyer | Already used in the repository | Contradicts ADR-0002; English-language, no link to Poland |
 
-## Решение
-Предлагается **Klauzula** (слоган: «Your playbook, every clause» / «Twój playbook w każdej klauzuli»). Репозиторий и папка проекта пока остаются `AI_lawyer`.
+## Decision
+Proposed: **Klauzula** (tagline: "Your playbook, every clause" / "Twój playbook w każdej klauzuli"). The repository and project folder remain `AI_lawyer` for now.
 
-## Последствия
-- Нужно: проверить товарные знаки (EUIPO, UPRP) и свободные домены до публичного использования.
-- Затронутые документы: `08_design.md`, `01_requirements.md`, `app/static/`.
+## Consequences
+- Needed: check trademarks (EUIPO, UPRP) and available domains before public use.
+- Affected documents: `08_design.md`, `01_requirements.md`, `app/static/`.
