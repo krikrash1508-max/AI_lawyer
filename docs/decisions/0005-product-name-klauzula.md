@@ -1,6 +1,6 @@
 # ADR-0005: Название продукта — Klauzula
 
-- Статус: proposed
+- Статус: superseded by [ADR-0006](0006-product-name-klauzula-ai.md)
 - Дата: 2026-11-24
 
 ## Контекст
