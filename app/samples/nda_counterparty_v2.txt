@@ -1,0 +1,28 @@
+MUTUAL NON-DISCLOSURE AGREEMENT
+(fictional sample for testing — all names and data are invented; version 2 after negotiation)
+
+concluded in Warsaw between:
+Alfa Logistics sp. z o.o., KRS 0000000000, NIP 000-000-00-00 ("Alfa"), represented by Jan Przykładowy, e-mail: jan.przykladowy@example.com, tel. +48 600 100 200,
+and
+Beta Software Ltd. ("Beta"), contact: legal@example.org.
+
+1. Purpose
+The Parties intend to discuss a possible cooperation in the area of warehouse software (the "Purpose") and will exchange Confidential Information for the Purpose only.
+
+2. Confidential Information
+"Confidential Information" means any technical, commercial or financial information disclosed by one Party to the other, in any form. Confidential Information shall not include information which: (a) is or becomes publicly available other than through a breach of this Agreement; (b) was lawfully known to the Receiving Party before disclosure; or (c) is independently developed by the Receiving Party.
+
+3. Obligations
+The Receiving Party shall keep the Confidential Information strictly confidential, use it only for the Purpose and disclose it only to its employees and advisers who need to know it. The Receiving Party shall indemnify the Disclosing Party against all losses, including indirect losses and lost profits, arising from any breach.
+
+4. Term
+This Agreement enters into force on the date of signature. The obligations of confidentiality shall survive for a period of five (5) years following the termination of this Agreement.
+
+5. Contractual penalty
+For each breach of this Agreement, the breaching Party shall pay the other Party a contractual penalty of PLN 50,000.
+
+7. Return of information
+Upon written request, the Receiving Party shall return or destroy all Confidential Information.
+
+8. Governing law and disputes
+This Agreement shall be governed by the laws of the Republic of Poland. Any dispute shall be resolved by the common court competent for the registered seat of Alfa.
