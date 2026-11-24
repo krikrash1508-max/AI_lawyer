@@ -14,7 +14,7 @@
 | `docs/04_ai_prompts.md` | Промты для LLM и их версии |
 | `docs/05_legal_compliance.md` | GDPR, конфиденциальность, дисклеймеры |
 | `docs/06_playbook/` | Чек-листы проверки договоров |
-| `docs/07_research.md` | Исследование: проблема, пользователи, конкуренты в ЕС (Project Step 2) |
+| `docs/07_research.md` | Исследование: проблема, пользователи, конкуренты в Польше и ЕС (Project Step 2) |
 | `docs/decisions/` | Архитектурные решения (ADR) |
 | `docs/meetings/` | Заметки встреч и интервью |
 | `CHANGELOG.md` | История изменений |
