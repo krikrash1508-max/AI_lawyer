@@ -1,0 +1,35 @@
+MUTUAL NON-DISCLOSURE AGREEMENT
+(fictional sample for testing name masking — all names and data are invented)
+
+concluded in Warsaw between:
+Alfa Logistics sp. z o.o., KRS 0000000000, NIP 000-000-00-00 ("Alfa"), represented by Jan Przykładowy, Prezes Zarządu,
+and
+Beta Software Ltd. ("Beta"), represented by its Managing Director Anna Testowa-Nowak.
+Contact person on the Alfa side: Piotr Wymyślony, Head of Legal.
+
+1. Purpose
+The Parties intend to discuss a possible cooperation in the area of warehouse software (the "Purpose").
+
+2. Notices
+Notices to Alfa shall be sent for the attention of J. Przykładowy. Mr Przykładowego's consent is required for any disclosure to third parties.
+
+3. Term
+The obligations of confidentiality shall survive for a period of three (3) years following the termination of this Agreement.
+
+4. Governing law and disputes
+This Agreement shall be governed by the laws of the Republic of Poland. Any dispute shall be resolved by the common court competent for the registered seat of Alfa.
+
+Signatures
+
+For and on behalf of Alfa Logistics sp. z o.o.:
+/-/ Jan Przykładowy
+Prezes Zarządu
+
+Marek Zmyślony
+Prokurent
+
+For and on behalf of Beta Software Ltd.:
+Anna Testowa-Nowak
+Managing Director
+Name: Ewa Fikcyjna
+Title: Authorised Signatory

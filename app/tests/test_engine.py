@@ -13,6 +13,7 @@ from engine import masking, parser, report  # noqa: E402
 
 V1 = (APP / "samples" / "nda_counterparty_v1.txt").read_text(encoding="utf-8")
 V2 = (APP / "samples" / "nda_counterparty_v2.txt").read_text(encoding="utf-8")
+V3 = (APP / "samples" / "nda_counterparty_v3.txt").read_text(encoding="utf-8")
 
 
 def levels(result):
@@ -32,6 +33,34 @@ class EngineTest(unittest.TestCase):
         self.assertNotIn("Nowak", text)
         self.assertIn("represented by the Management Board", text)  # no capitalised name → unchanged
         self.assertNotIn("Przykładowy", engine.review(V1, use_claude=False)["clauses"][0]["text"])
+
+    def test_masking_signatures_v3(self):
+        text, counts = masking.mask(V3)
+        for surname in ("Przykładow", "Testowa", "Wymyślony", "Zmyślony", "Fikcyjna"):
+            self.assertNotIn(surname, text)
+        self.assertEqual(counts["NAME"], 5)  # five people, one label each
+        self.assertEqual(text.count("[NAME_1]"), 4)  # Jan Przykładowy: preamble, J. …, Mr …'s, signature
+        for kept in ("Alfa Logistics sp. z o.o.", "Beta Software Ltd.", "Prezes Zarządu", "Managing Director",
+                     "Authorised Signatory", "Republic of Poland", '("Alfa")'):
+            self.assertIn(kept, text)
+
+    def test_masking_signatures_polish(self):
+        text, counts = masking.mask(
+            "Spółkę reprezentuje Prezes Zarządu Jan Kowalski.\n"
+            "§ 1. Zgoda Jana Kowalskiego jest wymagana.\n"
+            "Podpisy\n"
+            "Za Alfa sp. z o.o.:\n"
+            "Jan Kowalski\n"
+            "Za Beta S.A.:\n"
+            "Katarzyna Nowak, Członek Zarządu\n")
+        self.assertNotIn("Kowalsk", text)
+        self.assertNotIn("Nowak", text)
+        self.assertEqual(counts["NAME"], 2)
+        self.assertIn("Za Alfa sp. z o.o.", text)
+
+    def test_masking_keeps_contract_terms(self):
+        text = "The Receiving Party shall notify the Disclosing Party.\nSignatures\nReceiving Party\nConfidential Information"
+        self.assertEqual(masking.mask(text), (text, {}))
 
     def test_legal_basis(self):
         f = {x["rule_id"]: x for x in engine.review(V1, use_claude=False)["findings"]}
