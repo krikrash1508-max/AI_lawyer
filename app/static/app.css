@@ -1,4 +1,4 @@
-/* Klauzula — visual style v0.1 (see docs/08_design.md)
+/* Klauzula AI — visual style v0.2 (see docs/08_design.md)
    Layout: a lawyer's desk — contract on the left, findings on the right. */
 :root {
   --ink: #16213a;        /* text, top bar */
@@ -15,6 +15,7 @@
   --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --font-doc: "IBM Plex Serif", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --brand-ok: #6fd3a0;   /* logo check mark */
   --radius: 6px;
 }
 @media (prefers-color-scheme: dark) {
@@ -35,7 +36,14 @@ button { font: inherit; }
 
 .topbar { display: flex; align-items: center; gap: 24px; padding: 10px 24px; background: var(--sheet); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
 .brand { font-weight: 600; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
-.mark { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--stamp); color: var(--stamp); font-family: var(--font-doc); font-size: 1.05rem; }
+.logo { width: 24px; height: 29px; flex: none; }
+.logo .l-sheet { fill: var(--sheet); stroke: var(--stamp); stroke-width: 3.5; stroke-linejoin: round; }
+.logo .l-fold { fill: var(--stamp); }
+.logo text { fill: var(--stamp); font: 700 21px var(--font-doc); }
+.logo .l-line, .logo .l-ok { fill: none; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.logo .l-line { stroke: var(--stamp); }
+.logo .l-ok { stroke: var(--brand-ok); }
+.ai { color: var(--stamp); }
 .ver { font: 500 .75rem var(--font-mono); color: var(--muted); }
 .tabs { display: flex; gap: 4px; flex: 1; }
 .tabs button { background: none; border: 0; padding: 8px 12px; border-radius: var(--radius); color: var(--muted); cursor: pointer; }
@@ -72,7 +80,7 @@ textarea { width: 100%; font: .9rem/1.5 var(--font-doc); padding: 10px; border: 
 .chip.review { background: var(--review-soft); color: var(--review); }
 .chip.ok { background: var(--ok-soft); color: var(--ok); }
 .panes { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
-@media (max-width: 900px) { .panes, .compare-inputs { grid-template-columns: 1fr !important; } }
+@media (max-width: 900px) { .panes { grid-template-columns: 1fr !important; } }
 
 .doc { background: var(--sheet); border: 1px solid var(--line); border-radius: 4px; padding: 32px 40px; font-family: var(--font-doc); max-height: calc(100vh - 220px); overflow: auto; }
 .clause { padding: 6px 10px; margin: 0 -10px 10px; border-left: 3px solid transparent; border-radius: 2px; }
@@ -102,17 +110,25 @@ mark.pii { background: var(--stamp-soft); color: var(--stamp); font: .8rem var(-
 .decision { font-size: .8rem; font-weight: 500; }
 .ok-group summary { color: var(--muted); padding: 6px 0; }
 
-/* Compare */
-.compare-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.compare-inputs label { font-weight: 500; }
-.risk-changes { display: grid; gap: 8px; margin: 20px 0; }
+/* Decision: any red flags? */
+.decision-panel { display: grid; grid-template-columns: minmax(220px, 1fr) auto; gap: 10px 20px; align-items: center; background: var(--sheet); border: 1px solid var(--line); border-left: 4px solid var(--stamp); border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; }
+.dp-q { display: grid; gap: 2px; }
+.dp-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.dp-out { grid-column: 1 / -1; display: flex; gap: 12px 20px; align-items: center; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 10px; }
+.dp-out p { margin: 0; flex: 1; min-width: 240px; }
+.next-round { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; width: 100%; }
+label.btn { display: inline-block; }
+@media (max-width: 700px) { .decision-panel { grid-template-columns: 1fr; } }
+
+/* New round: what changed since the previous version */
+.since { display: grid; gap: 8px; margin-bottom: 16px; }
+.since p { margin: 0; }
 .rc { display: flex; gap: 10px; align-items: baseline; padding: 10px 14px; border-radius: var(--radius); background: var(--sheet); border: 1px solid var(--line); }
 .rc.new_risk { border-left: 4px solid var(--risk); }
 .rc.resolved { border-left: 4px solid var(--ok); }
 .rc strong { white-space: nowrap; }
-.diff { background: var(--sheet); border: 1px solid var(--line); border-radius: 4px; padding: 24px 32px; font-family: var(--font-doc); }
-.diff .clause { border-left-color: var(--line); }
-.diff .tag { font: .7rem var(--font-mono); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-left: 6px; }
+.clause.removed { opacity: .75; }
+.clause .tag { font: .7rem var(--font-mono); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-left: 6px; }
 ins { background: var(--ins); text-decoration: none; }
 del { background: var(--del); }
 
@@ -123,5 +139,7 @@ table.pb { border-collapse: collapse; width: 100%; font-size: .88rem; }
 .pb th { font-weight: 600; background: var(--paper); }
 .pb td:first-child { font-family: var(--font-mono); white-space: nowrap; }
 .pb td.edit { font-family: var(--font-doc); }
+.pb td.law, .finding .law { font-size: .8rem; color: var(--muted); }
+.finding .law { margin: 4px 0 8px; padding: 6px 8px; background: var(--stamp-soft); border-radius: 4px; color: var(--ink); }
 
 .disclaimer { text-align: center; color: var(--muted); font-size: .8rem; padding: 16px 24px 28px; }

@@ -1,8 +1,12 @@
-"""Compare two versions of a contract clause by clause."""
+"""Compare a new round of a contract with the previous one: clause diff + change in risk levels.
+
+Risk changes use the findings of each round as they were produced (rules or Claude),
+so the comparison always matches the mode of the review.
+"""
 import difflib
 import re
 
-from . import rules
+from .rules import LEVEL_ORDER
 
 
 def _word_diff(a: str, b: str):
@@ -20,7 +24,7 @@ def _word_diff(a: str, b: str):
     return out
 
 
-def compare(old_clauses, new_clauses, playbook):
+def compare(old_clauses, new_clauses, old_findings, new_findings):
     old_by_ref = {c["ref"]: c for c in old_clauses}
     new_by_ref = {c["ref"]: c for c in new_clauses}
     refs = list(old_by_ref)
@@ -37,27 +41,22 @@ def compare(old_clauses, new_clauses, playbook):
             status, diff = "unchanged", [["=", n["text"]]]
         else:
             status, diff = "modified", _word_diff(o["text"], n["text"])
-        changes.append({
-            "ref": ref,
-            "heading": (n or o)["heading"],
-            "status": status,
-            "diff": diff,
-        })
+        changes.append({"ref": ref, "heading": (n or o)["heading"], "status": status, "diff": diff})
 
-    old_f = {f["rule_id"]: f for f in rules.check(old_clauses, playbook)}
-    new_f = {f["rule_id"]: f for f in rules.check(new_clauses, playbook)}
+    old_f = {f["rule_id"]: f for f in old_findings}
     risk_changes = []
-    for rid, nf in new_f.items():
-        of = old_f[rid]
-        if of["level"] != nf["level"]:
-            better = rules.LEVEL_ORDER[nf["level"]] > rules.LEVEL_ORDER[of["level"]]
+    for nf in new_findings:
+        of = old_f.get(nf["rule_id"])
+        if of and of["level"] != nf["level"]:
+            better = LEVEL_ORDER[nf["level"]] > LEVEL_ORDER[of["level"]]
             risk_changes.append({
-                "rule_id": rid,
+                "rule_id": nf["rule_id"],
                 "topic": nf["topic"],
                 "before": of["level"],
                 "after": nf["level"],
                 "direction": "resolved" if better else "new_risk",
+                "clause_ref": nf.get("clause_ref"),
                 "explanation": nf["explanation"],
             })
     risk_changes.sort(key=lambda r: (r["direction"] != "new_risk", r["rule_id"]))
-    return {"changes": changes, "risk_changes": risk_changes, "findings_new": list(new_f.values())}
+    return {"changes": changes, "risk_changes": risk_changes}

@@ -1,10 +1,12 @@
-// Klauzula v0.1 — front end (no framework).
+// Klauzula AI v0.2 — front end (no framework). Follows the TO-BE process:
+// upload → masked check against playbook + Polish law → report → lawyer decides → new version = next round.
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const LEVEL = { risk: "Red flag", review: "Review", ok: "OK" };
 
-let current = null;      // last review result
-let decisions = {};      // rule_id -> {decision, edit, comment}
+let current = null;      // review of the current round
+let decisions = {};      // rule_id -> {decision, edit}
+let verdict = "";        // "sign" | "edits" — the lawyer's decision for this round
 let samples = null;
 
 async function api(path, body) {
@@ -23,17 +25,28 @@ function show(view) {
   if (view === "playbook") loadPlaybook();
 }
 
-// ---------- review ----------
-async function runReview(payload) {
+// ---------- review: a round ----------
+async function runReview(payload, nextRound = false) {
   $("#review-error").hidden = true;
+  if (nextRound && current) payload.previous = { round: current.round, clauses: current.clauses, findings: current.findings };
   try {
     current = await api("/api/review", payload);
     decisions = {};
+    verdict = "";
     renderReview();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   } catch (e) {
+    if (nextRound) { alert(e.message); return; }
     $("#review-error").textContent = e.message;
     $("#review-error").hidden = false;
   }
+}
+
+function readFile(file, nextRound = false) {
+  if (file.size > 5 * 1024 * 1024) { alert("The file is larger than 5 MB."); return; }
+  const reader = new FileReader();
+  reader.onload = () => runReview({ file_b64: reader.result.split(",")[1], filename: file.name }, nextRound);
+  reader.readAsDataURL(file);
 }
 
 $("#sample-run").addEventListener("click", async () => {
@@ -50,48 +63,70 @@ drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.ad
 drop.addEventListener("dragleave", () => drop.classList.remove("over"));
 drop.addEventListener("drop", (e) => { e.preventDefault(); drop.classList.remove("over"); e.dataTransfer.files[0] && readFile(e.dataTransfer.files[0]); });
 
-function readFile(file) {
-  if (file.size > 5 * 1024 * 1024) { $("#review-error").textContent = "The file is larger than 5 MB."; $("#review-error").hidden = false; return; }
-  const reader = new FileReader();
-  reader.onload = () => runReview({ file_b64: reader.result.split(",")[1], filename: file.name });
-  reader.readAsDataURL(file);
-}
+$("#next-file").addEventListener("change", (e) => { if (e.target.files[0]) readFile(e.target.files[0], true); e.target.value = ""; });
+$("#next-sample").addEventListener("click", async () => {
+  const s = await getSamples();
+  runReview({ text: s.nda_counterparty_v2, filename: "nda_counterparty_v2.txt (sample)" }, true);
+});
 
 $("#new-review").addEventListener("click", () => {
+  current = null;
   $("#workspace").hidden = true; $("#intake").hidden = false; $("#file-input").value = "";
 });
 
 function highlightPII(text) {
-  return esc(text).replace(/\[(EMAIL|PHONE|KRS|NIP|PESEL|IBAN)_\d+\]/g, (m) => `<mark class="pii" title="Masked before analysis">${m}</mark>`);
+  return esc(text).replace(/\[(EMAIL|PHONE|KRS|NIP|PESEL|IBAN|NAME)_\d+\]/g, (m) => `<mark class="pii" title="Masked before analysis">${m}</mark>`);
 }
+const refLabel = (ref) => (ref === "preamble" ? "" : `<span class="ref">§ ${esc(ref)}</span>`);
 
 function renderReview() {
   const r = current;
   $("#intake").hidden = true;
   $("#workspace").hidden = false;
-  $("#sum-file").textContent = r.filename || "contract";
+  $("#sum-file").textContent = `Round ${r.round} · ${r.filename || "contract"}`;
   $("#sum-chips").innerHTML = ["risk", "review", "ok"].map((l) => `<span class="chip ${l}">${r.counts[l]} ${LEVEL[l]}</span>`).join("");
   const masked = Object.entries(r.masked).map(([k, v]) => `${v} ${k}`).join(", ");
   $("#sum-meta").innerHTML = `Playbook: ${esc(r.playbook.title)} v${esc(r.playbook.version)} · ${r.mode === "claude" ? "Claude" : "rule-based check"} · ${r.seconds}s` +
     (masked ? `<br>Masked before analysis: ${esc(masked)}` : "") + (r.note ? `<br>${esc(r.note)}` : "");
 
-  // contract text: color each clause by its worst finding
-  const worst = {};
-  r.findings.forEach((f) => {
-    if (!f.clause_ref || f.level === "ok") return;
-    if (worst[f.clause_ref] !== "risk") worst[f.clause_ref] = f.level;
-  });
-  $("#doc").innerHTML = r.clauses.map((c) => `
-    <section class="clause ${worst[c.ref] || ""}" id="clause-${esc(c.ref)}">
-      <h3>${c.ref === "preamble" ? "" : `<span class="ref">§ ${esc(c.ref)}</span>`}${esc(c.heading)}</h3>
-      <p>${highlightPII(c.text)}</p>
-    </section>`).join("");
+  renderSince(r);
+  renderDoc(r);
 
   const open = r.findings.filter((f) => f.level !== "ok");
   const ok = r.findings.filter((f) => f.level === "ok");
   $("#findings").innerHTML = open.map(findingCard).join("") +
     (ok.length ? `<details class="ok-group"><summary>${ok.length} rules met the playbook</summary>${ok.map(findingCard).join("")}</details>` : "");
   bindFindings();
+  renderDecision();
+}
+
+// What changed since the previous round (the counterparty's new version)
+function renderSince(r) {
+  const box = $("#since");
+  if (!r.risk_changes) { box.hidden = true; return; }
+  const changed = r.changes.filter((c) => c.status !== "unchanged").length;
+  const rc = r.risk_changes.map((x) => `
+    <div class="rc ${x.direction}"><strong>${x.direction === "new_risk" ? "New risk" : "Improved"}</strong>
+      <span>${esc(x.topic)}${x.clause_ref ? ` (§ ${esc(x.clause_ref)})` : ""}: ${LEVEL[x.before]} → ${LEVEL[x.after]}. ${esc(x.explanation)}</span></div>`).join("");
+  box.innerHTML = `<div class="eyebrow">Since round ${r.round - 1} · ${changed} of ${r.changes.length} clauses changed</div>` +
+    (rc || '<p class="hint">No change in risk levels.</p>') +
+    `<p class="hint">Tracked changes in a .docx are read as if accepted; changed clauses are marked in the text below.</p>`;
+  box.hidden = false;
+}
+
+function renderDoc(r) {
+  const worst = {};
+  r.findings.forEach((f) => {
+    if (!f.clause_ref || f.level === "ok") return;
+    if (worst[f.clause_ref] !== "risk") worst[f.clause_ref] = f.level;
+  });
+  const diffHtml = (d) => d.map(([op, t]) => op === "+" ? `<ins>${highlightPII(t)}</ins>` : op === "-" ? `<del>${highlightPII(t)}</del>` : highlightPII(t)).join("");
+  const items = r.changes || r.clauses.map((c) => ({ ref: c.ref, heading: c.heading, status: "unchanged", diff: [["=", c.text]] }));
+  $("#doc").innerHTML = items.map((c) => `
+    <section class="clause ${c.status === "removed" ? "removed" : worst[c.ref] || ""}" ${c.status === "removed" ? "" : `id="clause-${esc(c.ref)}"`}>
+      <h3>${refLabel(c.ref)}${esc(c.heading)}${c.status !== "unchanged" ? `<span class="tag">${c.status}</span>` : ""}</h3>
+      <p>${diffHtml(c.diff)}</p>
+    </section>`).join("");
 }
 
 function findingCard(f) {
@@ -102,6 +137,7 @@ function findingCard(f) {
     ${f.quote ? `<blockquote>${highlightPII(f.quote)}</blockquote>` : ""}
     <p class="why">${esc(f.explanation)}</p>
     <p class="std">Playbook: ${esc(f.standard)}</p>
+    ${f.legal_basis ? `<p class="law"><span class="eyebrow">Polish law · to verify</span> ${esc(f.legal_basis)}</p>` : ""}
     ${f.suggested_edit ? `
       <label class="std" for="edit-${esc(f.rule_id)}">Suggested wording (editable)</label>
       <textarea id="edit-${esc(f.rule_id)}" rows="3">${esc(f.suggested_edit)}</textarea>
@@ -132,55 +168,49 @@ function bindFindings() {
       card.classList.remove("accepted", "rejected");
       card.classList.add(btn.dataset.act);
       card.querySelector(".decision").textContent = btn.dataset.act === "accepted" ? "Edit accepted" : "Rejected";
+      renderDecision();
     }));
   });
 }
 
+// ---------- the lawyer's decision: any red flags? ----------
+function renderDecision() {
+  const r = current;
+  const accepted = Object.values(decisions).filter((d) => d.decision === "accepted").length;
+  const openRisk = r.findings.filter((f) => f.level === "risk" && decisions[f.rule_id]?.decision !== "accepted").length;
+  $("#dp-question").textContent = r.red_flags ? `Any red flags? Klauzula AI found ${r.red_flags}.` : "Any red flags? Klauzula AI found none.";
+  $("#dp-hint").textContent = `${accepted} edit${accepted === 1 ? "" : "s"} accepted` + (openRisk ? ` · ${openRisk} red flag${openRisk === 1 ? "" : "s"} without an accepted edit` : "") + ". You decide.";
+  document.querySelectorAll(".verdict").forEach((b) => b.classList.toggle("primary", b.dataset.verdict === verdict));
+  $("#dp-out").hidden = !verdict;
+  $("#next-round").hidden = verdict !== "edits";
+  if (verdict === "sign") {
+    $("#dp-result").innerHTML = "<strong>Ready for signing.</strong> " +
+      (openRisk ? `Note: ${openRisk} red flag${openRisk === 1 ? " stays" : "s stay"} in the text — the report records that you accepted the risk.` : "The report records your decision for sales.");
+  } else if (verdict === "edits") {
+    $("#dp-result").innerHTML = accepted
+      ? `<strong>${accepted} edit${accepted === 1 ? "" : "s"} for the counterparty.</strong> Export the report; sales / purchasing sends the edits.`
+      : "<strong>No edits accepted yet.</strong> Accept the edits you want to send in the cards below, then export.";
+  }
+}
+document.querySelectorAll(".verdict").forEach((b) => b.addEventListener("click", () => { verdict = b.dataset.verdict; renderDecision(); }));
+
 document.querySelectorAll("[data-export]").forEach((b) => b.addEventListener("click", async () => {
   const fmt = b.dataset.export;
-  const res = await fetch("/api/export", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ review: current, decisions, format: fmt }) });
+  const res = await fetch("/api/export", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ review: current, decisions, verdict, format: fmt }) });
   const blob = await res.blob();
-  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: fmt === "md" ? "nda-review.md" : "nda-review.doc" });
+  const name = `klauzula-report-round${current.round}.${fmt === "md" ? "md" : "doc"}`;
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: name });
   a.click();
   URL.revokeObjectURL(a.href);
 }));
-
-// ---------- compare ----------
-$("#compare-sample").addEventListener("click", async () => {
-  const s = await getSamples();
-  $("#old-text").value = s.nda_counterparty_v1;
-  $("#new-text").value = s.nda_counterparty_v2;
-});
-$("#compare-run").addEventListener("click", async () => {
-  $("#compare-error").hidden = true;
-  try {
-    const r = await api("/api/compare", { old_text: $("#old-text").value, new_text: $("#new-text").value });
-    renderCompare(r);
-  } catch (e) { $("#compare-error").textContent = e.message; $("#compare-error").hidden = false; }
-});
-
-function renderCompare(r) {
-  const rc = r.risk_changes.map((x) => `
-    <div class="rc ${x.direction}"><strong>${x.direction === "new_risk" ? "New risk" : "Improved"}</strong>
-      <span>${esc(x.topic)}: ${LEVEL[x.before]} → ${LEVEL[x.after]}. ${esc(x.explanation)}</span></div>`).join("");
-  const changed = r.changes.filter((c) => c.status !== "unchanged");
-  const diff = changed.map((c) => `
-    <section class="clause">
-      <h3>${c.ref === "preamble" ? "" : `<span class="ref">§ ${esc(c.ref)}</span>`}${esc(c.heading)}<span class="tag">${c.status}</span></h3>
-      <p>${c.diff.map(([op, t]) => op === "+" ? `<ins>${highlightPII(t)}</ins>` : op === "-" ? `<del>${highlightPII(t)}</del>` : highlightPII(t)).join("")}</p>
-    </section>`).join("");
-  $("#compare-result").innerHTML =
-    `<div class="risk-changes"><div class="eyebrow">Effect on the playbook</div>${rc || '<p class="hint">No change in risk levels.</p>'}</div>` +
-    `<div class="eyebrow">${changed.length} of ${r.changes.length} clauses changed</div><div class="diff">${diff}</div>`;
-}
 
 // ---------- playbook ----------
 async function loadPlaybook() {
   const pb = await api("/api/playbook");
   $("#pb-title").textContent = `${pb.title} · v${pb.version}`;
-  $("#pb-status").textContent = `Status: ${pb.status}`;
-  $("#pb-table").innerHTML = "<tr><th>Rule</th><th>Topic</th><th>Standard position</th><th>Red flag</th><th>Fallback wording</th></tr>" +
-    pb.rules.map((r) => `<tr><td>${esc(r.id)}</td><td>${esc(r.topic)}</td><td>${esc(r.standard)}</td><td>${esc(r.red_flag)}</td><td class="edit">${esc(r.suggested_edit)}</td></tr>`).join("");
+  $("#pb-status").textContent = `Status: ${pb.status}. ${pb.legal_basis_status || ""}`;
+  $("#pb-table").innerHTML = "<tr><th>Rule</th><th>Topic</th><th>Standard position</th><th>Red flag</th><th>Polish law</th><th>Fallback wording</th></tr>" +
+    pb.rules.map((r) => `<tr><td>${esc(r.id)}</td><td>${esc(r.topic)}</td><td>${esc(r.standard)}</td><td>${esc(r.red_flag)}</td><td class="law">${esc(r.legal_basis)}</td><td class="edit">${esc(r.suggested_edit)}</td></tr>`).join("");
 }
 
 api("/api/status").then((s) => {

@@ -3,29 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Klauzula — NDA review</title>
+  <title>Klauzula AI — contract review</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><span class="mark" aria-hidden="true">§</span> Klauzula <span class="ver">v0.1</span></div>
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 48 58" aria-hidden="true">
+        <path class="l-sheet" d="M7 3h25l13 13v36a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/>
+        <path class="l-fold" d="M32 3v10a3 3 0 0 0 3 3h10z"/>
+        <text x="21" y="29" text-anchor="middle">§</text>
+        <path class="l-line" d="M12 36h20M12 49h22"/>
+        <path class="l-ok" d="M12 42.5h18M33 42.5l3 3 6-6.5"/>
+      </svg>
+      Klauzula <span class="ai">AI</span> <span class="ver">v0.2</span>
+    </div>
     <nav class="tabs" role="tablist">
-      <button role="tab" id="tab-review" aria-selected="true" data-view="review">Review NDA</button>
-      <button role="tab" id="tab-compare" aria-selected="false" data-view="compare">Compare versions</button>
+      <button role="tab" id="tab-review" aria-selected="true" data-view="review">Review contract</button>
       <button role="tab" id="tab-playbook" aria-selected="false" data-view="playbook">Playbook</button>
     </nav>
     <span class="mode" id="mode-badge">…</span>
   </header>
 
   <main>
-    <!-- 1. Review -->
+    <!-- Review: round 1 intake, then the report with the lawyer's decision; new versions are next rounds -->
     <section class="view" id="view-review">
       <div class="intake" id="intake">
         <div class="intake-card">
-          <h1>Check an NDA against your playbook</h1>
-          <p class="lead">Upload the counterparty's draft. Klauzula masks personal data, finds the clauses that break your rules and proposes wording. You decide on every point.</p>
+          <div class="eyebrow">Task from sales / purchasing · round 1</div>
+          <h1>Check a contract against your playbook and Polish law</h1>
+          <p class="lead">Upload the counterparty's draft. Klauzula AI masks names and identifiers, checks every clause against your playbook with references to Polish law and prepares a report. You decide: sign, or send edits.</p>
           <label class="drop" id="drop" for="file-input">
             <input type="file" id="file-input" accept=".docx,.txt,.md">
             <strong>Drop a .docx or .txt file</strong>
@@ -33,7 +43,7 @@
           </label>
           <details>
             <summary>Paste text instead</summary>
-            <textarea id="paste" rows="8" placeholder="Paste the NDA text here…"></textarea>
+            <textarea id="paste" rows="8" placeholder="Paste the contract text here…"></textarea>
             <button class="btn" id="paste-run">Check pasted text</button>
           </details>
           <div class="row">
@@ -52,11 +62,36 @@
           </div>
           <div class="summary-meta" id="sum-meta"></div>
           <div class="actions">
-            <button class="btn" id="new-review">New review</button>
-            <button class="btn" data-export="md">Export .md</button>
-            <button class="btn primary" data-export="doc">Export for Word</button>
+            <button class="btn" id="new-review">New contract</button>
           </div>
         </div>
+
+        <div class="since" id="since" hidden></div>
+
+        <div class="decision-panel" id="decision-panel">
+          <div class="dp-q">
+            <div class="eyebrow">Your decision</div>
+            <strong id="dp-question">Any red flags?</strong>
+            <span class="hint" id="dp-hint"></span>
+          </div>
+          <div class="dp-actions">
+            <button class="btn verdict" data-verdict="sign">No — ready for signing</button>
+            <button class="btn verdict" data-verdict="edits">Yes — send edits to the counterparty</button>
+          </div>
+          <div class="dp-out" id="dp-out" hidden>
+            <p id="dp-result"></p>
+            <div class="actions">
+              <button class="btn" data-export="md">Report .md</button>
+              <button class="btn primary" data-export="doc">Report for Word</button>
+            </div>
+            <div class="next-round" id="next-round" hidden>
+              <span class="hint">Counterparty answered with a new version?</span>
+              <label class="btn" for="next-file"><input type="file" id="next-file" accept=".docx,.txt,.md" hidden>Upload new version</label>
+              <button class="btn" id="next-sample">Try sample version 2</button>
+            </div>
+          </div>
+        </div>
+
         <div class="panes">
           <article class="doc" id="doc" aria-label="Contract text"></article>
           <aside class="findings" id="findings" aria-label="Findings"></aside>
@@ -64,28 +99,7 @@
       </div>
     </section>
 
-    <!-- 2. Compare -->
-    <section class="view" id="view-compare" hidden>
-      <div class="compare-inputs">
-        <div>
-          <label for="old-text">Version A — what we sent</label>
-          <textarea id="old-text" rows="10" placeholder="Paste version A…"></textarea>
-        </div>
-        <div>
-          <label for="new-text">Version B — what came back</label>
-          <textarea id="new-text" rows="10" placeholder="Paste version B…"></textarea>
-        </div>
-      </div>
-      <div class="row">
-        <button class="btn primary" id="compare-run">Compare</button>
-        <button class="btn" id="compare-sample">Load sample versions</button>
-        <span class="hint">Shows what changed and whether the change created or removed a risk.</span>
-      </div>
-      <p class="error" id="compare-error" hidden></p>
-      <div id="compare-result"></div>
-    </section>
-
-    <!-- 3. Playbook -->
+    <!-- Playbook -->
     <section class="view" id="view-playbook" hidden>
       <div class="pb-head">
         <h1 id="pb-title">Playbook</h1>
@@ -96,7 +110,7 @@
   </main>
 
   <footer class="disclaimer">
-    Klauzula is a working tool for lawyers. Results are not legal advice; the lawyer reviews and decides. Personal data is masked before analysis. Prototype v0.1 — do not upload real confidential contracts.
+    Klauzula AI is a working tool for lawyers. Results and legal references are not legal advice; the lawyer reviews and decides. Names and identifiers are masked before analysis. Prototype v0.2 — do not upload real confidential contracts.
   </footer>
   <script src="app.js"></script>
 </body>

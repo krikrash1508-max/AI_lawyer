@@ -1,7 +1,7 @@
 {
   "id": "nda_pl",
   "title": "NDA — company playbook (Poland)",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "draft — example rules, must be validated by a Polish lawyer (radca prawny)",
   "our_side": "Disclosing and receiving party (mutual NDA preferred)",
   "rules": [
@@ -10,70 +10,81 @@
       "topic": "Governing law",
       "standard": "Polish law.",
       "red_flag": "Foreign law (e.g. English, German, US state law).",
-      "suggested_edit": "This Agreement shall be governed by and construed in accordance with the laws of the Republic of Poland."
+      "suggested_edit": "This Agreement shall be governed by and construed in accordance with the laws of the Republic of Poland.",
+      "legal_basis": "Rome I Regulation (EC) 593/2008, art. 3 — the parties choose the governing law."
     },
     {
       "id": "NDA-02",
       "topic": "Jurisdiction / disputes",
       "standard": "Common court competent for our registered seat in Poland.",
       "red_flag": "Foreign courts or foreign arbitration.",
-      "suggested_edit": "Any disputes arising out of this Agreement shall be resolved by the common court competent for the registered seat of [Our Company]."
+      "suggested_edit": "Any disputes arising out of this Agreement shall be resolved by the common court competent for the registered seat of [Our Company].",
+      "legal_basis": "Brussels I bis Regulation (EU) 1215/2012, art. 25; Polish Code of Civil Procedure (KPC), art. 1105 — choice of court."
     },
     {
       "id": "NDA-03",
       "topic": "Duration of confidentiality",
       "standard": "2–5 years after disclosure or termination.",
       "red_flag": "Perpetual / indefinite obligation, or more than 10 years.",
-      "suggested_edit": "The obligations of confidentiality shall survive for a period of three (3) years following the termination or expiry of this Agreement."
+      "suggested_edit": "The obligations of confidentiality shall survive for a period of three (3) years following the termination or expiry of this Agreement.",
+      "legal_basis": "Polish Civil Code (KC), art. 365¹ — an open-ended continuing obligation can be terminated by notice; Act on Combating Unfair Competition (UZNK), art. 11 — trade secret."
     },
     {
       "id": "NDA-04",
       "topic": "Exclusions from Confidential Information",
       "standard": "At least: public domain, already known, independently developed, lawfully received from a third party.",
       "red_flag": "No exclusions at all.",
-      "suggested_edit": "Confidential Information shall not include information which: (a) is or becomes publicly available other than through a breach of this Agreement; (b) was lawfully known to the Receiving Party before disclosure; (c) is independently developed by the Receiving Party; or (d) is lawfully received from a third party without a duty of confidentiality."
+      "suggested_edit": "Confidential Information shall not include information which: (a) is or becomes publicly available other than through a breach of this Agreement; (b) was lawfully known to the Receiving Party before disclosure; (c) is independently developed by the Receiving Party; or (d) is lawfully received from a third party without a duty of confidentiality.",
+      "legal_basis": "UZNK, art. 11 sec. 2 — definition of a trade secret (information not generally known, protected by reasonable steps)."
     },
     {
       "id": "NDA-05",
       "topic": "Disclosure required by law",
       "standard": "Disclosure allowed if required by law or a competent authority, with prior notice where lawful.",
       "red_flag": "No such exception.",
-      "suggested_edit": "The Receiving Party may disclose Confidential Information to the extent required by law or by a decision of a competent court or authority, provided that it notifies the Disclosing Party in advance where legally permitted."
+      "suggested_edit": "The Receiving Party may disclose Confidential Information to the extent required by law or by a decision of a competent court or authority, provided that it notifies the Disclosing Party in advance where legally permitted.",
+      "legal_basis": "Statutory duties to disclose, e.g. KPC art. 248 (duty to produce documents to the court)."
     },
     {
       "id": "NDA-06",
       "topic": "Contractual penalty (kara umowna)",
       "standard": "None, or mutual and not higher than PLN 100,000 per breach.",
       "red_flag": "One-sided penalty or more than PLN 100,000 per breach.",
-      "suggested_edit": "In the event of a breach of this Agreement, the breaching Party shall pay the other Party a contractual penalty of PLN 50,000 per breach. The aggrieved Party may claim damages exceeding the contractual penalty."
+      "suggested_edit": "In the event of a breach of this Agreement, the breaching Party shall pay the other Party a contractual penalty of PLN 50,000 per breach. The aggrieved Party may claim damages exceeding the contractual penalty.",
+      "legal_basis": "KC, art. 483–484 — contractual penalty; art. 484 § 2 — the court may reduce a grossly excessive penalty."
     },
     {
       "id": "NDA-07",
       "topic": "Liability and indemnities",
       "standard": "Liability under general rules of the Polish Civil Code; no indemnities.",
       "red_flag": "Unlimited liability, indemnification for all losses, or liability for indirect losses.",
-      "suggested_edit": "Each Party shall be liable for breach of this Agreement in accordance with the Polish Civil Code. Neither Party shall be liable for lost profits or indirect losses."
+      "suggested_edit": "Each Party shall be liable for breach of this Agreement in accordance with the Polish Civil Code. Neither Party shall be liable for lost profits or indirect losses.",
+      "legal_basis": "KC, art. 471 — contractual liability; art. 361 — adequate causation and scope of damage (incl. lost profits)."
     },
     {
       "id": "NDA-08",
       "topic": "Non-solicitation / non-compete",
       "standard": "Not part of an NDA.",
       "red_flag": "Non-solicitation of employees or non-compete hidden in the NDA.",
-      "suggested_edit": "Delete the clause. Non-solicitation, if needed, belongs in the main commercial agreement."
+      "suggested_edit": "Delete the clause. Non-solicitation, if needed, belongs in the main commercial agreement.",
+      "legal_basis": "UZNK, art. 12 — inducing employees to breach duties; Labour Code (KP), art. 101¹–101⁴ — non-compete with employees."
     },
     {
       "id": "NDA-09",
       "topic": "Return or destruction of information",
       "standard": "Return or destroy on request or at termination; archival copies allowed if required by law.",
       "red_flag": "Missing.",
-      "suggested_edit": "Upon the Disclosing Party's written request or termination of this Agreement, the Receiving Party shall return or destroy all Confidential Information, except copies it is required to retain by law."
+      "suggested_edit": "Upon the Disclosing Party's written request or termination of this Agreement, the Receiving Party shall return or destroy all Confidential Information, except copies it is required to retain by law.",
+      "legal_basis": "KC, art. 353¹ — freedom of contract; statutory retention duties (e.g. accounting records)."
     },
     {
       "id": "NDA-10",
       "topic": "Personal data (GDPR / RODO)",
       "standard": "Clause on personal data under Regulation (EU) 2016/679, or a statement that no personal data is shared.",
       "red_flag": "Missing when personal data may be exchanged.",
-      "suggested_edit": "If Confidential Information includes personal data, the Parties shall process it in accordance with Regulation (EU) 2016/679 (GDPR) and, where required, conclude a data processing agreement."
+      "suggested_edit": "If Confidential Information includes personal data, the Parties shall process it in accordance with Regulation (EU) 2016/679 (GDPR) and, where required, conclude a data processing agreement.",
+      "legal_basis": "GDPR (RODO), art. 6 and 28; Polish Personal Data Protection Act of 10 May 2018."
     }
-  ]
+  ],
+  "legal_basis_status": "References to Polish and EU law are examples for the prototype and must be verified by a radca prawny."
 }
