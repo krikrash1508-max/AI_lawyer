@@ -1,0 +1,294 @@
+<title>Klauzula Step 3 Design Pack</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: a lawyer's desk — narrow reading column, wide frames for screens. */
+:root {
+  --ink: #16213a; --paper: #f2f4f8; --sheet: #ffffff; --line: #d9dee8; --muted: #5a6479;
+  --stamp: #3a3d9e; --stamp-soft: #e9e9f8;
+  --risk: #b42318; --risk-soft: #fdecea; --review: #a15c07; --review-soft: #fdf3e2; --ok: #1e7a4f; --ok-soft: #e6f4ec;
+  --ins: #dff3e7; --del: #fbe3e1;
+  --ui: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --doc: "IBM Plex Serif", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --ink: #e6e9f2; --paper: #11151f; --sheet: #1a2030; --line: #2e3648; --muted: #9aa3b8; --stamp: #9fa3ff; --stamp-soft: #262a52;
+  --risk: #ff8a80; --risk-soft: #3a1d1d; --review: #f5b759; --review-soft: #3a2c14; --ok: #6fd3a0; --ok-soft: #15301f; --ins: #17351f; --del: #3d1c1c; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --ink: #e6e9f2; --paper: #11151f; --sheet: #1a2030; --line: #2e3648; --muted: #9aa3b8; --stamp: #9fa3ff; --stamp-soft: #262a52;
+  --risk: #ff8a80; --risk-soft: #3a1d1d; --review: #f5b759; --review-soft: #3a2c14; --ok: #6fd3a0; --ok-soft: #15301f; --ins: #17351f; --del: #3d1c1c; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 15px/1.55 var(--ui); margin: 0; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 64px; display: grid; gap: 56px; }
+h1 { font-size: 2rem; font-weight: 600; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.35rem; font-weight: 600; margin: 0 0 6px; text-wrap: balance; }
+h3 { font-size: 1rem; font-weight: 600; margin: 0 0 8px; }
+p { margin: 0; max-width: 68ch; }
+.muted { color: var(--muted); }
+.eyebrow { font: 500 .72rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.mark { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 2.5px solid var(--stamp); color: var(--stamp); font: 600 1.4rem var(--doc); flex: none; }
+.mark.sm { width: 24px; height: 24px; border-width: 2px; font-size: .8rem; }
+header.top { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.section-head { display: grid; gap: 6px; margin-bottom: 18px; }
+
+/* Process */
+.flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+.step { flex: 1 1 140px; min-width: 0; background: var(--sheet); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; font-size: .86rem; position: relative; }
+.step b { display: block; font-size: .72rem; font-family: var(--mono); color: var(--muted); font-weight: 500; }
+.step.pain { border-color: var(--risk); background: var(--risk-soft); }
+.step.ai { border-color: var(--stamp); background: var(--stamp-soft); }
+.step.human { border-style: dashed; border-color: var(--ink); }
+.arrow { align-self: center; color: var(--muted); font-family: var(--mono); }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: .8rem; color: var(--muted); margin-top: 10px; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--line); }
+.legend .l-pain::before { background: var(--risk-soft); border-color: var(--risk); }
+.legend .l-ai::before { background: var(--stamp-soft); border-color: var(--stamp); }
+.legend .l-human::before { border: 1px dashed var(--ink); }
+.loop { margin-top: 8px; font-size: .82rem; color: var(--muted); }
+
+/* Style */
+.style-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+.sw { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--sheet); font-size: .78rem; }
+.sw i { display: block; height: 44px; }
+.sw div { padding: 6px 8px; }
+.sw code { font-family: var(--mono); color: var(--muted); font-size: .72rem; }
+.type-spec { display: grid; gap: 12px; }
+.type-spec div { background: var(--sheet); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+.t-doc { font-family: var(--doc); font-size: 1.05rem; }
+.t-mono { font-family: var(--mono); font-size: .9rem; }
+
+/* Mock-up frames */
+.frames { display: grid; gap: 28px; }
+.frame { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--paper); }
+.frame-cap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 14px; background: var(--sheet); border-bottom: 1px solid var(--line); font-size: .85rem; }
+.frame-cap strong { font-weight: 600; }
+.screen { padding: 14px; overflow-x: auto; }
+.bar { display: flex; gap: 14px; align-items: center; padding: 8px 12px; background: var(--sheet); border: 1px solid var(--line); border-radius: 6px; font-size: .82rem; margin-bottom: 12px; min-width: 560px; }
+.bar .tab { color: var(--muted); } .bar .tab.on { color: var(--stamp); background: var(--stamp-soft); padding: 2px 8px; border-radius: 4px; }
+.bar .grow { flex: 1; }
+.btn { display: inline-block; border: 1px solid var(--line); background: var(--sheet); border-radius: 5px; padding: 4px 10px; font-size: .78rem; white-space: nowrap; }
+.btn.p { background: var(--stamp); border-color: var(--stamp); color: var(--sheet); }
+.chip { font-size: .72rem; font-weight: 500; padding: 1px 8px; border-radius: 999px; white-space: nowrap; }
+.chip.r { background: var(--risk-soft); color: var(--risk); } .chip.v { background: var(--review-soft); color: var(--review); } .chip.o { background: var(--ok-soft); color: var(--ok); }
+.two { display: grid; grid-template-columns: 1.1fr 1fr; gap: 12px; min-width: 560px; }
+.sheet { background: var(--sheet); border: 1px solid var(--line); border-radius: 3px; padding: 16px 20px; font: .8rem/1.5 var(--doc); }
+.cl { padding: 4px 8px; margin: 0 -8px 6px; border-left: 3px solid transparent; }
+.cl.r { border-left-color: var(--risk); background: var(--risk-soft); } .cl.v { border-left-color: var(--review); background: var(--review-soft); }
+.cl b { font-weight: 600; } .ref { font: .68rem var(--mono); color: var(--muted); margin-right: 4px; }
+.pii { font: .7rem var(--mono); background: var(--stamp-soft); color: var(--stamp); padding: 0 3px; border-radius: 3px; }
+.card { background: var(--sheet); border: 1px solid var(--line); border-left: 4px solid var(--risk); border-radius: 5px; padding: 8px 10px; font-size: .78rem; margin-bottom: 8px; }
+.card.v { border-left-color: var(--review); }
+.card .h { display: flex; justify-content: space-between; gap: 8px; font-weight: 600; }
+.card .h span { font: .66rem var(--mono); color: var(--muted); font-weight: 400; }
+.card q { display: block; font: italic .76rem var(--doc); color: var(--muted); border-left: 2px solid var(--line); padding-left: 6px; margin: 4px 0; quotes: none; }
+.card .edit { font-family: var(--doc); border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; margin: 4px 0; }
+.drop { border: 2px dashed var(--line); border-radius: 8px; padding: 22px; text-align: center; font-size: .82rem; margin: 10px 0; }
+.center { max-width: 440px; margin: 0 auto; background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; padding: 18px; font-size: .82rem; }
+.rc { background: var(--sheet); border: 1px solid var(--line); border-left: 4px solid var(--ok); border-radius: 5px; padding: 6px 10px; font-size: .78rem; margin-bottom: 6px; min-width: 560px; }
+.rc.n { border-left-color: var(--risk); }
+ins { background: var(--ins); text-decoration: none; } del { background: var(--del); }
+table.pb { border-collapse: collapse; width: 100%; min-width: 560px; font-size: .76rem; background: var(--sheet); }
+.pb td, .pb th { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+.pb th { background: var(--paper); }
+.word { display: grid; grid-template-columns: 1fr 260px; gap: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; min-width: 560px; }
+.word .ribbon { grid-column: 1 / -1; background: var(--stamp-soft); padding: 6px 10px; font-size: .74rem; color: var(--muted); border-bottom: 1px solid var(--line); }
+.word .page { background: var(--paper); padding: 16px; }
+.word .pane { background: var(--sheet); border-left: 1px solid var(--line); padding: 10px; }
+
+/* Spec + notes */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--sheet); }
+table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
+.spec th, .spec td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.spec th { font-weight: 600; background: var(--paper); }
+.spec td:first-child { font-family: var(--mono); white-space: nowrap; color: var(--stamp); }
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.note { background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; font-size: .9rem; display: grid; gap: 6px; align-content: start; }
+.disclaimer { font-size: .8rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+@media (max-width: 640px) { h1 { font-size: 1.5rem; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="mark" aria-hidden="true">§</span>
+    <div style="display:grid;gap:4px;min-width:0">
+      <div class="eyebrow">Course project · Step 3 · 24 Nov 2026</div>
+      <h1>Klauzula</h1>
+      <p class="muted">NDA review for in-house lawyers in Polish companies. Your playbook, every clause. This page shows the process, the name and visual style, the screen mock-ups, the v0.1 specification and what we learned building the first working version.</p>
+    </div>
+  </header>
+
+  <!-- Process -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">1 · Process</div>
+      <h2>How an NDA gets approved today, and with Klauzula</h2>
+      <p class="muted">The lawyer still decides at every point. Klauzula removes the manual comparison with the company's rules and the manual search for what changed between versions.</p>
+    </div>
+    <h3>Today</h3>
+    <div class="flow">
+      <div class="step"><b>Sales</b>Receives the counterparty's NDA</div><span class="arrow">→</span>
+      <div class="step"><b>Email</b>"Please check, urgent"</div><span class="arrow">→</span>
+      <div class="step pain"><b>Queue</b>Waits 1–5 days for the lawyer</div><span class="arrow">→</span>
+      <div class="step pain"><b>Lawyer</b>Reads all of it, checks rules from memory</div><span class="arrow">→</span>
+      <div class="step"><b>Lawyer</b>Edits in Word, explains by email</div><span class="arrow">→</span>
+      <div class="step pain"><b>New version</b>Finds changes by hand</div>
+    </div>
+    <p class="loop">↺ The last two steps repeat for every round of negotiation.</p>
+    <h3 style="margin-top:22px">With Klauzula</h3>
+    <div class="flow">
+      <div class="step"><b>Lawyer</b>Uploads the DOCX</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula</b>Masks personal data</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula</b>Checks 10 playbook rules: OK / Review / Red flag</div><span class="arrow">→</span>
+      <div class="step human"><b>Lawyer decides</b>Edits, accepts or rejects each proposal</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula</b>Report for Word, reply to counterparty</div><span class="arrow">→</span>
+      <div class="step ai"><b>New version</b>Compare: what changed, which risks appeared</div>
+    </div>
+    <div class="legend"><span class="l-pain">bottleneck</span><span class="l-ai">done by Klauzula</span><span class="l-human">lawyer's decision</span></div>
+  </section>
+
+  <!-- Name & style -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">2 · Name and visual style</div>
+      <h2>Klauzula: the Polish word for a contract clause</h2>
+      <p class="muted">We are a tool for the lawyer, not an "AI lawyer", so the name speaks the lawyer's language. The mark is a § in a circle, like the ink of an official stamp. The screen is a lawyer's desk: the contract on a sheet in a serif face on the left, findings on the right.</p>
+    </div>
+    <div class="style-grid">
+      <div>
+        <h3>Colour</h3>
+        <div class="swatches">
+          <div class="sw"><i style="background:var(--ink)"></i><div>Ink<br><code>text, logo</code></div></div>
+          <div class="sw"><i style="background:var(--stamp)"></i><div>Stamp ink<br><code>accent, actions</code></div></div>
+          <div class="sw"><i style="background:var(--paper)"></i><div>Paper<br><code>background</code></div></div>
+          <div class="sw"><i style="background:var(--risk)"></i><div>Red flag<br><code>risk only</code></div></div>
+          <div class="sw"><i style="background:var(--review)"></i><div>Review<br><code>deviation</code></div></div>
+          <div class="sw"><i style="background:var(--ok)"></i><div>OK<br><code>meets playbook</code></div></div>
+        </div>
+      </div>
+      <div>
+        <h3>Type</h3>
+        <div class="type-spec">
+          <div><span class="eyebrow">Interface · IBM Plex Sans</span><br>Check an NDA against your playbook</div>
+          <div><span class="eyebrow">Contract · IBM Plex Serif</span><br><span class="t-doc">The obligations of confidentiality shall survive for three (3) years.</span></div>
+          <div><span class="eyebrow">Reference · IBM Plex Mono</span><br><span class="t-mono">§ 4 · NDA-03 · [EMAIL_1]</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mock-ups -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">3 · Mock-ups</div>
+      <h2>Five screens</h2>
+      <p class="muted">Screens 1–4 are built in prototype v0.1. Screen 5 is the direction after the pilot: lawyers asked to stay inside Word.</p>
+    </div>
+    <div class="frames">
+
+      <div class="frame">
+        <div class="frame-cap"><strong>1 · Upload</strong><span class="muted">Drop a file, paste text or try the sample</span></div>
+        <div class="screen">
+          <div class="bar"><span class="mark sm">§</span><b>Klauzula</b><span class="tab on">Review NDA</span><span class="tab">Compare versions</span><span class="tab">Playbook</span><span class="grow"></span><span class="muted">Demo mode</span></div>
+          <div class="center">
+            <h3>Check an NDA against your playbook</h3>
+            <p class="muted">Klauzula masks personal data, finds clauses that break your rules and proposes wording. You decide on every point.</p>
+            <div class="drop"><b>Drop a .docx or .txt file</b><br><span class="muted">or click to choose · max 5 MB</span></div>
+            <span class="btn p">Try the sample NDA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="frame-cap"><strong>2 · Review</strong><span class="muted">Summary, contract with highlighted clauses, finding cards</span></div>
+        <div class="screen">
+          <div class="bar"><b>nda_counterparty_v1.docx</b><span class="chip r">6 Red flag</span><span class="chip v">2 Review</span><span class="chip o">2 OK</span><span class="muted">Masked: 2 EMAIL, 1 PHONE, 1 NIP</span><span class="grow"></span><span class="btn">Export .md</span><span class="btn p">Export for Word</span></div>
+          <div class="two">
+            <div class="sheet">
+              <div class="cl"><b>Preamble</b><br>Alfa Logistics sp. z o.o., <span class="pii">[NIP_1]</span>, e-mail <span class="pii">[EMAIL_1]</span></div>
+              <div class="cl r"><span class="ref">§ 4</span><b>Term</b><br>The obligations of confidentiality shall remain in force indefinitely.</div>
+              <div class="cl r"><span class="ref">§ 5</span><b>Contractual penalty</b><br>For each breach, Alfa shall pay Beta a contractual penalty of PLN 500,000.</div>
+              <div class="cl r"><span class="ref">§ 8</span><b>Governing law and disputes</b><br>This Agreement shall be governed by the laws of England and Wales.</div>
+            </div>
+            <div>
+              <div class="card"><div class="h">Duration of confidentiality <span>NDA-03 · § 4</span></div><q>…shall remain in force indefinitely.</q>Obligation never ends; playbook allows 2–5 years.<div class="edit">…shall survive for three (3) years following termination.</div><span class="btn">Accept edit</span> <span class="btn">Reject</span></div>
+              <div class="card"><div class="h">Contractual penalty <span>NDA-06 · § 5</span></div><q>…a contractual penalty of PLN 500,000.</q>PLN 500,000 exceeds the PLN 100,000 limit; binds only one Party.</div>
+              <div class="card v"><div class="h">Disclosure required by law <span>NDA-05 · missing</span></div>No exception for disclosure required by law.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="frame-cap"><strong>3 · Compare versions</strong><span class="muted">What changed and what it did to the risks</span></div>
+        <div class="screen">
+          <div class="eyebrow" style="margin-bottom:6px">Effect on the playbook</div>
+          <div class="rc n"><b>New risk</b> · Liability: OK → Red flag. Indemnity for all losses added in § 3.</div>
+          <div class="rc"><b>Improved</b> · Governing law: Red flag → OK. Polish law.</div>
+          <div class="rc"><b>Improved</b> · Duration: Red flag → OK. 5 years.</div>
+          <div class="sheet" style="margin-top:10px;min-width:560px"><span class="ref">§ 4</span><b>Term</b> <span class="eyebrow">modified</span><br>The obligations of confidentiality shall <del>remain in force indefinitely.</del><ins>survive for a period of five (5) years following the termination of this Agreement.</ins></div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="frame-cap"><strong>4 · Playbook</strong><span class="muted">The company's rules; editing comes after v0.1</span></div>
+        <div class="screen">
+          <table class="pb">
+            <tr><th>Rule</th><th>Topic</th><th>Standard</th><th>Red flag</th></tr>
+            <tr><td>NDA-01</td><td>Governing law</td><td>Polish law</td><td>Foreign law</td></tr>
+            <tr><td>NDA-03</td><td>Duration</td><td>2–5 years</td><td>Perpetual or over 10 years</td></tr>
+            <tr><td>NDA-06</td><td>Kara umowna</td><td>None, or mutual up to PLN 100,000</td><td>One-sided or over PLN 100,000</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="frame-cap"><strong>5 · Word add-in</strong><span class="muted">Idea for after the pilot, not built</span></div>
+        <div class="screen">
+          <div class="word">
+            <div class="ribbon">Home · Insert · Review · <b style="color:var(--stamp)">§ Klauzula</b></div>
+            <div class="page"><div class="sheet"><span class="ref">§ 8</span><b>Governing law</b><br><del>This Agreement shall be governed by the laws of England and Wales.</del> <ins>This Agreement shall be governed by the laws of the Republic of Poland.</ins></div></div>
+            <div class="pane"><div class="eyebrow">Klauzula · 6 red flags</div><div class="card" style="margin-top:6px"><div class="h">Governing law <span>§ 8</span></div>Inserted as tracked change.<br><span class="btn">Next finding</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spec -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">4 · Specification v0.1</div>
+      <h2>Five features</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="spec">
+        <tr><th>ID</th><th>Feature</th><th>What it does</th><th>In v0.1</th></tr>
+        <tr><td>F1</td><td>Upload and parse</td><td>DOCX, TXT or pasted text split into numbered clauses</td><td>Built</td></tr>
+        <tr><td>F2</td><td>Personal data masking</td><td>Email, phone, PESEL, NIP, KRS and IBAN replaced with labels before analysis</td><td>Built; names of people not yet masked</td></tr>
+        <tr><td>F3</td><td>Playbook check</td><td>One finding per rule: level, clause, verbatim quote, explanation</td><td>Built as rules; Claude mode written, not yet tested</td></tr>
+        <tr><td>F4</td><td>Proposed edits</td><td>Fallback wording from the playbook; the lawyer edits, accepts or rejects</td><td>Built</td></tr>
+        <tr><td>F5</td><td>Compare and report</td><td>Clause-by-clause diff, new and resolved risks, export for Word and Markdown</td><td>Built; no tracked changes yet</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- Observations -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">5 · Observations from building v0.1</div>
+      <h2>What we learned</h2>
+    </div>
+    <div class="notes">
+      <div class="note"><h3>Rules get far on standard NDAs</h3><p>Ten pattern rules caught all six red flags in the sample. They will miss unusual wording, so the AI mode is for robustness, not for the demo.</p></div>
+      <div class="note"><h3>Compare is the strongest moment</h3><p>Version 2 fixed five problems and quietly added an indemnity. The tool shows it in one line. A lawyer comparing by hand can easily miss it.</p></div>
+      <div class="note"><h3>Masking has a gap</h3><p>Identifiers are masked, but the name of the company's representative is not. People's names need a proper recogniser before a pilot.</p></div>
+      <div class="note"><h3>The playbook is the product</h3><p>Quality depends on rules written by a lawyer. Ours are examples. A radca prawny has to check them before any interview demo.</p></div>
+      <div class="note"><h3>Lawyers live in Word</h3><p>Export for Word works, but real tracked changes inside the .docx matter more than any screen. This is the first thing to build after v0.1.</p></div>
+      <div class="note"><h3>No AI results yet</h3><p>The Claude mode is written to the same output format but has not run on the test set. Accuracy numbers come next, in the prompt log.</p></div>
+    </div>
+  </section>
+
+  <p class="disclaimer">All contract text on this page is fictional. Klauzula is a working tool for lawyers; results are not legal advice. The name is a proposal and needs a trademark check.</p>
+</div>
