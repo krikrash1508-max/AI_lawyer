@@ -1,4 +1,4 @@
-<title>Klauzula Step 3 Design Pack</title>
+<title>Klauzula AI Step 3 Design Pack</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
@@ -27,8 +27,18 @@ h3 { font-size: 1rem; font-weight: 600; margin: 0 0 8px; }
 p { margin: 0; max-width: 68ch; }
 .muted { color: var(--muted); }
 .eyebrow { font: 500 .72rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.mark { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 2.5px solid var(--stamp); color: var(--stamp); font: 600 1.4rem var(--doc); flex: none; }
-.mark.sm { width: 24px; height: 24px; border-width: 2px; font-size: .8rem; }
+.logo { width: 44px; height: 53px; flex: none; }
+.logo.sm { width: 16px; height: 19px; }
+.logo .l-sheet { fill: var(--sheet); stroke: var(--stamp); stroke-width: 3.5; stroke-linejoin: round; }
+.logo .l-fold { fill: var(--stamp); }
+.logo text { fill: var(--stamp); font: 700 21px var(--doc); }
+.logo .l-line, .logo .l-ok { fill: none; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
+.logo .l-line { stroke: var(--stamp); } .logo .l-ok { stroke: #6fd3a0; }
+.ai { color: var(--stamp); }
+.logo-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.logo-tile { display: flex; gap: 10px; align-items: center; padding: 14px 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--sheet); font-weight: 600; font-size: 1.2rem; }
+.logo-tile.dark { background: #11151f; color: #e6e9f2; border-color: #2e3648; --sheet: #1a2030; --stamp: #9fa3ff; }
+.logo-tile.dark .ai { color: #9fa3ff; }
 header.top { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
 .section-head { display: grid; gap: 6px; margin-bottom: 18px; }
 
@@ -39,6 +49,7 @@ header.top { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
 .step.pain { border-color: var(--risk); background: var(--risk-soft); }
 .step.ai { border-color: var(--stamp); background: var(--stamp-soft); }
 .step.human { border-style: dashed; border-color: var(--ink); }
+.step.end { border-color: var(--ok); background: var(--ok-soft); }
 .arrow { align-self: center; color: var(--muted); font-family: var(--mono); }
 .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: .8rem; color: var(--muted); margin-top: 10px; }
 .legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--line); }
@@ -88,6 +99,17 @@ header.top { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
 .center { max-width: 440px; margin: 0 auto; background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; padding: 18px; font-size: .82rem; }
 .rc { background: var(--sheet); border: 1px solid var(--line); border-left: 4px solid var(--ok); border-radius: 5px; padding: 6px 10px; font-size: .78rem; margin-bottom: 6px; min-width: 560px; }
 .rc.n { border-left-color: var(--risk); }
+.law { font-size: .72rem; background: var(--stamp-soft); border-radius: 3px; padding: 3px 6px; margin: 4px 0; }
+.law .eyebrow { font-size: .6rem; }
+.decision { background: var(--sheet); border: 1px solid var(--line); border-left: 4px solid var(--stamp); border-radius: 6px; padding: 10px 12px; font-size: .8rem; margin-bottom: 12px; min-width: 560px; display: grid; gap: 8px; }
+.decision .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.decision .grow { flex: 1; }
+.outcomes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; min-width: 560px; }
+.outcome { background: var(--sheet); border: 1px solid var(--line); border-radius: 6px; padding: 12px; font-size: .8rem; display: grid; gap: 6px; align-content: start; }
+.outcome.sign { border-top: 4px solid var(--ok); } .outcome.edits { border-top: 4px solid var(--stamp); }
+.outcome ul { margin: 0; padding-left: 18px; font-family: var(--doc); }
+.cl.chg { border-left-color: var(--stamp); }
+.tag { font: .62rem var(--mono); text-transform: uppercase; color: var(--muted); margin-left: 6px; }
 ins { background: var(--ins); text-decoration: none; } del { background: var(--del); }
 table.pb { border-collapse: collapse; width: 100%; min-width: 560px; font-size: .76rem; background: var(--sheet); }
 .pb td, .pb th { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
@@ -111,11 +133,11 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
 
 <div class="wrap">
   <header class="top">
-    <span class="mark" aria-hidden="true">§</span>
+    <svg class="logo" viewBox="0 0 48 58" aria-hidden="true"><path class="l-sheet" d="M7 3h25l13 13v36a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/><path class="l-fold" d="M32 3v10a3 3 0 0 0 3 3h10z"/><text x="21" y="29" text-anchor="middle">§</text><path class="l-line" d="M12 36h20M12 49h22"/><path class="l-ok" d="M12 42.5h18M33 42.5l3 3 6-6.5"/></svg>
     <div style="display:grid;gap:4px;min-width:0">
-      <div class="eyebrow">Course project · Step 3 · 24 Nov 2026</div>
-      <h1>Klauzula</h1>
-      <p class="muted">NDA review for in-house lawyers in Polish companies. Your playbook, every clause. This page shows the process, the name and visual style, the screen mock-ups, the v0.1 specification and what we learned building the first working version.</p>
+      <div class="eyebrow">Course project · Step 3 · revised for the TO-BE process · 24 Nov 2026</div>
+      <h1>Klauzula <span class="ai">AI</span></h1>
+      <p class="muted">Contract review for in-house lawyers in Polish companies, starting with NDAs. Your playbook, every clause. This page shows the process, the name and visual style, the screen mock-ups, the specification and what we learned building the working skeleton v0.2.</p>
     </div>
   </header>
 
@@ -123,8 +145,8 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
   <section>
     <div class="section-head">
       <div class="eyebrow">1 · Process</div>
-      <h2>How a contract gets approved today, and with Klauzula</h2>
-      <p class="muted">The lawyer still decides at every point. Klauzula removes the queue and the check against the playbook from memory: the lawyer reviews a ready report.</p>
+      <h2>How a contract gets approved today, and with Klauzula AI</h2>
+      <p class="muted">The lawyer still decides at every point. Klauzula AI removes the queue and the check against the playbook from memory: the lawyer reviews a ready report and answers one question, "any red flags?".</p>
     </div>
     <h3>Today</h3>
     <div class="flow">
@@ -136,34 +158,44 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
       <div class="step"><b>Counterparty</b>Sends a new version in Word tracked changes; sales forwards it and it waits in the queue again</div>
     </div>
     <p class="loop">↺ Every round of negotiation goes back through sales and the queue.</p>
-    <h3 style="margin-top:22px">With Klauzula</h3>
+    <h3 style="margin-top:22px">With Klauzula AI</h3>
     <div class="flow">
       <div class="step"><b>Sales</b>Receives the counterparty's contract, assigns the task to the lawyer</div><span class="arrow">→</span>
-      <div class="step"><b>Lawyer</b>Uploads the file to Klauzula</div><span class="arrow">→</span>
-      <div class="step ai"><b>Klauzula</b>Masks identifiers: names, email, phone, PESEL, NIP, KRS, IBAN</div><span class="arrow">→</span>
-      <div class="step ai"><b>Klauzula</b>Analyses the contract against the playbook and Polish law</div><span class="arrow">→</span>
-      <div class="step ai"><b>Klauzula</b>Generates a report for the lawyer</div><span class="arrow">→</span>
-      <div class="step human"><b>Lawyer decides</b>Reviews the report: any red flags?</div><span class="arrow">→</span>
-      <div class="step human"><b>Lawyer</b>Red flags: edits the contract. None: straight to signing</div><span class="arrow">→</span>
-      <div class="step"><b>Sales</b>Sends the edits to the counterparty</div>
+      <div class="step"><b>Lawyer</b>Uploads the file to Klauzula AI</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula AI</b>Masks identifiers: names, email, phone, PESEL, NIP, KRS, IBAN</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula AI</b>Analyses the contract against the playbook and Polish law</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula AI</b>Generates a report for the lawyer</div><span class="arrow">→</span>
+      <div class="step human"><b>Lawyer decides</b>Reviews the report: any red flags?</div>
     </div>
-    <p class="loop">↺ New version: sales forwards it, the lawyer uploads it to Klauzula for a new check.</p>
-    <div class="legend"><span class="l-pain">bottleneck</span><span class="l-ai">done by Klauzula</span><span class="l-human">lawyer's decision</span></div>
+    <div class="flow" style="margin-top:8px">
+      <div class="step end"><b>No red flags</b>Straight to signing</div>
+      <div class="step human"><b>Red flags · Lawyer</b>Edits the contract</div><span class="arrow">→</span>
+      <div class="step"><b>Sales</b>Sends the edits to the counterparty</div><span class="arrow">→</span>
+      <div class="step"><b>Counterparty agrees?</b>Yes: signing. No: a new version in Word tracked changes</div>
+    </div>
+    <p class="loop">↺ New version: sales forwards it, the lawyer uploads it to Klauzula AI — a new round of the same check.</p>
+    <div class="legend"><span class="l-pain">bottleneck</span><span class="l-ai">done by Klauzula AI</span><span class="l-human">lawyer's decision</span></div>
   </section>
 
   <!-- Name & style -->
   <section>
     <div class="section-head">
       <div class="eyebrow">2 · Name and visual style</div>
-      <h2>Klauzula: the Polish word for a contract clause</h2>
-      <p class="muted">We are a tool for the lawyer, not an "AI lawyer", so the name speaks the lawyer's language. The mark is a § in a circle, like the ink of an official stamp. The screen is a lawyer's desk: the contract on a sheet in a serif face on the left, findings on the right.</p>
+      <h2>Klauzula AI: the Polish word for a contract clause, plus what it is</h2>
+      <p class="muted">"Klauzula" speaks the lawyer's language; "AI" says at once what kind of tool it is (ADR-0006). The mark is a contract sheet with a § and one checked clause: it shows exactly what the product does. The screen is a lawyer's desk: the contract on a sheet in a serif face on the left, findings on the right, the lawyer's decision on top.</p>
+    </div>
+    <div class="logo-row" style="margin-bottom:20px">
+      <div class="logo-tile"><svg class="logo" viewBox="0 0 48 58" aria-hidden="true"><path class="l-sheet" d="M7 3h25l13 13v36a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/><path class="l-fold" d="M32 3v10a3 3 0 0 0 3 3h10z"/><text x="21" y="29" text-anchor="middle">§</text><path class="l-line" d="M12 36h20M12 49h22"/><path class="l-ok" d="M12 42.5h18M33 42.5l3 3 6-6.5"/></svg><span>Klauzula <span class="ai">AI</span></span></div>
+      <div class="logo-tile dark"><svg class="logo" viewBox="0 0 48 58" aria-hidden="true"><path class="l-sheet" d="M7 3h25l13 13v36a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/><path class="l-fold" d="M32 3v10a3 3 0 0 0 3 3h10z"/><text x="21" y="29" text-anchor="middle">§</text><path class="l-line" d="M12 36h20M12 49h22"/><path class="l-ok" d="M12 42.5h18M33 42.5l3 3 6-6.5"/></svg><span>Klauzula <span class="ai">AI</span></span></div>
+      <p class="muted" style="font-size:.85rem">Vector redraw of the generated logo, so it stays sharp at favicon size and works on the dark theme.</p>
     </div>
     <div class="style-grid">
       <div>
         <h3>Colour</h3>
         <div class="swatches">
-          <div class="sw"><i style="background:var(--ink)"></i><div>Ink<br><code>text, logo</code></div></div>
-          <div class="sw"><i style="background:var(--stamp)"></i><div>Stamp ink<br><code>accent, actions</code></div></div>
+          <div class="sw"><i style="background:var(--ink)"></i><div>Ink<br><code>text</code></div></div>
+          <div class="sw"><i style="background:var(--stamp)"></i><div>Stamp ink<br><code>logo, actions</code></div></div>
+          <div class="sw"><i style="background:#6fd3a0"></i><div>Check<br><code>logo only</code></div></div>
           <div class="sw"><i style="background:var(--paper)"></i><div>Paper<br><code>background</code></div></div>
           <div class="sw"><i style="background:var(--risk)"></i><div>Red flag<br><code>risk only</code></div></div>
           <div class="sw"><i style="background:var(--review)"></i><div>Review<br><code>deviation</code></div></div>
@@ -173,9 +205,9 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
       <div>
         <h3>Type</h3>
         <div class="type-spec">
-          <div><span class="eyebrow">Interface · IBM Plex Sans</span><br>Check an NDA against your playbook</div>
+          <div><span class="eyebrow">Interface · IBM Plex Sans</span><br>Check a contract against your playbook</div>
           <div><span class="eyebrow">Contract · IBM Plex Serif</span><br><span class="t-doc">The obligations of confidentiality shall survive for three (3) years.</span></div>
-          <div><span class="eyebrow">Reference · IBM Plex Mono</span><br><span class="t-mono">§ 4 · NDA-03 · [EMAIL_1]</span></div>
+          <div><span class="eyebrow">Reference · IBM Plex Mono</span><br><span class="t-mono">§ 4 · NDA-03 · [NAME_1] · art. 484 KC</span></div>
         </div>
       </div>
     </div>
@@ -185,18 +217,19 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
   <section>
     <div class="section-head">
       <div class="eyebrow">3 · Mock-ups</div>
-      <h2>Five screens</h2>
-      <p class="muted">Screens 1–4 are built in prototype v0.1. Screen 5 is the direction after the pilot: lawyers asked to stay inside Word.</p>
+      <h2>Five screens, in the order of the process</h2>
+      <p class="muted">One review screen covers the whole loop: upload, report, decision, next round. Comparing versions is no longer a separate tab: a new version is simply round 2 of the same check. All five screens are built in the skeleton v0.2.</p>
     </div>
     <div class="frames">
 
       <div class="frame">
-        <div class="frame-cap"><strong>1 · Upload</strong><span class="muted">Drop a file, paste text or try the sample</span></div>
+        <div class="frame-cap"><strong>1 · Upload</strong><span class="muted">Sales assigned the task; the lawyer uploads the file</span></div>
         <div class="screen">
-          <div class="bar"><span class="mark sm">§</span><b>Klauzula</b><span class="tab on">Review NDA</span><span class="tab">Compare versions</span><span class="tab">Playbook</span><span class="grow"></span><span class="muted">Demo mode</span></div>
+          <div class="bar"><svg class="logo sm" viewBox="0 0 48 58" aria-hidden="true"><path class="l-sheet" d="M7 3h25l13 13v36a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/><path class="l-fold" d="M32 3v10a3 3 0 0 0 3 3h10z"/><text x="21" y="29" text-anchor="middle">§</text><path class="l-line" d="M12 36h20M12 49h22"/><path class="l-ok" d="M12 42.5h18M33 42.5l3 3 6-6.5"/></svg><b>Klauzula <span class="ai">AI</span></b><span class="tab on">Review contract</span><span class="tab">Playbook</span><span class="grow"></span><span class="muted">Demo mode</span></div>
           <div class="center">
-            <h3>Check an NDA against your playbook</h3>
-            <p class="muted">Klauzula masks personal data, finds clauses that break your rules and proposes wording. You decide on every point.</p>
+            <div class="eyebrow">Task from sales / purchasing · round 1</div>
+            <h3>Check a contract against your playbook and Polish law</h3>
+            <p class="muted">Klauzula AI masks names and identifiers, checks every clause against your playbook with references to Polish law and prepares a report. You decide: sign, or send edits.</p>
             <div class="drop"><b>Drop a .docx or .txt file</b><br><span class="muted">or click to choose · max 5 MB</span></div>
             <span class="btn p">Try the sample NDA</span>
           </div>
@@ -204,19 +237,19 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
       </div>
 
       <div class="frame">
-        <div class="frame-cap"><strong>2 · Review</strong><span class="muted">Summary, contract with highlighted clauses, finding cards</span></div>
+        <div class="frame-cap"><strong>2 · Report</strong><span class="muted">Masked text, findings with a quote, the playbook and the Polish law reference</span></div>
         <div class="screen">
-          <div class="bar"><b>nda_counterparty_v1.docx</b><span class="chip r">6 Red flag</span><span class="chip v">2 Review</span><span class="chip o">2 OK</span><span class="muted">Masked: 2 EMAIL, 1 PHONE, 1 NIP</span><span class="grow"></span><span class="btn">Export .md</span><span class="btn p">Export for Word</span></div>
+          <div class="bar"><b>Round 1 · nda_counterparty_v1.docx</b><span class="chip r">6 Red flag</span><span class="chip v">2 Review</span><span class="chip o">2 OK</span><span class="muted">Masked: 1 NAME, 2 EMAIL, 1 PHONE, 1 NIP, 1 KRS</span></div>
           <div class="two">
             <div class="sheet">
-              <div class="cl"><b>Preamble</b><br>Alfa Logistics sp. z o.o., <span class="pii">[NIP_1]</span>, e-mail <span class="pii">[EMAIL_1]</span></div>
+              <div class="cl"><b>Preamble</b><br>Alfa Logistics sp. z o.o., <span class="pii">[KRS_1]</span>, <span class="pii">[NIP_1]</span>, represented by <span class="pii">[NAME_1]</span>, e-mail <span class="pii">[EMAIL_1]</span></div>
               <div class="cl r"><span class="ref">§ 4</span><b>Term</b><br>The obligations of confidentiality shall remain in force indefinitely.</div>
               <div class="cl r"><span class="ref">§ 5</span><b>Contractual penalty</b><br>For each breach, Alfa shall pay Beta a contractual penalty of PLN 500,000.</div>
               <div class="cl r"><span class="ref">§ 8</span><b>Governing law and disputes</b><br>This Agreement shall be governed by the laws of England and Wales.</div>
             </div>
             <div>
-              <div class="card"><div class="h">Duration of confidentiality <span>NDA-03 · § 4</span></div><q>…shall remain in force indefinitely.</q>Obligation never ends; playbook allows 2–5 years.<div class="edit">…shall survive for three (3) years following termination.</div><span class="btn">Accept edit</span> <span class="btn">Reject</span></div>
-              <div class="card"><div class="h">Contractual penalty <span>NDA-06 · § 5</span></div><q>…a contractual penalty of PLN 500,000.</q>PLN 500,000 exceeds the PLN 100,000 limit; binds only one Party.</div>
+              <div class="card"><div class="h">Contractual penalty <span>NDA-06 · § 5</span></div><q>…a contractual penalty of PLN 500,000.</q>PLN 500,000 exceeds the PLN 100,000 limit; binds only one Party.<div class="law"><span class="eyebrow">Polish law · to verify</span> KC art. 483–484; § 2: a court may reduce a grossly excessive penalty.</div><div class="edit">…the breaching Party shall pay a contractual penalty of PLN 50,000 per breach.</div><span class="btn">Accept edit</span> <span class="btn">Reject</span></div>
+              <div class="card"><div class="h">Duration of confidentiality <span>NDA-03 · § 4</span></div><q>…shall remain in force indefinitely.</q>Obligation never ends; playbook allows 2–5 years.<div class="law"><span class="eyebrow">Polish law · to verify</span> KC art. 365¹ — open-ended obligation, terminable by notice.</div></div>
               <div class="card v"><div class="h">Disclosure required by law <span>NDA-05 · missing</span></div>No exception for disclosure required by law.</div>
             </div>
           </div>
@@ -224,36 +257,41 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
       </div>
 
       <div class="frame">
-        <div class="frame-cap"><strong>3 · Compare versions</strong><span class="muted">What changed and what it did to the risks</span></div>
+        <div class="frame-cap"><strong>3 · Decision</strong><span class="muted">The lawyer answers "any red flags?"; Klauzula AI only counts</span></div>
         <div class="screen">
-          <div class="eyebrow" style="margin-bottom:6px">Effect on the playbook</div>
-          <div class="rc n"><b>New risk</b> · Liability: OK → Red flag. Indemnity for all losses added in § 3.</div>
-          <div class="rc"><b>Improved</b> · Governing law: Red flag → OK. Polish law.</div>
-          <div class="rc"><b>Improved</b> · Duration: Red flag → OK. 5 years.</div>
-          <div class="sheet" style="margin-top:10px;min-width:560px"><span class="ref">§ 4</span><b>Term</b> <span class="eyebrow">modified</span><br>The obligations of confidentiality shall <del>remain in force indefinitely.</del><ins>survive for a period of five (5) years following the termination of this Agreement.</ins></div>
-        </div>
-      </div>
-
-      <div class="frame">
-        <div class="frame-cap"><strong>4 · Playbook</strong><span class="muted">The company's rules; editing comes after v0.1</span></div>
-        <div class="screen">
-          <table class="pb">
-            <tr><th>Rule</th><th>Topic</th><th>Standard</th><th>Red flag</th></tr>
-            <tr><td>NDA-01</td><td>Governing law</td><td>Polish law</td><td>Foreign law</td></tr>
-            <tr><td>NDA-03</td><td>Duration</td><td>2–5 years</td><td>Perpetual or over 10 years</td></tr>
-            <tr><td>NDA-06</td><td>Kara umowna</td><td>None, or mutual up to PLN 100,000</td><td>One-sided or over PLN 100,000</td></tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="frame">
-        <div class="frame-cap"><strong>5 · Word add-in</strong><span class="muted">Idea for after the pilot, not built</span></div>
-        <div class="screen">
-          <div class="word">
-            <div class="ribbon">Home · Insert · Review · <b style="color:var(--stamp)">§ Klauzula</b></div>
-            <div class="page"><div class="sheet"><span class="ref">§ 8</span><b>Governing law</b><br><del>This Agreement shall be governed by the laws of England and Wales.</del> <ins>This Agreement shall be governed by the laws of the Republic of Poland.</ins></div></div>
-            <div class="pane"><div class="eyebrow">Klauzula · 6 red flags</div><div class="card" style="margin-top:6px"><div class="h">Governing law <span>§ 8</span></div>Inserted as tracked change.<br><span class="btn">Next finding</span></div></div>
+          <div class="decision">
+            <div class="row"><div class="grow"><div class="eyebrow">Your decision</div><b>Any red flags? Klauzula AI found 6.</b><br><span class="muted">5 edits accepted · 1 red flag without an accepted edit. You decide.</span></div><span class="btn">No — ready for signing</span><span class="btn p">Yes — send edits to the counterparty</span></div>
           </div>
+          <div class="outcomes">
+            <div class="outcome sign"><b>No red flags → signing</b><span class="muted">The report records the decision for sales. If red flags stay in the text, the report says the lawyer accepted the risk.</span><span><span class="btn">Report for Word</span></span></div>
+            <div class="outcome edits"><b>Red flags → edits for sales</b><span class="muted">Edits to send to the counterparty:</span><ul><li>§ 8 — governed by the laws of the Republic of Poland</li><li>§ 4 — survive for three (3) years</li><li>§ 5 — mutual penalty of PLN 50,000</li></ul><span><span class="btn">Report .md</span> <span class="btn p">Report for Word</span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="frame-cap"><strong>4 · New version = round 2</strong><span class="muted">Same check; what changed and what it did to the risks</span></div>
+        <div class="screen">
+          <div class="bar"><b>Round 2 · nda_counterparty_v2.docx</b><span class="chip r">1 Red flag</span><span class="chip v">4 Review</span><span class="chip o">5 OK</span></div>
+          <div class="eyebrow" style="margin-bottom:6px">Since round 1 · 7 of 9 clauses changed</div>
+          <div class="rc n"><b>New risk</b> · Liability (§ 3): OK → Red flag. Indemnity for all losses added.</div>
+          <div class="rc"><b>Improved</b> · Governing law (§ 8): Red flag → OK. Polish law.</div>
+          <div class="rc"><b>Improved</b> · Duration (§ 4): Red flag → OK. 5 years.</div>
+          <div class="sheet" style="margin-top:10px;min-width:560px"><div class="cl chg"><span class="ref">§ 4</span><b>Term</b><span class="tag">modified</span><br>The obligations of confidentiality shall <del>remain in force indefinitely.</del><ins>survive for a period of five (5) years following the termination of this Agreement.</ins></div><div class="cl chg"><span class="ref">§ 6</span><b>Non-solicitation</b><span class="tag">removed</span><br><del>Alfa shall not solicit or employ any employee of Beta.</del></div></div>
+        </div>
+      </div>
+
+      <div class="frame">
+        <div class="frame-cap"><strong>5 · Playbook</strong><span class="muted">The company's rules with the Polish law behind each; editing comes later</span></div>
+        <div class="screen">
+          <div class="bar"><svg class="logo sm" viewBox="0 0 48 58" aria-hidden="true"><path class="l-sheet" d="M7 3h25l13 13v36a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3z"/><path class="l-fold" d="M32 3v10a3 3 0 0 0 3 3h10z"/><text x="21" y="29" text-anchor="middle">§</text><path class="l-line" d="M12 36h20M12 49h22"/><path class="l-ok" d="M12 42.5h18M33 42.5l3 3 6-6.5"/></svg><b>Klauzula <span class="ai">AI</span></b><span class="tab">Review contract</span><span class="tab on">Playbook</span><span class="grow"></span><span class="muted">Demo mode</span></div>
+          <table class="pb">
+            <tr><th>Rule</th><th>Topic</th><th>Standard</th><th>Red flag</th><th>Polish law (to verify)</th></tr>
+            <tr><td>NDA-01</td><td>Governing law</td><td>Polish law</td><td>Foreign law</td><td>Rome I, art. 3</td></tr>
+            <tr><td>NDA-03</td><td>Duration</td><td>2–5 years</td><td>Perpetual or over 10 years</td><td>KC art. 365¹; UZNK art. 11</td></tr>
+            <tr><td>NDA-06</td><td>Kara umowna</td><td>None, or mutual up to PLN 100,000</td><td>One-sided or over PLN 100,000</td><td>KC art. 483–484</td></tr>
+            <tr><td>NDA-10</td><td>Personal data</td><td>RODO clause</td><td>Missing</td><td>GDPR art. 6, 28</td></tr>
+          </table>
         </div>
       </div>
     </div>
@@ -262,17 +300,17 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
   <!-- Spec -->
   <section>
     <div class="section-head">
-      <div class="eyebrow">4 · Specification v0.1</div>
-      <h2>Five features</h2>
+      <div class="eyebrow">4 · Specification v0.2</div>
+      <h2>Five features, one per step of the TO-BE process</h2>
     </div>
     <div class="table-wrap">
       <table class="spec">
-        <tr><th>ID</th><th>Feature</th><th>What it does</th><th>In v0.1</th></tr>
-        <tr><td>F1</td><td>Upload and parse</td><td>DOCX, TXT or pasted text split into numbered clauses</td><td>Built</td></tr>
-        <tr><td>F2</td><td>Personal data masking</td><td>Email, phone, PESEL, NIP, KRS and IBAN replaced with labels before analysis</td><td>Built; names of people not yet masked</td></tr>
-        <tr><td>F3</td><td>Playbook check</td><td>One finding per rule: level, clause, verbatim quote, explanation</td><td>Built as rules; Claude mode written, not yet tested</td></tr>
-        <tr><td>F4</td><td>Proposed edits</td><td>Fallback wording from the playbook; the lawyer edits, accepts or rejects</td><td>Built</td></tr>
-        <tr><td>F5</td><td>Compare and report</td><td>Clause-by-clause diff, new and resolved risks, export for Word and Markdown</td><td>Built; no tracked changes yet</td></tr>
+        <tr><th>ID</th><th>Feature</th><th>Process step</th><th>What it does</th><th>In skeleton v0.2</th></tr>
+        <tr><td>F1</td><td>Upload and parse</td><td>Lawyer uploads the file</td><td>DOCX, TXT or pasted text split into numbered clauses</td><td>Built</td></tr>
+        <tr><td>F2</td><td>Mask identifiers</td><td>Masks identifiers</td><td>Names, email, phone, PESEL, NIP, KRS, IBAN replaced with labels before analysis</td><td>Built; names only after a cue such as "represented by"</td></tr>
+        <tr><td>F3</td><td>Playbook and Polish law check</td><td>Analyses the contract</td><td>One finding per rule: level, clause, verbatim quote, explanation, Polish law reference</td><td>Built as rules; references are examples to verify; Claude mode not yet tested</td></tr>
+        <tr><td>F4</td><td>Report and decision</td><td>Generates a report; any red flags?</td><td>Editable wording, accept or reject; the lawyer chooses "sign" or "send edits"; report for Word with the edits for sales</td><td>Built; no tracked changes in .docx yet</td></tr>
+        <tr><td>F5</td><td>New version, next round</td><td>New version, check again</td><td>Same check on the new version plus what changed and which risks appeared or went away</td><td>Built; replaces the separate Compare tab</td></tr>
       </table>
     </div>
   </section>
@@ -280,18 +318,18 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
   <!-- Observations -->
   <section>
     <div class="section-head">
-      <div class="eyebrow">5 · Observations from building v0.1</div>
+      <div class="eyebrow">5 · Observations from building the skeleton</div>
       <h2>What we learned</h2>
     </div>
     <div class="notes">
-      <div class="note"><h3>Rules get far on standard NDAs</h3><p>Ten pattern rules caught all six red flags in the sample. They will miss unusual wording, so the AI mode is for robustness, not for the demo.</p></div>
-      <div class="note"><h3>Compare is the strongest moment</h3><p>Version 2 fixed five problems and quietly added an indemnity. The tool shows it in one line. A lawyer comparing by hand can easily miss it.</p></div>
-      <div class="note"><h3>Masking has a gap</h3><p>Identifiers are masked, but the name of the company's representative is not. People's names need a proper recogniser before a pilot.</p></div>
-      <div class="note"><h3>The playbook is the product</h3><p>Quality depends on rules written by a lawyer. Ours are examples. A radca prawny has to check them before any interview demo.</p></div>
-      <div class="note"><h3>Lawyers live in Word</h3><p>Export for Word works, but real tracked changes inside the .docx matter more than any screen. This is the first thing to build after v0.1.</p></div>
-      <div class="note"><h3>No AI results yet</h3><p>The Claude mode is written to the same output format but has not run on the test set. Accuracy numbers come next, in the prompt log.</p></div>
+      <div class="note"><h3>The process removed a screen</h3><p>In the TO-BE process a new version is just another round. Compare stopped being a tab and became part of the review. Round 2 now uses the same mode as round 1, so rules and AI never disagree about what changed.</p></div>
+      <div class="note"><h3>The decision belongs to the lawyer</h3><p>The tool counts red flags but does not say "safe to sign". If the lawyer signs with open red flags, the report records that the risk was accepted.</p></div>
+      <div class="note"><h3>"Polish law" is bigger than it looks</h3><p>The diagram promises an analysis against Polish law. We deliver a reference to the statute behind each playbook rule. A real check of mandatory law needs a source base and a radca prawny; an AI must not invent article numbers.</p></div>
+      <div class="note"><h3>Names: cues work, signatures do not</h3><p>"Represented by Jan …" is now masked. A bare name on a signature line is not. A proper name recogniser is still needed before a pilot.</p></div>
+      <div class="note"><h3>Sales is a user too</h3><p>Edits go to the counterparty through sales, so the report needs a plain "edits to send" list, not only legal reasoning. Sending it from the tool (email, Teams) is the next question.</p></div>
+      <div class="note"><h3>Lawyers still live in Word</h3><p>A new version arrives as tracked changes; we read it as if all changes were accepted. Reading and writing real tracked changes in .docx is the most important next step. AI accuracy on a test set is still not measured.</p></div>
     </div>
   </section>
 
-  <p class="disclaimer">All contract text on this page is fictional. Klauzula is a working tool for lawyers; results are not legal advice. The name is a proposal and needs a trademark check.</p>
+  <p class="disclaimer">All contract text on this page is fictional. Klauzula AI is a working tool for lawyers; results and legal references are not legal advice. The name is a proposal and needs a trademark check.</p>
 </div>

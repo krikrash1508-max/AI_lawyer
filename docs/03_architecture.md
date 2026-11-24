@@ -1,6 +1,6 @@
 ---
 title: Архитектура и процесс
-version: 0.4.1
+version: 0.5.0
 status: draft
 owner: TBD
 updated: 2026-11-24
@@ -60,29 +60,38 @@ updated: 2026-11-24
 
 Решение на каждом шаге принимает юрист (human-in-the-loop): Продукт готовит отчёт, юрист проверяет его и решает, править ли контракт.
 
-Расхождения TO-BE с прототипом v0.1:
-- Маскирование ФИО не реализовано (FR-004 ⬜).
-- Анализ на соответствие **законодательству Польши** не реализован и не входит в спецификацию: v0.1 проверяет только по плейбуку (F3).
-- Сравнение версий — отдельный экран без карточек правок; сравнение рисков между версиями всегда работает на правилах (`compare.py` → `rules.check`), даже в Claude-режиме.
+Как шаги TO-BE реализованы в прототипе v0.2 ([ADR-0007](decisions/0007-scope-v0-2-to-be-process.md)):
 
-## 3. Компоненты v0.1
+| Шаг TO-BE | Функция | Экран v0.2 | Ограничение |
+|-----------|---------|-----------|-------------|
+| Юрист загружает файл в Продукт | F1 | Review → Upload (round 1) | — |
+| Маскирует идентификаторы, включая ФИО | F2 | Сводка «Masked before analysis» | ФИО — только после слов-маркеров («represented by», «reprezentowana przez», «Pan»…) |
+| Анализирует на соответствие плейбуку и законодательству Польши | F3 | Карточки находок с блоком «Polish law · to verify» | Ссылка на норму за правилом плейбука, не анализ императивных норм; нормы не проверены юристом |
+| Генерирует отчёт → юрист проверяет отчёт | F4 | Лист договора + карточки, экспорт отчёта | Track changes в .docx — нет |
+| Есть красные флаги? | F4 | Блок «Your decision»: «ready for signing» / «send edits» | Продукт только считает флаги, решает юрист |
+| Новая версия — снова на проверку | F5 | «Upload new version» → Round 2 с блоком «Since round 1» | Track changes из .docx читаются как принятые |
+
+Закрытые расхождения v0.1: маскирование ФИО (частично), нормы права Польши, шаг решения юриста; отдельная вкладка Compare убрана — сравнение стало частью раунда и использует находки того же режима (правила или Claude).
+
+## 3. Компоненты v0.2
 
 | Компонент | Файл | Технология | Что делает |
 |-----------|------|------------|-----------|
-| Frontend | `app/static/` | HTML + CSS + JS без фреймворков | 3 экрана: Review, Compare, Playbook |
+| Frontend | `app/static/` | HTML + CSS + JS без фреймворков | 2 вкладки: Review contract (раунды, решение юриста), Playbook |
 | Backend | `app/server.py` | Python 3.9+ стандартная библиотека (`http.server`) | REST API, без внешних пакетов |
 | Парсер | `app/engine/parser.py` | `zipfile` + XML | DOCX/TXT → пункты |
-| Маскирование | `app/engine/masking.py` | регулярные выражения | e-mail, телефон, PESEL, NIP, KRS, IBAN → метки |
+| Маскирование | `app/engine/masking.py` | регулярные выражения | ФИО (после маркеров), e-mail, телефон, PESEL, NIP, KRS, IBAN → метки |
 | Проверка (demo) | `app/engine/rules.py` | правила на регулярных выражениях | 10 правил NDA, детерминированно |
 | Проверка (AI) | `app/engine/llm.py` | Claude API (`anthropic` SDK), structured output | Тот же плейбук, инструкции из `skills/nda-review/SKILL.md` |
-| Сравнение | `app/engine/compare.py` | `difflib` | Diff по пунктам + изменения рисков |
-| Отчёт | `app/engine/report.py` | HTML для Word, Markdown | Экспорт с решениями юриста |
-| Плейбук | `app/playbooks/nda_pl.json` | JSON | Правила компании |
-| Хранилище | — | — | v0.1 ничего не хранит |
+| Нормы права | `app/engine/__init__.py` | — | Добавляет к каждой находке `legal_basis` из плейбука (не из ответа модели) |
+| Раунды | `app/engine/compare.py` | `difflib` | Diff по пунктам + изменения рисков между находками прошлого и нового раунда |
+| Отчёт | `app/engine/report.py` | HTML для Word, Markdown | Решение юриста, изменения с прошлого раунда, правки для бизнеса, нормы права |
+| Плейбук | `app/playbooks/nda_pl.json` 0.2.0 | JSON | Правила компании + `legal_basis` |
+| Хранилище | — | — | v0.2 ничего не хранит: прошлый раунд живёт в браузере и передаётся в запросе |
 
 Решение о стеке: [ADR-0004](decisions/0004-prototype-stack.md).
 
-## 4. Поток данных
+## 4. Поток данных (v0.2)
 
 ```mermaid
 sequenceDiagram
@@ -91,10 +100,9 @@ sequenceDiagram
     participant M as masking
     participant R as rules / llm
     participant C as Claude API (опц.)
-    U->>S: POST /api/review (DOCX base64 или текст)
-    S->>S: parser: DOCX → текст
-    S->>M: маскирование ПДн
-    M-->>S: текст с метками [EMAIL_1]…
+    U->>S: POST /api/review (раунд 1: файл или текст)
+    S->>M: маскирование ФИО и идентификаторов
+    M-->>S: текст с метками [NAME_1], [EMAIL_1]…
     S->>S: parser: текст → пункты
     alt Claude-режим (есть ключ)
         S->>C: пункты + плейбук + SKILL.md
@@ -102,9 +110,13 @@ sequenceDiagram
     else Demo-режим
         S->>R: rules.check(пункты, плейбук)
     end
-    S-->>U: находки + пункты (ничего не сохраняется)
-    U->>S: POST /api/export (находки + решения)
-    S-->>U: nda-review.doc / .md
+    S->>S: нормы права (legal_basis) из плейбука
+    S-->>U: отчёт: пункты, находки, счётчики (ничего не сохраняется)
+    U->>U: юрист: Accept / Reject правок, «Есть красные флаги?»
+    U->>S: POST /api/export (отчёт, решения, verdict)
+    S-->>U: klauzula-report-roundN.doc / .md
+    U->>S: POST /api/review (новая версия + прошлый раунд)
+    S-->>U: отчёт раунда 2 + changes + risk_changes
 ```
 
 ## 5. API
@@ -112,12 +124,14 @@ sequenceDiagram
 | Метод | Путь | Вход | Выход |
 |-------|------|------|-------|
 | GET | `/api/status` | — | доступен ли Claude-режим, модель |
-| GET | `/api/playbook` | — | плейбук JSON |
+| GET | `/api/playbook` | — | плейбук JSON с `legal_basis` |
 | GET | `/api/samples` | — | обезличенные образцы NDA |
-| POST | `/api/review` | `text` или `file_b64` + `filename` | пункты, находки, счётчики, что замаскировано |
-| POST | `/api/compare` | `old_text`, `new_text` | изменения по пунктам, изменения рисков |
-| POST | `/api/export` | `review`, `decisions`, `format` (doc/md) | файл отчёта |
+| POST | `/api/review` | `text` или `file_b64` + `filename`; опционально `previous` = `{round, clauses, findings}` | `round`, пункты, находки с `legal_basis`, счётчики, `red_flags`, что замаскировано; при `previous` — `changes`, `risk_changes` |
+| POST | `/api/export` | `review`, `decisions`, `verdict` (`sign` / `edits`), `format` (doc/md) | файл отчёта |
+
+`/api/compare` удалён в v0.2: сравнение — часть `/api/review` с `previous`.
 
 ## Связанные решения
 - [ADR-0003](decisions/0003-mvp-contract-type-nda.md) — тип договора NDA
 - [ADR-0004](decisions/0004-prototype-stack.md) — стек прототипа
+- [ADR-0007](decisions/0007-scope-v0-2-to-be-process.md) — объём v0.2 по процессу TO-BE
