@@ -123,30 +123,31 @@ table.spec { border-collapse: collapse; width: 100%; font-size: .88rem; }
   <section>
     <div class="section-head">
       <div class="eyebrow">1 · Process</div>
-      <h2>How an NDA gets approved today, and with Klauzula</h2>
-      <p class="muted">The lawyer still decides at every point. Klauzula removes the manual comparison with the company's rules and the manual search for what changed between versions.</p>
+      <h2>How a contract gets approved today, and with Klauzula</h2>
+      <p class="muted">The lawyer still decides at every point. Klauzula removes the queue and the check against the playbook from memory: the lawyer reviews a ready report.</p>
     </div>
     <h3>Today</h3>
     <div class="flow">
-      <div class="step"><b>Sales</b>Receives the counterparty's NDA, emails the lawyer: "please check, urgent"</div><span class="arrow">→</span>
-      <div class="step pain"><b>Queue</b>Waits about 2 days for the lawyer</div><span class="arrow">→</span>
-      <div class="step pain"><b>Lawyer</b>Reads all of it, checks rules from memory</div><span class="arrow">→</span>
+      <div class="step"><b>Sales</b>Receives the counterparty's contract, emails the lawyer: "please check, urgent"</div><span class="arrow">→</span>
+      <div class="step pain"><b>Queue</b>About 2 days for every round of edits</div><span class="arrow">→</span>
+      <div class="step pain"><b>Lawyer</b>Reads all of it, checks it against the playbook from memory</div><span class="arrow">→</span>
       <div class="step"><b>Lawyer</b>Edits in Word, explains by email</div><span class="arrow">→</span>
       <div class="step"><b>Sales</b>Sends the edits to the counterparty</div><span class="arrow">→</span>
-      <div class="step pain"><b>New version</b>Sales forwards it, it waits in the queue again, the lawyer finds changes by hand</div>
+      <div class="step"><b>Counterparty</b>Sends a new version in Word tracked changes; sales forwards it and it waits in the queue again</div>
     </div>
     <p class="loop">↺ Every round of negotiation goes back through sales and the queue.</p>
     <h3 style="margin-top:22px">With Klauzula</h3>
     <div class="flow">
-      <div class="step"><b>Sales → queue</b>Same entry; the queue gets shorter because each review takes less time</div><span class="arrow">→</span>
-      <div class="step"><b>Lawyer</b>Uploads the DOCX or TXT</div><span class="arrow">→</span>
-      <div class="step ai"><b>Klauzula</b>Masks identifiers: email, phone, PESEL, NIP, KRS, IBAN</div><span class="arrow">→</span>
-      <div class="step ai"><b>Klauzula</b>Checks 10 playbook rules: OK / Review / Red flag</div><span class="arrow">→</span>
-      <div class="step human"><b>Lawyer decides</b>Verifies each finding against the quoted clause</div><span class="arrow">→</span>
-      <div class="step human"><b>Lawyer decides</b>Red flags: edits, accepts or rejects each proposal</div><span class="arrow">→</span>
-      <div class="step ai"><b>Klauzula</b>Report for Word (.doc); tracked changes come next</div>
+      <div class="step"><b>Sales</b>Receives the counterparty's contract, assigns the task to the lawyer</div><span class="arrow">→</span>
+      <div class="step"><b>Lawyer</b>Uploads the file to Klauzula</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula</b>Masks identifiers: names, email, phone, PESEL, NIP, KRS, IBAN</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula</b>Analyses the contract against the playbook and Polish law</div><span class="arrow">→</span>
+      <div class="step ai"><b>Klauzula</b>Generates a report for the lawyer</div><span class="arrow">→</span>
+      <div class="step human"><b>Lawyer decides</b>Reviews the report: any red flags?</div><span class="arrow">→</span>
+      <div class="step human"><b>Lawyer</b>Red flags: edits the contract. None: straight to signing</div><span class="arrow">→</span>
+      <div class="step"><b>Sales</b>Sends the edits to the counterparty</div>
     </div>
-    <p class="loop">↺ New version: Klauzula shows what changed and which risks appeared, then the lawyer uploads it for a full check.</p>
+    <p class="loop">↺ New version: sales forwards it, the lawyer uploads it to Klauzula for a new check.</p>
     <div class="legend"><span class="l-pain">bottleneck</span><span class="l-ai">done by Klauzula</span><span class="l-human">lawyer's decision</span></div>
   </section>
 
