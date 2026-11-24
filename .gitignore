@@ -20,3 +20,6 @@ build/
 
 # Claude Code локальные настройки
 .claude/settings.local.json
+
+# Временные файлы Microsoft Office (создаются, пока документ открыт)
+~$*
