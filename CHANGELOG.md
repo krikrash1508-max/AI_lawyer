@@ -6,7 +6,11 @@ versioning — [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0] — 2026-11-28
+Prototype **Klauzula AI v0.2** per the TO-BE process, published as a public demo: https://klauzula-ai.onrender.com
+
 ### Added
+- `docs/meetings/2026-11-28-public-demo-render.md` — deployment and verification of the public demo (laptop, phone screen size, Render, real phone).
 - Preparation of the public demo on Render (ADR-0008, proposed): `render.yaml` (web service, free plan, region Frankfurt, Python 3.12, health check `/api/status`, auto-deploy from `main`); `app/server.py` reads the address from `HOST` (default `127.0.0.1`, on Render `0.0.0.0`). Checked: 12 autotests, full scenario at phone screen size (375 px), report export.
 - `docs/03_architecture.md` → 0.6.0: section 6 "Deployment (public demo)".
 - `docs/05_legal_compliance.md` → 0.3.3: "Public demo" section; `docs/01_requirements.md` → 0.3.3: NFR-002 partly met; `README.md`: "Public demo" section.
