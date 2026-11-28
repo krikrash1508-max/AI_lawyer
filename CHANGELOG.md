@@ -6,6 +6,9 @@ versioning — [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- ADR-0009 (proposed): knowledge base (RAG) — NotebookLM for the lawyer (assignment requirement, no API) + built-in BM25 search in Klauzula AI over one shared source library `docs/rag/sources/`; alternatives compared: Gemini API, vector databases, self-hosted NotebookLM alternatives, Supabase.
+
 ## [0.5.0] — 2026-11-28
 Prototype **Klauzula AI v0.2** per the TO-BE process, published as a public demo: https://klauzula-ai.onrender.com
 
