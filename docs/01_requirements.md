@@ -1,9 +1,9 @@
 ---
 title: Requirements and specification v0.2
-version: 0.3.2
+version: 0.3.3
 status: draft
 owner: TBD
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # Requirements and specification v0.2
@@ -55,7 +55,7 @@ Process: TO-BE from [03_architecture.md](03_architecture.md), section 2. v0.2 sc
 | ID | Requirement | Metric / criterion | Status |
 |----|-------------|--------------------|--------|
 | NFR-001 | Confidentiality | Text is masked before the LLM; contracts are not stored on the server; the model is not trained on the data | ✅ v0.2 stores nothing (rounds live only in the browser) |
-| NFR-002 | Storage and processing in the EU | Hosting and LLM processing in the EU | ⬜ decide when choosing hosting |
+| NFR-002 | Storage and processing in the EU | Hosting and LLM processing in the EU | 🟡 demo hosted in the EU (Render, Frankfurt — ADR-0008); LLM processing in the EU open |
 | NFR-003 | Speed | NDA review ≤ 60 s (Claude), ≤ 1 s (rules) | ✅ rules: < 0.1 s |
 | NFR-004 | Transparency | Each finding: verbatim quote, clause reference, legal provision | ✅ |
 | NFR-005 | Human-in-the-loop | The "sign / send edits" decision is made only by the lawyer; nothing is sent to the counterparty automatically; disclaimer on screen and in the report | ✅ |

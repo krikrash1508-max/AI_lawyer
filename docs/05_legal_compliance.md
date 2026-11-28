@@ -1,9 +1,9 @@
 ---
 title: Legal requirements and compliance
-version: 0.3.2
+version: 0.3.3
 status: draft
 owner: TBD
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # Legal requirements and compliance
@@ -23,6 +23,11 @@ A tool for the lawyer, not a replacement for the lawyer. Human-in-the-loop: ever
 - On every screen: "Klauzula AI is a working tool for lawyers. Results and legal references are not legal advice; the lawyer reviews and decides."
 - In every report: "Prepared with Klauzula AI as a working aid for the lawyer. It is not legal advice…"
 - On every legal provision: "Polish law · to verify".
+
+## Public demo (ADR-0008)
+- The demo is open to anyone with the link (Render, Frankfurt). It stores no contract text; Render keeps only access logs (time, URL, IP).
+- Claude mode is off in the public demo: no text leaves the server.
+- The on-screen disclaimer ("do not upload real confidential contracts") applies; demonstrations use only the built-in anonymised samples.
 - In the prototype: "do not upload real confidential contracts".
 
 ## References to Polish legislation (v0.2)

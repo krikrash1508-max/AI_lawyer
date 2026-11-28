@@ -1,9 +1,9 @@
 ---
 title: Architecture and process
-version: 0.5.2
+version: 0.6.0
 status: draft
 owner: TBD
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # Architecture and process
@@ -131,7 +131,23 @@ sequenceDiagram
 
 `/api/compare` was removed in v0.2: comparison is part of `/api/review` with `previous`.
 
+## 6. Deployment (public demo)
+
+| What | Locally | Public demo |
+|------|---------|-------------|
+| Where | Author's laptop | Render Web Service, free plan, region Frankfurt (EU) |
+| Start | `python3 app/server.py` | The same command, from `render.yaml` |
+| Address | `127.0.0.1:8000` (this computer only) | `HOST=0.0.0.0`, port from `PORT`; permanent link `*.onrender.com` |
+| Python | 3.9+ | 3.12 (`PYTHON_VERSION` in `render.yaml`) |
+| Updates | — | Automatic on every `git push` to `main` |
+| Health check | — | `GET /api/status` |
+| Claude mode | Optional (key) | Off: rule-based demo, no API key on the server |
+| Data | Nothing stored | Nothing stored; Render keeps only access logs |
+
+The free instance sleeps after ~15 minutes without visitors; the first open takes 30–60 s. Decision: [ADR-0008](decisions/0008-demo-hosting-render.md).
+
 ## Related decisions
 - [ADR-0003](decisions/0003-mvp-contract-type-nda.md) — contract type NDA
 - [ADR-0004](decisions/0004-prototype-stack.md) — prototype stack
 - [ADR-0007](decisions/0007-scope-v0-2-to-be-process.md) — v0.2 scope per the TO-BE process
+- [ADR-0008](decisions/0008-demo-hosting-render.md) — public demo on Render (Frankfurt)
