@@ -10,6 +10,7 @@ versioning — [Semantic Versioning](https://semver.org/).
 - Preparation of the public demo on Render (ADR-0008, proposed): `render.yaml` (web service, free plan, region Frankfurt, Python 3.12, health check `/api/status`, auto-deploy from `main`); `app/server.py` reads the address from `HOST` (default `127.0.0.1`, on Render `0.0.0.0`). Checked: 12 autotests, full scenario at phone screen size (375 px), report export.
 - `docs/03_architecture.md` → 0.6.0: section 6 "Deployment (public demo)".
 - `docs/05_legal_compliance.md` → 0.3.3: "Public demo" section; `docs/01_requirements.md` → 0.3.3: NFR-002 partly met; `README.md`: "Public demo" section.
+- Public demo deployed: https://klauzula-ai.onrender.com — checked: round 1 (6 red flags) → round 2 (7 risk changes) → report export.
 - Masking of personal names in the signature block and next to job titles (Prezes Zarządu, Prokurent, Managing Director…), and after "Name:" / "Imię i nazwisko:"; each person found gets one `[NAME_n]` placeholder throughout the text — including "J. Kowalski" and grammatical cases ("Kowalskiego"). Company names, job titles and contract terms are not masked.
 - `app/samples/nda_counterparty_v3.txt` — a fictional NDA with a signature block; 3 new autotests (12 in total).
 - `docs/diagrams/as-is.svg` — AS-IS diagram with three horizontal role lanes (business, lawyer, counterparty).

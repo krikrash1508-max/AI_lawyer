@@ -36,7 +36,7 @@ python3 app/server.py
 Open http://localhost:8000 and click **Try the sample NDA**. Then: accept the edits → "Yes — send edits to the counterparty" → "Try sample version 2" (round 2). Stop the server: `Ctrl+C`.
 
 ### Public demo (Render)
-Link: _will be added after the first deploy_ (`https://<name>.onrender.com`).
+Link: **https://klauzula-ai.onrender.com** (works on a computer and on a phone; click **Try the sample NDA**).
 
 The demo is deployed from `render.yaml` (Render → New → Blueprint → this repository), region Frankfurt, free plan; every `git push` to `main` updates it. The free instance sleeps after ~15 minutes without visitors — open the link 2–3 minutes before a demo. Details: [ADR-0008](docs/decisions/0008-demo-hosting-render.md).
 
