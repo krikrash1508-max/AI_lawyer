@@ -1,0 +1,17 @@
+# Render Blueprint for the public demo of Klauzula AI (ADR-0008).
+# Render reads this file when you create the service via New → Blueprint.
+services:
+  - type: web
+    name: klauzula-ai
+    runtime: python
+    region: frankfurt          # EU hosting (NFR-002)
+    plan: free                 # sleeps after ~15 min without visitors
+    buildCommand: echo "No dependencies to install (standard library only)"
+    startCommand: python3 app/server.py
+    healthCheckPath: /api/status
+    autoDeploy: true           # every git push to main updates the site
+    envVars:
+      - key: HOST
+        value: 0.0.0.0         # accept visitors from the internet
+      - key: PYTHON_VERSION
+        value: 3.12.8
