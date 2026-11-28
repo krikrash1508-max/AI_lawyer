@@ -93,7 +93,10 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    # Locally: only this computer (127.0.0.1). On hosting (Render): HOST=0.0.0.0 accepts visitors.
+    host = os.environ.get("HOST", "127.0.0.1")
     port = int(os.environ.get("PORT", 8000))
-    print("Klauzula AI v0.2 → http://localhost:{}  (Claude mode: {})".format(
-        port, "on" if engine.llm.available() else "off, rule-based demo"))
-    ThreadingHTTPServer(("127.0.0.1", port), Handler).serve_forever()
+    print("Klauzula AI v0.2 → http://{}:{}  (Claude mode: {})".format(
+        "localhost" if host == "127.0.0.1" else host, port,
+        "on" if engine.llm.available() else "off, rule-based demo"), flush=True)
+    ThreadingHTTPServer((host, port), Handler).serve_forever()
